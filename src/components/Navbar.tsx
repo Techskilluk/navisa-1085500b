@@ -10,13 +10,9 @@ const Navbar = () => {
           <span className="text-2xl font-bold text-white">Navisa</span>
         </div>
         <div className="hidden md:flex items-center space-x-8">
-          <a href="#" className="text-white/80 hover:text-white transition-colors">Deposit</a>
-          <a href="#" className="text-white/80 hover:text-white transition-colors">Dashboard</a>
-          <a href="#" className="text-white/80 hover:text-white transition-colors">Company</a>
-          <a href="#" className="text-white/80 hover:text-white transition-colors">Pricing</a>
-          <Button variant="outline" className="text-white border-white/20 hover:bg-white/10">
-            Open your account
-          </Button>
+          <a href="#" className="text-white/80 hover:text-white transition-colors">Pathways</a>
+          <a href="#" className="text-white/80 hover:text-white transition-colors">How it works</a>
+          <a href="#" className="text-white/80 hover:text-white transition-colors">Check your eligibility</a>
           <Button className="bg-[#F2FF44] text-black hover:bg-[#E2EF34]">
             Sign in
             <LogIn className="w-4 h-4 ml-2" />

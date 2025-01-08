@@ -22,28 +22,33 @@ export default {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
-        background: "#0F1115",
-        foreground: "#FFFFFF",
+        background: "#172A3A", // Prussian Blue
+        foreground: "#FFFCF9", // Baby Powder
         primary: {
-          DEFAULT: "#141413",
-          foreground: "#FFFFFF",
+          DEFAULT: "#122932", // Gunmetal
+          foreground: "#FFFCF9", // Baby Powder
         },
         secondary: {
-          DEFAULT: "#E6E4DD",
-          foreground: "#141413",
+          DEFAULT: "#324A5F", // Steel Blue
+          foreground: "#FFFCF9", // Baby Powder
         },
         accent: {
-          DEFAULT: "#8989DE",
-          foreground: "#FFFFFF",
+          DEFAULT: "#EF8354", // Coral
+          foreground: "#FFFCF9", // Baby Powder
         },
         muted: {
-          DEFAULT: "#828179",
-          foreground: "#FAFAF8",
+          DEFAULT: "#4F5D75", // Payne's Gray
+          foreground: "#E2DCDE", // Platinum
         },
         card: {
-          DEFAULT: "#FFFFFF",
-          foreground: "#141413",
+          DEFAULT: "#004643", // Brunswick Green
+          foreground: "#FFFCF9", // Baby Powder
         },
+        // Additional custom colors
+        "dark-slate": "#26413C", // Dark Slate Green
+        "columbia-blue": "#D6EFFF", // Columbia Blue
+        wheat: "#FFE8C2", // Wheat
+        "sandy-brown": "#F0A868", // Sandy Brown
       },
       borderRadius: {
         lg: "var(--radius)",

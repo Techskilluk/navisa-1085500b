@@ -2,14 +2,44 @@ import { Auth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
 import { supabase } from "@/integrations/supabase/client";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { useEffect } from "react";
+import { AuthError } from "@supabase/supabase-js";
 
 interface AuthFormProps {
   error: string;
 }
 
-const AuthForm = ({ error }: AuthFormProps) => {
+const AuthForm = ({ error: propError }: AuthFormProps) => {
+  console.log("Auth form rendered with error:", propError);
+  
   // Get the current URL's origin for redirect
   const redirectTo = `${window.location.origin}/signin`;
+
+  // Helper function to get a user-friendly error message
+  const getErrorMessage = (error: AuthError) => {
+    console.log("Processing error:", error);
+    const errorBody = error.message;
+    
+    if (errorBody.includes("Invalid login credentials")) {
+      return "Invalid email or password. Please check your credentials and try again.";
+    }
+    
+    return error.message;
+  };
+
+  useEffect(() => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
+      console.log("Auth state changed:", event);
+      if (event === 'USER_UPDATED') {
+        const { error } = await supabase.auth.getSession();
+        if (error) {
+          console.error("Auth error:", error);
+        }
+      }
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
 
   return (
     <div className="w-full lg:w-1/2 flex items-center justify-center p-8 bg-white">
@@ -20,9 +50,9 @@ const AuthForm = ({ error }: AuthFormProps) => {
           <p className="text-muted">Sign in to continue your journey</p>
         </div>
 
-        {error && (
+        {propError && (
           <Alert variant="destructive" className="mb-4">
-            <AlertDescription>{error}</AlertDescription>
+            <AlertDescription>{propError}</AlertDescription>
           </Alert>
         )}
 

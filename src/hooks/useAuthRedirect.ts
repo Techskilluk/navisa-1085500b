@@ -1,15 +1,17 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
-import { Session } from "@supabase/supabase-js";
+import { Session, AuthError } from "@supabase/supabase-js";
 
 export const useAuthRedirect = (session: Session | null) => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [error, setError] = useState("");
 
   useEffect(() => {
     if (session) {
-      navigate("/");
+      const returnUrl = location.state?.returnUrl || "/";
+      navigate(returnUrl);
     }
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
@@ -17,7 +19,8 @@ export const useAuthRedirect = (session: Session | null) => {
       
       if (event === "SIGNED_IN") {
         setError(""); // Clear any errors on successful sign in
-        navigate("/");
+        const returnUrl = location.state?.returnUrl || "/";
+        navigate(returnUrl);
       } else if (event === "SIGNED_OUT") {
         setError(""); // Clear errors on sign out
       } else if (event === "USER_UPDATED") {
@@ -25,22 +28,24 @@ export const useAuthRedirect = (session: Session | null) => {
         const { error } = await supabase.auth.getSession();
         if (error) {
           console.error("Auth error:", error);
-          switch (error.message) {
-            case "Invalid login credentials":
-              setError("Invalid email or password. Please check your credentials and try again.");
-              break;
-            case "Email not confirmed":
-              setError("Please verify your email address before signing in.");
-              break;
-            default:
-              setError(error.message);
-          }
+          handleAuthError(error);
         }
       }
     });
 
     return () => subscription.unsubscribe();
-  }, [session, navigate]);
+  }, [session, navigate, location.state]);
+
+  const handleAuthError = (error: AuthError) => {
+    console.error("Authentication error:", error);
+    if (error.message.includes("Invalid login credentials")) {
+      setError("Invalid email or password. Please check your credentials and try again.");
+    } else if (error.message.includes("Email not confirmed")) {
+      setError("Please verify your email address before signing in.");
+    } else {
+      setError(error.message);
+    }
+  };
 
   return { error };
 };

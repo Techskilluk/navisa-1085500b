@@ -1,16 +1,23 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Progress } from "@/components/ui/progress";
 import { Card } from "@/components/ui/card";
 import EligibilityForm from "@/components/eligibility/EligibilityForm";
+import FormStepIndicator from "@/components/eligibility/FormStepIndicator";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 
 const EligibilityAssessment = () => {
   const [step, setStep] = useState(1);
   const totalSteps = 7;
-  const progress = (step / totalSteps) * 100;
   const navigate = useNavigate();
+
+  const handleNext = () => {
+    setStep(prev => Math.min(prev + 1, totalSteps));
+  };
+
+  const handlePrevious = () => {
+    setStep(prev => Math.max(prev - 1, 1));
+  };
 
   return (
     <div className="min-h-screen bg-background p-6">
@@ -24,15 +31,14 @@ const EligibilityAssessment = () => {
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back
           </Button>
-          <Progress value={progress} className="w-full" />
-          <p className="text-sm text-muted-foreground">Step {step} of {totalSteps}</p>
+          <FormStepIndicator currentStep={step} totalSteps={totalSteps} />
         </div>
         
         <Card className="p-6">
           <EligibilityForm 
             currentStep={step} 
-            onNext={() => setStep(prev => Math.min(prev + 1, totalSteps))}
-            onPrevious={() => setStep(prev => Math.max(prev - 1, 1))}
+            onNext={handleNext}
+            onPrevious={handlePrevious}
           />
         </Card>
       </div>

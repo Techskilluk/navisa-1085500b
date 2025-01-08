@@ -1,7 +1,14 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const Hero = () => {
+  const navigate = useNavigate();
+
+  const handleEligibilityCheck = () => {
+    navigate("/eligibility");
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center px-4 pt-20 bg-background">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
@@ -12,7 +19,10 @@ const Hero = () => {
           <p className="text-lg text-white/80 max-w-xl">
             At Navisa.co, we specialize in simplifying the complexities of international mobility. Whether you're a professional, employer, student, or consultant, our platform offers comprehensive support.
           </p>
-          <Button className="px-8 py-6 text-lg bg-white text-black hover:bg-white/90 flex items-center gap-2">
+          <Button 
+            className="px-8 py-6 text-lg bg-white text-black hover:bg-white/90 flex items-center gap-2"
+            onClick={handleEligibilityCheck}
+          >
             Check Your Eligibility To Get Started
             <ArrowRight className="w-5 h-5" />
           </Button>

@@ -10,6 +10,8 @@ import Skills from "./steps/Skills";
 import Achievements from "./steps/Achievements";
 import PreferredCountries from "./steps/PreferredCountries";
 import Summary from "./steps/Summary";
+import FormNavigation from "./FormNavigation";
+import { supabase } from "@/integrations/supabase/client";
 
 interface EligibilityFormProps {
   currentStep: number;
@@ -45,6 +47,7 @@ export type EligibilityData = {
 
 const EligibilityForm = ({ currentStep, onNext, onPrevious }: EligibilityFormProps) => {
   const [formData, setFormData] = useState<Partial<EligibilityData>>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const form = useForm<EligibilityData>();
   const { toast } = useToast();
 
@@ -72,14 +75,34 @@ const EligibilityForm = ({ currentStep, onNext, onPrevious }: EligibilityFormPro
   const handleSubmit = async (data: EligibilityData) => {
     setFormData(prev => ({ ...prev, ...data }));
     
-    if (currentStep === totalSteps) {
-      // Final submission
-      console.log("Final form data:", formData);
-      toast({
-        title: "Assessment Submitted",
-        description: "We'll analyze your eligibility and get back to you soon.",
-      });
-      // Here you would typically send the data to your backend
+    if (currentStep === 7) {
+      setIsSubmitting(true);
+      try {
+        const { error } = await supabase
+          .from('eligibility_verifications')
+          .insert([
+            {
+              verification_data: data,
+              status: 'pending'
+            }
+          ]);
+
+        if (error) throw error;
+
+        toast({
+          title: "Assessment Submitted",
+          description: "We'll analyze your eligibility and get back to you soon.",
+        });
+      } catch (error) {
+        console.error('Error submitting eligibility assessment:', error);
+        toast({
+          title: "Submission Error",
+          description: "There was an error submitting your assessment. Please try again.",
+          variant: "destructive",
+        });
+      } finally {
+        setIsSubmitting(false);
+      }
     } else {
       onNext();
     }
@@ -91,17 +114,13 @@ const EligibilityForm = ({ currentStep, onNext, onPrevious }: EligibilityFormPro
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
         {renderStep()}
-        
-        <div className="flex justify-between pt-6">
-          {currentStep > 1 && (
-            <Button type="button" variant="outline" onClick={onPrevious}>
-              Previous
-            </Button>
-          )}
-          <Button type="submit" className="ml-auto">
-            {currentStep === totalSteps ? "Submit" : "Next"}
-          </Button>
-        </div>
+        <FormNavigation 
+          currentStep={currentStep}
+          totalSteps={totalSteps}
+          onNext={onNext}
+          onPrevious={onPrevious}
+          isSubmitting={isSubmitting}
+        />
       </form>
     </Form>
   );

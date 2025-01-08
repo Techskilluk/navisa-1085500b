@@ -13,7 +13,7 @@ import PreferredCountries from "./steps/PreferredCountries";
 import ImmigrationInfo from "./steps/ImmigrationInfo";
 import Summary from "./steps/Summary";
 import FormNavigation from "./FormNavigation";
-import AssessmentResult from "./AssessmentResult";
+import AssessmentResults from "./AssessmentResults";
 import { supabase } from "@/integrations/supabase/client";
 
 interface EligibilityFormProps {
@@ -70,7 +70,7 @@ const EligibilityForm = ({ currentStep, onNext, onPrevious }: EligibilityFormPro
 
   const renderStep = () => {
     if (isSubmitted) {
-      return <AssessmentResult data={formData as EligibilityData} />;
+      return <AssessmentResults data={formData as EligibilityData} />;
     }
 
     switch (currentStep) {

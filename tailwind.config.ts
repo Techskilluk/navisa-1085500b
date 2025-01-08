@@ -22,36 +22,38 @@ export default {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
-        background: "#172A3A", // Dark Navy Blue
-        foreground: "#FFFFFF", // White
+        background: "#172A3A", // Prussian Blue
+        foreground: "#FFFCF9", // Baby Powder
         primary: {
-          DEFAULT: "#1F3541", // Darker Steel Blue
-          foreground: "#FFFFFF",
+          DEFAULT: "#233D4D", // Gunmetal
+          foreground: "#FFFCF9",
         },
         secondary: {
-          DEFAULT: "#324A5F", // Steel Blue
-          foreground: "#FFFFFF",
+          DEFAULT: "#4F6D7A", // Steel Blue
+          foreground: "#FFFCF9",
         },
         accent: {
-          DEFAULT: "#EF8354", // Coral Orange
-          foreground: "#FFFFFF",
+          DEFAULT: "#FE5F55", // Coral
+          foreground: "#FFFCF9",
         },
         muted: {
-          DEFAULT: "#4F5D75", // Slate Blue
-          foreground: "#FFFFFF",
+          DEFAULT: "#6E7E85", // Payne's Gray
+          foreground: "#FFFCF9",
         },
         card: {
-          DEFAULT: "#004643", // Deep Teal
-          foreground: "#FFFFFF",
+          DEFAULT: "#1B4B43", // Brunswick Green
+          foreground: "#FFFCF9",
         },
-        // Additional custom colors from the image
-        "navisa-dark": "#0D1B24", // Darkest Blue
-        "navisa-steel": "#324A5F", // Steel Blue
-        "navisa-slate": "#4F5D75", // Slate Blue
-        "navisa-teal": "#004643", // Deep Teal
-        "navisa-forest": "#26413C", // Forest Green
-        "navisa-coral": "#EF8354", // Coral Orange
-        "navisa-sky": "#D6EFFF", // Light Sky Blue
+        // Additional custom colors from the first iteration
+        "navisa-dark": "#172A3A", // Prussian Blue
+        "navisa-steel": "#4F6D7A", // Steel Blue
+        "navisa-slate": "#6E7E85", // Payne's Gray
+        "navisa-teal": "#1B4B43", // Brunswick Green
+        "navisa-forest": "#2D5A27", // Dark Slate Green
+        "navisa-coral": "#FE5F55", // Coral
+        "navisa-sky": "#BFDBF7", // Columbia Blue
+        "navisa-wheat": "#F5DEB3", // Wheat
+        "navisa-sandy": "#F4A460", // Sandy Brown
       },
       borderRadius: {
         lg: "var(--radius)",

@@ -9,7 +9,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
           <div className="space-y-4">
             <div className="flex items-center gap-2">
-              <img src="/navisa-logo.png" alt="Navisa" className="h-8 w-auto" />
+              <img src="/navisa-logo.svg" alt="Navisa" className="h-8 w-auto" />
               <h3 className="text-2xl font-bold text-white">Navisa</h3>
             </div>
             <p className="text-white/60">

@@ -1,21 +1,50 @@
 import { Auth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
 import { supabase } from "@/integrations/supabase/client";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { useToast } from "@/components/ui/use-toast";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { AuthError } from "@supabase/supabase-js";
 
 const SignIn = () => {
   const navigate = useNavigate();
   const { session } = useAuth();
   const { toast } = useToast();
+  const [error, setError] = useState<string>("");
 
   useEffect(() => {
     if (session) {
       navigate("/");
     }
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      console.log("Auth state changed:", event);
+      if (event === "SIGNED_IN") {
+        navigate("/");
+      } else if (event === "USER_DELETED" || event === "SIGNED_OUT") {
+        setError("");
+      }
+    });
+
+    return () => subscription.unsubscribe();
   }, [session, navigate]);
+
+  // Error handling function
+  const handleAuthError = (error: AuthError) => {
+    console.error("Auth error:", error);
+    switch (error.message) {
+      case "Invalid login credentials":
+        setError("Invalid email or password. Please check your credentials and try again.");
+        break;
+      case "Email not confirmed":
+        setError("Please verify your email address before signing in.");
+        break;
+      default:
+        setError(error.message);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-background flex">
@@ -48,12 +77,19 @@ const SignIn = () => {
             <p className="text-muted">Sign in to continue your journey</p>
           </div>
 
+          {error && (
+            <Alert variant="destructive" className="mb-4">
+              <AlertDescription>{error}</AlertDescription>
+            </Alert>
+          )}
+
           <Auth
             supabaseClient={supabase}
             view="sign_in"
             showLinks={true}
             providers={[]}
             redirectTo={window.location.origin}
+            onError={handleAuthError}
             appearance={{
               theme: ThemeSupa,
               variables: {

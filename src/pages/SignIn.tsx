@@ -4,10 +4,12 @@ import { supabase } from "@/integrations/supabase/client";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
+import { useToast } from "@/components/ui/use-toast";
 
 const SignIn = () => {
   const navigate = useNavigate();
   const { session } = useAuth();
+  const { toast } = useToast();
 
   useEffect(() => {
     if (session) {
@@ -48,6 +50,10 @@ const SignIn = () => {
 
           <Auth
             supabaseClient={supabase}
+            view="sign_in"
+            showLinks={true}
+            providers={[]}
+            redirectTo={window.location.origin}
             appearance={{
               theme: ThemeSupa,
               variables: {
@@ -92,7 +98,6 @@ const SignIn = () => {
                 divider: 'my-6 border-t border-secondary',
               },
             }}
-            providers={[]}
           />
         </div>
       </div>

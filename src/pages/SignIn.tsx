@@ -20,7 +20,7 @@ const SignIn = () => {
       {/* Left side - Image */}
       <div className="hidden lg:block lg:w-1/2 relative">
         <img 
-          src="https://images.unsplash.com/photo-1557804506-669a67965ba0?q=80&w=2574&auto=format&fit=crop"
+          src="/lovable-uploads/de492bbf-a7aa-4f4d-a5d3-b9a7e0143516.png"
           alt="Global Mobility"
           className="absolute inset-0 w-full h-full object-cover"
         />

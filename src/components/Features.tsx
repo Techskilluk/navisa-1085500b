@@ -1,12 +1,12 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Briefcase, GraduationCap, Passport, Users } from "lucide-react";
+import { Briefcase, Globe, GraduationCap, Users } from "lucide-react";
 import { landingContent } from "@/config/landing-content";
 
 const getIconForCard = (index: number) => {
   switch (index) {
     case 0:
-      return <Passport className="h-8 w-8 text-accent" />;
+      return <Globe className="h-8 w-8 text-accent" />;
     case 1:
       return <Briefcase className="h-8 w-8 text-accent" />;
     case 2:

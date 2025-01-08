@@ -1,68 +1,106 @@
-import { Card } from "@/components/ui/card";
-import { Briefcase, Building2, GraduationCap, Users } from "lucide-react";
-import { Button } from "./ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Briefcase, GraduationCap, Passport, Users } from "lucide-react";
+import { landingContent } from "@/config/landing-content";
+
+const getIconForCard = (index: number) => {
+  switch (index) {
+    case 0:
+      return <Passport className="h-8 w-8 text-accent" />;
+    case 1:
+      return <Briefcase className="h-8 w-8 text-accent" />;
+    case 2:
+      return <GraduationCap className="h-8 w-8 text-accent" />;
+    case 3:
+      return <Users className="h-8 w-8 text-accent" />;
+    default:
+      return null;
+  }
+};
 
 const Features = () => {
-  const audiences = [
-    {
-      icon: <Briefcase className="w-6 h-6 text-white" />,
-      title: "International Professionals",
-      description: "Navigate visa processes, secure employment abroad, and settle with confidence. Perfect for skilled workers, tech professionals, and healthcare workers.",
-      cta: "Book a Consultation"
-    },
-    {
-      icon: <Building2 className="w-6 h-6 text-white" />,
-      title: "Employers & Recruiters",
-      description: "Simplify sponsorship processes, streamline talent acquisition, and access end-to-end recruitment solutions for your global hiring needs.",
-      cta: "Expand Your Team"
-    },
-    {
-      icon: <GraduationCap className="w-6 h-6 text-white" />,
-      title: "Students & Institutions",
-      description: "Get comprehensive study abroad assistance, visa guidance, and support for educational institutions in managing international students.",
-      cta: "Start Your Journey"
-    },
-    {
-      icon: <Users className="w-6 h-6 text-white" />,
-      title: "Immigration Consultants",
-      description: "Access comprehensive resources, process management tools, and partnership opportunities to enhance your client services.",
-      cta: "Partner With Us"
-    }
-  ];
-
   return (
-    <div className="py-20 px-4 bg-background relative overflow-hidden">
-      <div className="absolute inset-0 bg-accent/5 backdrop-blur-3xl"></div>
-      <div className="max-w-7xl mx-auto relative z-10">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-white mb-4">
-            Who We Serve
-          </h2>
-          <p className="text-xl text-white/60 max-w-2xl mx-auto">
-            Tailored solutions for every journey in global mobility
-          </p>
-        </div>
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {audiences.map((audience, index) => (
-            <Card 
-              key={index} 
-              className="p-6 hover-lift glass-effect flex flex-col justify-between group transition-all duration-300"
-            >
-              <div>
-                <div className="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center mb-6 group-hover:bg-accent/20 transition-colors">
-                  {audience.icon}
+    <section className="w-full py-12 md:py-24 lg:py-32 bg-background">
+      <div className="container px-4 md:px-6">
+        <div className="grid gap-6 lg:grid-cols-2 xl:grid-cols-2">
+          {landingContent.cards.map((card, index) => (
+            <Card key={card.title} className="relative overflow-hidden transition-all hover:shadow-lg">
+              <CardHeader>
+                <div className="flex items-center gap-4">
+                  {getIconForCard(index)}
+                  <div>
+                    <CardTitle className="text-2xl font-bold">{card.title}</CardTitle>
+                    <CardDescription className="mt-2">{card.subtitle}</CardDescription>
+                  </div>
                 </div>
-                <h3 className="text-xl font-semibold mb-3 text-white">{audience.title}</h3>
-                <p className="text-white/60 mb-6">{audience.description}</p>
-              </div>
-              <Button variant="outline" className="w-full hover:bg-white hover:text-black transition-colors">
-                {audience.cta}
-              </Button>
+              </CardHeader>
+              <CardContent>
+                {'sections' in card ? (
+                  // Career Development & Global Recruitment card
+                  <div className="space-y-6">
+                    {card.sections.map((section) => (
+                      <div key={section.sectionTitle} className="space-y-3">
+                        <h4 className="font-semibold text-lg">{section.sectionTitle}</h4>
+                        <ul className="space-y-2">
+                          {section.features.map((feature, featureIndex) => (
+                            <li key={featureIndex} className="flex items-center gap-2">
+                              <span className="h-1.5 w-1.5 rounded-full bg-accent" />
+                              <span>{feature}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  // Other cards with features array
+                  <div className="space-y-4">
+                    {card.features.map((feature) => (
+                      <div key={feature.heading} className="space-y-2">
+                        <h4 className="font-semibold">{feature.heading}</h4>
+                        <p className="text-muted-foreground">{feature.description}</p>
+                      </div>
+                    ))}
+                  </div>
+                )}
+                <p className="mt-6 text-sm text-muted-foreground italic">{card.cta}</p>
+                <Button className="mt-6 w-full" variant="secondary">
+                  Learn More
+                </Button>
+              </CardContent>
             </Card>
           ))}
         </div>
+
+        <div className="mt-24 text-center space-y-12">
+          <div className="space-y-6">
+            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
+              {landingContent.whyChooseUs.title}
+            </h2>
+            <ul className="space-y-4">
+              {landingContent.whyChooseUs.reasons.map((reason) => (
+                <li key={reason} className="flex items-center justify-center gap-2">
+                  <span className="h-2 w-2 rounded-full bg-accent" />
+                  <span>{reason}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="space-y-4">
+            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl">
+              {landingContent.finalCta.title}
+            </h2>
+            <p className="mx-auto max-w-[700px] text-muted-foreground">
+              {landingContent.finalCta.description}
+            </p>
+            <Button size="lg" className="mt-4">
+              Contact Us
+            </Button>
+          </div>
+        </div>
       </div>
-    </div>
+    </section>
   );
 };
 

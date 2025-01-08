@@ -10,6 +10,7 @@ import Experience from "./steps/Experience";
 import Skills from "./steps/Skills";
 import Achievements from "./steps/Achievements";
 import PreferredCountries from "./steps/PreferredCountries";
+import ImmigrationInfo from "./steps/ImmigrationInfo";
 import Summary from "./steps/Summary";
 import FormNavigation from "./FormNavigation";
 import { supabase } from "@/integrations/supabase/client";
@@ -44,6 +45,18 @@ export type EligibilityData = {
     description: string;
   }[];
   preferredCountries: string[];
+  immigrationInfo: {
+    currentStatus: string;
+    otherStatusSpecification?: string;
+    hasValidVisa: string;
+    visaType?: string;
+    visaNumber?: string;
+    issueDate?: Date;
+    expirationDate?: Date;
+    relocationPurpose: string;
+    stayDuration: number;
+    proposedEntryDate: Date;
+  };
 };
 
 const EligibilityForm = ({ currentStep, onNext, onPrevious }: EligibilityFormProps) => {
@@ -66,8 +79,10 @@ const EligibilityForm = ({ currentStep, onNext, onPrevious }: EligibilityFormPro
       case 5:
         return <Achievements form={form} />;
       case 6:
-        return <PreferredCountries form={form} />;
+        return <ImmigrationInfo form={form} />;
       case 7:
+        return <PreferredCountries form={form} />;
+      case 8:
         return <Summary data={formData} />;
       default:
         return null;
@@ -77,7 +92,7 @@ const EligibilityForm = ({ currentStep, onNext, onPrevious }: EligibilityFormPro
   const handleSubmit = async (data: EligibilityData) => {
     setFormData(prev => ({ ...prev, ...data }));
     
-    if (currentStep === 7) {
+    if (currentStep === 8) {
       setIsSubmitting(true);
       try {
         if (!user) {
@@ -115,7 +130,7 @@ const EligibilityForm = ({ currentStep, onNext, onPrevious }: EligibilityFormPro
     }
   };
 
-  const totalSteps = 7;
+  const totalSteps = 8;
 
   return (
     <Form {...form}>

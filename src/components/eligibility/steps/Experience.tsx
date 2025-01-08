@@ -8,10 +8,25 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Briefcase } from "lucide-react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 interface ExperienceProps {
   form: UseFormReturn<EligibilityData>;
 }
+
+const EXPERIENCE_RANGES = [
+  "0-2 years",
+  "3-5 years",
+  "6-10 years",
+  "10+ years"
+];
 
 const Experience = ({ form }: ExperienceProps) => {
   return (
@@ -27,9 +42,20 @@ const Experience = ({ form }: ExperienceProps) => {
         render={({ field }) => (
           <FormItem>
             <FormLabel>Years of Experience</FormLabel>
-            <FormControl>
-              <Input type="number" placeholder="Enter years of experience" {...field} />
-            </FormControl>
+            <Select onValueChange={field.onChange} defaultValue={field.value}>
+              <FormControl>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select years of experience" />
+                </SelectTrigger>
+              </FormControl>
+              <SelectContent>
+                {EXPERIENCE_RANGES.map((range) => (
+                  <SelectItem key={range} value={range}>
+                    {range}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
             <FormMessage />
           </FormItem>
         )}
@@ -42,7 +68,10 @@ const Experience = ({ form }: ExperienceProps) => {
           <FormItem>
             <FormLabel>Current Role</FormLabel>
             <FormControl>
-              <Input placeholder="Enter your current role" {...field} />
+              <div className="relative">
+                <Briefcase className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                <Input className="pl-9" placeholder="Enter your current role" {...field} />
+              </div>
             </FormControl>
             <FormMessage />
           </FormItem>

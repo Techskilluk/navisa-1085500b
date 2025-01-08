@@ -4,6 +4,7 @@ import { Progress } from "@/components/ui/progress";
 import { Card } from "@/components/ui/card";
 import EligibilityForm from "@/components/eligibility/EligibilityForm";
 import { useNavigate } from "react-router-dom";
+import { ArrowLeft } from "lucide-react";
 
 const EligibilityAssessment = () => {
   const [step, setStep] = useState(1);
@@ -20,10 +21,11 @@ const EligibilityAssessment = () => {
             onClick={() => navigate(-1)}
             className="mb-4"
           >
-            ← Back
+            <ArrowLeft className="mr-2 h-4 w-4" />
+            Back
           </Button>
           <Progress value={progress} className="w-full" />
-          <p className="text-sm text-muted">Step {step} of {totalSteps}</p>
+          <p className="text-sm text-muted-foreground">Step {step} of {totalSteps}</p>
         </div>
         
         <Card className="p-6">

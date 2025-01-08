@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
 import { useToast } from "@/components/ui/use-toast";
+import { useAuth } from "@/contexts/AuthContext";
 import PersonalInfo from "./steps/PersonalInfo";
 import Education from "./steps/Education";
 import Experience from "./steps/Experience";
@@ -50,6 +51,7 @@ const EligibilityForm = ({ currentStep, onNext, onPrevious }: EligibilityFormPro
   const [isSubmitting, setIsSubmitting] = useState(false);
   const form = useForm<EligibilityData>();
   const { toast } = useToast();
+  const { user } = useAuth();
 
   const renderStep = () => {
     switch (currentStep) {
@@ -78,12 +80,17 @@ const EligibilityForm = ({ currentStep, onNext, onPrevious }: EligibilityFormPro
     if (currentStep === 7) {
       setIsSubmitting(true);
       try {
+        if (!user) {
+          throw new Error("You must be logged in to submit an eligibility assessment");
+        }
+
         const { error } = await supabase
           .from('eligibility_verifications')
           .insert([
             {
               verification_data: data,
-              status: 'pending'
+              status: 'pending',
+              user_id: user.id
             }
           ]);
 

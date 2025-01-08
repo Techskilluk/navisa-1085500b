@@ -8,7 +8,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { User, Mail, Globe, MapPin } from "lucide-react";
 
 interface PersonalInfoProps {
   form: UseFormReturn<EligibilityData>;
@@ -19,7 +18,7 @@ const PersonalInfo = ({ form }: PersonalInfoProps) => {
     <div className="space-y-6">
       <div>
         <h2 className="text-2xl font-semibold mb-2">Personal Information</h2>
-        <p className="text-muted-foreground">Please provide your basic information to begin the assessment.</p>
+        <p className="text-muted">Please provide your basic information to begin the assessment.</p>
       </div>
 
       <FormField
@@ -29,10 +28,7 @@ const PersonalInfo = ({ form }: PersonalInfoProps) => {
           <FormItem>
             <FormLabel>Full Name</FormLabel>
             <FormControl>
-              <div className="relative">
-                <User className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                <Input className="pl-9" placeholder="Enter your full name" {...field} />
-              </div>
+              <Input placeholder="Enter your full name" {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -46,10 +42,7 @@ const PersonalInfo = ({ form }: PersonalInfoProps) => {
           <FormItem>
             <FormLabel>Email</FormLabel>
             <FormControl>
-              <div className="relative">
-                <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                <Input className="pl-9" type="email" placeholder="Enter your email" {...field} />
-              </div>
+              <Input type="email" placeholder="Enter your email" {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -63,10 +56,7 @@ const PersonalInfo = ({ form }: PersonalInfoProps) => {
           <FormItem>
             <FormLabel>Nationality</FormLabel>
             <FormControl>
-              <div className="relative">
-                <Globe className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                <Input className="pl-9" placeholder="Enter your nationality" {...field} />
-              </div>
+              <Input placeholder="Enter your nationality" {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -80,10 +70,7 @@ const PersonalInfo = ({ form }: PersonalInfoProps) => {
           <FormItem>
             <FormLabel>Current Location</FormLabel>
             <FormControl>
-              <div className="relative">
-                <MapPin className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                <Input className="pl-9" placeholder="Enter your current location" {...field} />
-              </div>
+              <Input placeholder="Enter your current location" {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>

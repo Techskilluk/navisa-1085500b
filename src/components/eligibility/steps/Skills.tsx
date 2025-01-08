@@ -1,5 +1,12 @@
 import { UseFormReturn } from "react-hook-form";
 import { EligibilityData } from "../EligibilityForm";
+import {
+  FormField,
+  FormItem,
+  FormLabel,
+  FormControl,
+  FormMessage,
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";

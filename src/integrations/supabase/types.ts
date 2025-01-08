@@ -9,33 +9,6 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      eligibility_verifications: {
-        Row: {
-          created_at: string
-          id: string
-          status: string
-          updated_at: string
-          user_id: string | null
-          verification_data: Json
-        }
-        Insert: {
-          created_at?: string
-          id?: string
-          status: string
-          updated_at?: string
-          user_id?: string | null
-          verification_data: Json
-        }
-        Update: {
-          created_at?: string
-          id?: string
-          status?: string
-          updated_at?: string
-          user_id?: string | null
-          verification_data?: Json
-        }
-        Relationships: []
-      }
       profiles: {
         Row: {
           avatar_url: string | null

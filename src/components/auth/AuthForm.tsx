@@ -8,6 +8,9 @@ interface AuthFormProps {
 }
 
 const AuthForm = ({ error }: AuthFormProps) => {
+  // Get the current URL's origin for redirect
+  const redirectTo = `${window.location.origin}/signin`;
+
   return (
     <div className="w-full lg:w-1/2 flex items-center justify-center p-8 bg-white">
       <div className="w-full max-w-md space-y-8">
@@ -28,7 +31,7 @@ const AuthForm = ({ error }: AuthFormProps) => {
           view="sign_in"
           showLinks={true}
           providers={[]}
-          redirectTo={window.location.origin}
+          redirectTo={redirectTo}
           appearance={{
             theme: ThemeSupa,
             variables: {

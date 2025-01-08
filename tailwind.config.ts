@@ -22,33 +22,36 @@ export default {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
-        background: "#172A3A", // Prussian Blue
-        foreground: "#FFFCF9", // Baby Powder
+        background: "#172A3A", // Dark Navy Blue
+        foreground: "#FFFFFF", // White
         primary: {
-          DEFAULT: "#122932", // Gunmetal
-          foreground: "#FFFCF9", // Baby Powder
+          DEFAULT: "#1F3541", // Darker Steel Blue
+          foreground: "#FFFFFF",
         },
         secondary: {
           DEFAULT: "#324A5F", // Steel Blue
-          foreground: "#FFFCF9", // Baby Powder
+          foreground: "#FFFFFF",
         },
         accent: {
-          DEFAULT: "#EF8354", // Coral
-          foreground: "#FFFCF9", // Baby Powder
+          DEFAULT: "#EF8354", // Coral Orange
+          foreground: "#FFFFFF",
         },
         muted: {
-          DEFAULT: "#4F5D75", // Payne's Gray
-          foreground: "#E2DCDE", // Platinum
+          DEFAULT: "#4F5D75", // Slate Blue
+          foreground: "#FFFFFF",
         },
         card: {
-          DEFAULT: "#004643", // Brunswick Green
-          foreground: "#FFFCF9", // Baby Powder
+          DEFAULT: "#004643", // Deep Teal
+          foreground: "#FFFFFF",
         },
-        // Additional custom colors
-        "dark-slate": "#26413C", // Dark Slate Green
-        "columbia-blue": "#D6EFFF", // Columbia Blue
-        wheat: "#FFE8C2", // Wheat
-        "sandy-brown": "#F0A868", // Sandy Brown
+        // Additional custom colors from the image
+        "navisa-dark": "#0D1B24", // Darkest Blue
+        "navisa-steel": "#324A5F", // Steel Blue
+        "navisa-slate": "#4F5D75", // Slate Blue
+        "navisa-teal": "#004643", // Deep Teal
+        "navisa-forest": "#26413C", // Forest Green
+        "navisa-coral": "#EF8354", // Coral Orange
+        "navisa-sky": "#D6EFFF", // Light Sky Blue
       },
       borderRadius: {
         lg: "var(--radius)",

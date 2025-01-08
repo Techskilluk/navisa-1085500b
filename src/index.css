@@ -26,3 +26,20 @@
 .hover-lift {
   @apply transition-transform duration-300 hover:-translate-y-1;
 }
+
+/* Auth UI Customization */
+.supabase-auth-ui_ui-container {
+  @apply w-full max-w-md mx-auto;
+}
+
+.supabase-auth-ui_ui-divider {
+  @apply my-6 border-t border-[#E5E5E5];
+}
+
+.supabase-auth-ui_ui-message {
+  @apply text-sm text-[#8E9196] my-2;
+}
+
+.supabase-auth-ui_ui-anchor {
+  @apply text-[#1EAEDB] hover:text-[#0FA0CE] transition-colors duration-200;
+}

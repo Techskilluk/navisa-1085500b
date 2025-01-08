@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Apple, Play } from "lucide-react";
+import { Mail, Phone, Globe } from "lucide-react";
 
 const Download = () => {
   return (
@@ -11,16 +11,20 @@ const Download = () => {
             Get Started Today
           </h2>
           <p className="text-xl text-white/60 max-w-2xl mx-auto">
-            Download our app and experience the future of banking. Available on iOS and Android.
+            Empower your global journey with Navisa.co. Let's begin.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button className="px-8 py-6 text-lg bg-white text-black hover:bg-white/90 flex items-center gap-2">
-              <Apple className="w-5 h-5" />
-              App Store
+              <Mail className="w-5 h-5" />
+              info@navisa.co
             </Button>
             <Button className="px-8 py-6 text-lg glass-effect hover:bg-white/10 flex items-center gap-2">
-              <Play className="w-5 h-5" />
-              Play Store
+              <Phone className="w-5 h-5" />
+              +1 (800) 123-4567
+            </Button>
+            <Button className="px-8 py-6 text-lg glass-effect hover:bg-white/10 flex items-center gap-2">
+              <Globe className="w-5 h-5" />
+              Visit Website
             </Button>
           </div>
         </div>

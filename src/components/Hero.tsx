@@ -10,10 +10,10 @@ const Hero = () => {
             Empowering Global Dreams
           </h1>
           <p className="text-lg text-white/80 max-w-xl">
-            Ready to relocate? We help you with every tool needed for a smooth visa application
+            At Navisa.co, we specialize in simplifying the complexities of international mobility. Whether you're a professional, employer, student, or consultant, our platform offers comprehensive support.
           </p>
           <Button className="px-8 py-6 text-lg bg-white text-black hover:bg-white/90 flex items-center gap-2">
-            Check your eligibility
+            Get Started Today
             <ArrowRight className="w-5 h-5" />
           </Button>
           <div className="grid grid-cols-3 gap-8 pt-8">

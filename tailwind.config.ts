@@ -41,8 +41,8 @@ export default {
           foreground: "#FAFAF8",
         },
         card: {
-          DEFAULT: "#FFFFFF",
-          foreground: "#141413",
+          DEFAULT: "#1A1B1E",  // Slightly lighter background for cards
+          foreground: "#FFFFFF",
         },
       },
       borderRadius: {

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
+import { useToast } from "@/components/ui/use-toast";
 import PersonalInfo from "./steps/PersonalInfo";
 import Education from "./steps/Education";
 import Experience from "./steps/Experience";
@@ -45,6 +46,7 @@ export type EligibilityData = {
 const EligibilityForm = ({ currentStep, onNext, onPrevious }: EligibilityFormProps) => {
   const [formData, setFormData] = useState<Partial<EligibilityData>>({});
   const form = useForm<EligibilityData>();
+  const { toast } = useToast();
 
   const renderStep = () => {
     switch (currentStep) {
@@ -67,10 +69,23 @@ const EligibilityForm = ({ currentStep, onNext, onPrevious }: EligibilityFormPro
     }
   };
 
-  const handleSubmit = (data: EligibilityData) => {
+  const handleSubmit = async (data: EligibilityData) => {
     setFormData(prev => ({ ...prev, ...data }));
-    onNext();
+    
+    if (currentStep === totalSteps) {
+      // Final submission
+      console.log("Final form data:", formData);
+      toast({
+        title: "Assessment Submitted",
+        description: "We'll analyze your eligibility and get back to you soon.",
+      });
+      // Here you would typically send the data to your backend
+    } else {
+      onNext();
+    }
   };
+
+  const totalSteps = 7;
 
   return (
     <Form {...form}>
@@ -84,7 +99,7 @@ const EligibilityForm = ({ currentStep, onNext, onPrevious }: EligibilityFormPro
             </Button>
           )}
           <Button type="submit" className="ml-auto">
-            {currentStep === 7 ? "Submit" : "Next"}
+            {currentStep === totalSteps ? "Submit" : "Next"}
           </Button>
         </div>
       </form>

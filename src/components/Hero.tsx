@@ -13,7 +13,7 @@ const Hero = () => {
             At Navisa.co, we specialize in simplifying the complexities of international mobility. Whether you're a professional, employer, student, or consultant, our platform offers comprehensive support.
           </p>
           <Button className="px-8 py-6 text-lg bg-white text-black hover:bg-white/90 flex items-center gap-2">
-            Get Started Today
+            Check Your Eligibility To Get Started
             <ArrowRight className="w-5 h-5" />
           </Button>
           <div className="grid grid-cols-3 gap-8 pt-8">

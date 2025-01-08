@@ -8,7 +8,7 @@ import { ArrowLeft } from "lucide-react";
 
 const EligibilityAssessment = () => {
   const [step, setStep] = useState(1);
-  const totalSteps = 7;
+  const totalSteps = 8;
   const navigate = useNavigate();
 
   const handleNext = () => {

@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
 import Index from "./pages/Index";
 import SignIn from "./pages/SignIn";
+import EligibilityAssessment from "./pages/EligibilityAssessment";
 
 const queryClient = new QueryClient();
 
@@ -18,6 +19,7 @@ const App = () => (
           <Sonner />
           <Routes>
             <Route path="/signin" element={<SignIn />} />
+            <Route path="/eligibility" element={<EligibilityAssessment />} />
             <Route path="/" element={<Index />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>

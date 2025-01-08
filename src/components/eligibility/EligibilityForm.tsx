@@ -99,15 +99,24 @@ const EligibilityForm = ({ currentStep, onNext, onPrevious }: EligibilityFormPro
           throw new Error("You must be logged in to submit an eligibility assessment");
         }
 
+        // Convert Date objects to ISO strings for Supabase
+        const processedData = {
+          ...data,
+          immigrationInfo: {
+            ...data.immigrationInfo,
+            issueDate: data.immigrationInfo.issueDate?.toISOString(),
+            expirationDate: data.immigrationInfo.expirationDate?.toISOString(),
+            proposedEntryDate: data.immigrationInfo.proposedEntryDate?.toISOString(),
+          }
+        };
+
         const { error } = await supabase
           .from('eligibility_verifications')
-          .insert([
-            {
-              verification_data: data,
-              status: 'pending',
-              user_id: user.id
-            }
-          ]);
+          .insert({
+            verification_data: processedData,
+            status: 'pending',
+            user_id: user.id
+          });
 
         if (error) throw error;
 

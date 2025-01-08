@@ -147,8 +147,6 @@ const EligibilityForm = ({ currentStep, onNext, onPrevious }: EligibilityFormPro
     }
   };
 
-  const totalSteps = 8;
-
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
@@ -156,7 +154,7 @@ const EligibilityForm = ({ currentStep, onNext, onPrevious }: EligibilityFormPro
         {!isSubmitted && (
           <FormNavigation 
             currentStep={currentStep}
-            totalSteps={totalSteps}
+            totalSteps={8}
             onNext={onNext}
             onPrevious={onPrevious}
             isSubmitting={isSubmitting}

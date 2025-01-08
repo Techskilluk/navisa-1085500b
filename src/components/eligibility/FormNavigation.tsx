@@ -27,7 +27,11 @@ const FormNavigation = ({
         className="ml-auto"
         disabled={isSubmitting}
       >
-        {currentStep === totalSteps ? "Submit" : "Next"}
+        {currentStep === totalSteps ? (
+          isSubmitting ? "Submitting..." : "Submit Assessment"
+        ) : (
+          "Next"
+        )}
       </Button>
     </div>
   );

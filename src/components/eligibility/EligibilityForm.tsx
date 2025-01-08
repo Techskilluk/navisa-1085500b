@@ -13,6 +13,7 @@ import PreferredCountries from "./steps/PreferredCountries";
 import ImmigrationInfo from "./steps/ImmigrationInfo";
 import Summary from "./steps/Summary";
 import FormNavigation from "./FormNavigation";
+import AssessmentResult from "./AssessmentResult";
 import { supabase } from "@/integrations/supabase/client";
 
 interface EligibilityFormProps {
@@ -62,11 +63,16 @@ export type EligibilityData = {
 const EligibilityForm = ({ currentStep, onNext, onPrevious }: EligibilityFormProps) => {
   const [formData, setFormData] = useState<Partial<EligibilityData>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
   const form = useForm<EligibilityData>();
   const { toast } = useToast();
   const { user } = useAuth();
 
   const renderStep = () => {
+    if (isSubmitted) {
+      return <AssessmentResult data={formData as EligibilityData} />;
+    }
+
     switch (currentStep) {
       case 1:
         return <PersonalInfo form={form} />;
@@ -124,6 +130,8 @@ const EligibilityForm = ({ currentStep, onNext, onPrevious }: EligibilityFormPro
           title: "Assessment Submitted",
           description: "We'll analyze your eligibility and get back to you soon.",
         });
+
+        setIsSubmitted(true);
       } catch (error) {
         console.error('Error submitting eligibility assessment:', error);
         toast({
@@ -145,13 +153,15 @@ const EligibilityForm = ({ currentStep, onNext, onPrevious }: EligibilityFormPro
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
         {renderStep()}
-        <FormNavigation 
-          currentStep={currentStep}
-          totalSteps={totalSteps}
-          onNext={onNext}
-          onPrevious={onPrevious}
-          isSubmitting={isSubmitting}
-        />
+        {!isSubmitted && (
+          <FormNavigation 
+            currentStep={currentStep}
+            totalSteps={totalSteps}
+            onNext={onNext}
+            onPrevious={onPrevious}
+            isSubmitting={isSubmitting}
+          />
+        )}
       </form>
     </Form>
   );

@@ -1,6 +1,6 @@
 import PageHeader from "@/components/PageHeader";
 import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Globe, Flag, Passport } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const Pathways = () => {
@@ -15,62 +15,67 @@ const Pathways = () => {
       
       <section className="py-20 px-4">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {/* Skilled Worker Visa */}
-          <div className="bg-accent/5 rounded-xl p-8 space-y-4">
-            <h3 className="text-2xl font-bold text-white">Skilled Worker Visa</h3>
-            <p className="text-white/60">For professionals with job offers from UK employers. Work and live in the UK with a pathway to settlement.</p>
-            <Button variant="outline" className="w-full" onClick={() => navigate("/eligibility")}>
-              Check Eligibility
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </Button>
-          </div>
-
           {/* Global Talent Visa */}
-          <div className="bg-accent/5 rounded-xl p-8 space-y-4">
-            <h3 className="text-2xl font-bold text-white">Global Talent Visa</h3>
-            <p className="text-white/60">For leaders or promising talents in academia, research, digital technology, or arts and culture.</p>
+          <div className="bg-accent/5 rounded-xl p-8 space-y-4 hover:bg-accent/10 transition-colors">
+            <div className="flex items-center gap-3 mb-2">
+              <Globe className="h-6 w-6 text-primary" />
+              <h3 className="text-2xl font-bold text-white">Global Talent Visa (UK)</h3>
+            </div>
+            <p className="text-white/60">For highly skilled individuals in science, digital technology, engineering, arts, and humanities who want to live and work in the UK.</p>
             <Button variant="outline" className="w-full" onClick={() => navigate("/eligibility")}>
-              Check Eligibility
+              Find out how to apply
               <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
           </div>
 
-          {/* Start-up Visa */}
-          <div className="bg-accent/5 rounded-xl p-8 space-y-4">
-            <h3 className="text-2xl font-bold text-white">Start-up Visa</h3>
-            <p className="text-white/60">For entrepreneurs looking to establish an innovative business in the UK for the first time.</p>
+          {/* Express Entry */}
+          <div className="bg-accent/5 rounded-xl p-8 space-y-4 hover:bg-accent/10 transition-colors">
+            <div className="flex items-center gap-3 mb-2">
+              <Flag className="h-6 w-6 text-primary" />
+              <h3 className="text-2xl font-bold text-white">Express Entry (Canada)</h3>
+            </div>
+            <p className="text-white/60">The fastest pathway to Canadian permanent residency for skilled workers who want to immigrate to Canada.</p>
             <Button variant="outline" className="w-full" onClick={() => navigate("/eligibility")}>
-              Check Eligibility
+              Find out how to apply
               <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
           </div>
 
-          {/* Innovator Visa */}
-          <div className="bg-accent/5 rounded-xl p-8 space-y-4">
-            <h3 className="text-2xl font-bold text-white">Innovator Visa</h3>
-            <p className="text-white/60">For experienced business people seeking to establish a innovative business in the UK.</p>
+          {/* EB-1/EB-2 */}
+          <div className="bg-accent/5 rounded-xl p-8 space-y-4 hover:bg-accent/10 transition-colors">
+            <div className="flex items-center gap-3 mb-2">
+              <Passport className="h-6 w-6 text-primary" />
+              <h3 className="text-2xl font-bold text-white">EB-1/EB-2 (USA)</h3>
+            </div>
+            <p className="text-white/60">For professionals with extraordinary abilities or exceptional achievements in fields like science, business, or arts who want to stay in the U.S.</p>
             <Button variant="outline" className="w-full" onClick={() => navigate("/eligibility")}>
-              Check Eligibility
+              Find out how to apply
               <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
           </div>
 
-          {/* High Potential Individual */}
-          <div className="bg-accent/5 rounded-xl p-8 space-y-4">
-            <h3 className="text-2xl font-bold text-white">High Potential Individual</h3>
-            <p className="text-white/60">For graduates from top global universities looking to work or find work in the UK.</p>
+          {/* EU Blue Card */}
+          <div className="bg-accent/5 rounded-xl p-8 space-y-4 hover:bg-accent/10 transition-colors">
+            <div className="flex items-center gap-3 mb-2">
+              <Flag className="h-6 w-6 text-primary" />
+              <h3 className="text-2xl font-bold text-white">EU Blue Card</h3>
+            </div>
+            <p className="text-white/60">A work permit for highly qualified non-EU citizens, offering a path to permanent residency in participating EU countries.</p>
             <Button variant="outline" className="w-full" onClick={() => navigate("/eligibility")}>
-              Check Eligibility
+              Find out how to apply
               <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
           </div>
 
-          {/* Scale-up Visa */}
-          <div className="bg-accent/5 rounded-xl p-8 space-y-4">
-            <h3 className="text-2xl font-bold text-white">Scale-up Visa</h3>
-            <p className="text-white/60">For talented individuals with a job offer from an approved scale-up company.</p>
+          {/* Golden Visa */}
+          <div className="bg-accent/5 rounded-xl p-8 space-y-4 hover:bg-accent/10 transition-colors">
+            <div className="flex items-center gap-3 mb-2">
+              <Globe className="h-6 w-6 text-primary" />
+              <h3 className="text-2xl font-bold text-white">Golden Visa (UAE)</h3>
+            </div>
+            <p className="text-white/60">A long-term residency program designed to attract investors, entrepreneurs, skilled professionals, and exceptional talents to the UAE.</p>
             <Button variant="outline" className="w-full" onClick={() => navigate("/eligibility")}>
-              Check Eligibility
+              Find out how to apply
               <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
           </div>

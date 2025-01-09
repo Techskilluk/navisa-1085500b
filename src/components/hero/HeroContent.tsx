@@ -10,12 +10,12 @@ const HeroContent = () => {
   };
 
   return (
-    <div className="space-y-8 max-w-xl">
+    <div className="space-y-8 w-full">
       <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-white leading-[1.1] tracking-tight animate-fade-in">
         Transform Your Career Across Borders
       </h1>
       
-      <p className="text-xl text-white/80 leading-relaxed animate-fade-in delay-100">
+      <p className="text-xl text-white/80 leading-relaxed max-w-2xl animate-fade-in delay-100">
         Navigate global opportunities with confidence. NAVISA connects ambitious professionals with international employers, simplifies migration pathways, and turns your dream of a global career into reality.
       </p>
 

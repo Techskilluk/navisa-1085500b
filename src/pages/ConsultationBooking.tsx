@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { CalendarDays, Check, Clock, Globe } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Cal } from "@calcom/embed-react";
+import Cal from "@calcom/embed-react";
 import { useToast } from "@/hooks/use-toast";
 
 const ConsultationBooking = () => {

@@ -1,4 +1,4 @@
-import { UserPlus, ListChecks, FolderOpen, UserRound } from "lucide-react";
+import { UserPlus, ListChecks, FolderOpen, UserRound, Sparkles } from "lucide-react";
 import FeatureCard from "./FeatureCard";
 
 const features = [
@@ -44,6 +44,17 @@ const features = [
       "Secure collaboration tools",
       "Revenue sharing platform",
       "Quality rating system"
+    ]
+  },
+  {
+    icon: <Sparkles className="w-12 h-12 text-white/80" />,
+    title: "AI Tools for Documentation",
+    shortDesc: "Leverage AI to streamline document generation and evidence management",
+    benefits: [
+      "AI-powered document templates",
+      "Automated evidence validation",
+      "Smart research assistance",
+      "Regulatory compliance checks"
     ]
   }
 ];

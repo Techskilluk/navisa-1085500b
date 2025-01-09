@@ -36,9 +36,9 @@ const HeroVideo = () => {
             <source src={video} type="video/mp4" />
             Your browser does not support the video tag.
           </video>
+          <div className="absolute inset-0 bg-gradient-to-t from-background/20 to-transparent"></div>
         </div>
       ))}
-      <div className="absolute inset-0 bg-gradient-to-t from-background/20 to-transparent"></div>
     </div>
   );
 };

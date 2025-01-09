@@ -5,26 +5,8 @@ import { Button } from "@/components/ui/button";
 import DocumentChecklistPanel from "./DocumentChecklistPanel";
 import DocumentUploadForm from "./DocumentUploadForm";
 import DocumentResources from "./DocumentResources";
-
-interface DocumentRequirement {
-  type: string;
-  label: string;
-  required: boolean;
-  maxSize: number;
-  formats: string[];
-}
-
-const VISA_DOCUMENTS: Record<string, DocumentRequirement[]> = {
-  "express-entry": [
-    { type: "resume", label: "Resume", required: true, maxSize: 5, formats: [".pdf", ".doc", ".docx"] },
-    { type: "personal-statement", label: "Personal Statement", required: true, maxSize: 5, formats: [".pdf", ".doc", ".docx"] },
-    { type: "recommendation", label: "Letter of Recommendation", required: true, maxSize: 5, formats: [".pdf"] },
-    { type: "degree", label: "Degree Certificate", required: true, maxSize: 5, formats: [".pdf", ".jpg", ".png"] },
-    { type: "language", label: "Language Proficiency Result", required: true, maxSize: 5, formats: [".pdf"] },
-    { type: "funds", label: "Proof of Funds", required: true, maxSize: 5, formats: [".pdf"] },
-  ],
-  // Add more visa types here
-};
+import { VISA_DOCUMENTS } from "@/types/documents";
+import type { DocumentRequirement } from "@/types/documents";
 
 interface DocumentUploadProps {
   visaType: string;
@@ -34,20 +16,14 @@ const DocumentUpload = ({ visaType }: DocumentUploadProps) => {
   const [uploadedFiles, setUploadedFiles] = useState<Record<string, File>>({});
   const navigate = useNavigate();
 
-  const documents = VISA_DOCUMENTS[visaType] || [];
+  const visaDocuments = VISA_DOCUMENTS[visaType];
+  
+  if (!visaDocuments) {
+    console.error(`No document requirements found for visa type: ${visaType}`);
+    return null;
+  }
 
-  const resources = [
-    {
-      title: "Resume Template",
-      description: "A professional template tailored for your visa application",
-      url: "/templates/resume.pdf"
-    },
-    {
-      title: "Personal Statement Guide",
-      description: "Guidelines and examples for writing your personal statement",
-      url: "/templates/personal-statement.pdf"
-    }
-  ];
+  const { requirements, resources } = visaDocuments;
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
@@ -61,28 +37,30 @@ const DocumentUpload = ({ visaType }: DocumentUploadProps) => {
           Back to dashboard
         </Button>
         
-        <h1 className="text-2xl font-bold mb-2">Required documents</h1>
+        <h1 className="text-2xl font-bold mb-2">Required Documents</h1>
         <p className="text-muted-foreground">
           Based on your selected visa pathway ({visaType}), we've generated a personalized list of required documents and resources to guide you
         </p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <DocumentChecklistPanel 
-          documents={documents}
-          uploadedFiles={uploadedFiles}
-        />
+        <div className="space-y-8">
+          <DocumentChecklistPanel 
+            documents={requirements}
+            uploadedFiles={uploadedFiles}
+          />
+          <DocumentResources resources={resources} />
+        </div>
 
         <div className="md:col-span-2">
           <DocumentUploadForm 
             visaType={visaType}
-            documents={documents}
+            documents={requirements}
+            onFileUpload={(type: string, file: File) => {
+              setUploadedFiles(prev => ({ ...prev, [type]: file }));
+            }}
           />
         </div>
-      </div>
-
-      <div className="mt-8">
-        <DocumentResources resources={resources} />
       </div>
     </div>
   );

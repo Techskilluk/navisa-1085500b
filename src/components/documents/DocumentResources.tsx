@@ -25,7 +25,12 @@ const DocumentResources = ({ resources }: DocumentResourcesProps) => {
             <div className="flex-1 min-w-0">
               <h4 className="font-medium mb-1">{resource.title}</h4>
               <p className="text-sm text-muted-foreground mb-3">{resource.description}</p>
-              <Button variant="outline" size="sm" className="w-full sm:w-auto">
+              <Button 
+                variant="outline" 
+                size="sm" 
+                className="w-full sm:w-auto"
+                onClick={() => window.open(resource.url, '_blank')}
+              >
                 <Download className="w-4 h-4 mr-2" />
                 Download Template
               </Button>

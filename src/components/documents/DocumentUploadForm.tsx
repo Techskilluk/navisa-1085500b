@@ -5,23 +5,16 @@ import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
-import DocumentChecklistItem from "./DocumentChecklistItem";
 import DocumentUploadZone from "./DocumentUploadZone";
-
-interface DocumentRequirement {
-  type: string;
-  label: string;
-  required: boolean;
-  maxSize: number;
-  formats: string[];
-}
+import type { DocumentRequirement } from "@/types/documents";
 
 interface DocumentUploadFormProps {
   visaType: string;
   documents: DocumentRequirement[];
+  onFileUpload: (type: string, file: File) => void;
 }
 
-const DocumentUploadForm = ({ visaType, documents }: DocumentUploadFormProps) => {
+const DocumentUploadForm = ({ visaType, documents, onFileUpload }: DocumentUploadFormProps) => {
   const [uploadedFiles, setUploadedFiles] = useState<Record<string, File>>({});
   const [uploading, setUploading] = useState(false);
   const { toast } = useToast();
@@ -30,7 +23,12 @@ const DocumentUploadForm = ({ visaType, documents }: DocumentUploadFormProps) =>
 
   const handleFileUpload = async (type: string, file: File) => {
     setUploadedFiles(prev => ({ ...prev, [type]: file }));
+    onFileUpload(type, file);
   };
+
+  const isComplete = documents.every(doc => 
+    !doc.required || uploadedFiles[doc.type]
+  );
 
   const handleSubmit = async () => {
     if (!user) {
@@ -80,16 +78,15 @@ const DocumentUploadForm = ({ visaType, documents }: DocumentUploadFormProps) =>
     }
   };
 
-  const isComplete = documents.every(doc => 
-    !doc.required || uploadedFiles[doc.type]
-  );
-
   return (
     <div className="space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {documents.map((doc) => (
           <div key={doc.type} className="space-y-2">
-            <label className="text-sm font-medium">{doc.label}</label>
+            <label className="text-sm font-medium">
+              {doc.label}
+              {doc.required && <span className="text-destructive ml-1">*</span>}
+            </label>
             <DocumentUploadZone
               onFileSelect={(file) => handleFileUpload(doc.type, file)}
               file={uploadedFiles[doc.type]}
@@ -106,7 +103,7 @@ const DocumentUploadForm = ({ visaType, documents }: DocumentUploadFormProps) =>
           disabled={!isComplete || uploading}
           className="w-full md:w-auto"
         >
-          {uploading ? "Uploading..." : "Submit"}
+          {uploading ? "Uploading..." : "Submit Documents"}
           {!uploading && <Upload className="w-4 h-4 ml-2" />}
         </Button>
       </div>

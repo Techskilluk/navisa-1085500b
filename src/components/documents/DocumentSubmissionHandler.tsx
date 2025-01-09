@@ -36,16 +36,19 @@ const DocumentSubmissionHandler = ({
     let successCount = 0;
 
     try {
-      const timestamp = new Date().toLocaleString();
       const { data: { user } } = await supabase.auth.getUser();
 
       if (!user) {
         throw new Error("User not authenticated");
       }
 
+      console.log("Starting document upload process...");
+
       for (const [docType, file] of Object.entries(uploadedFiles)) {
         const filePath = `${user.id}/${visaType}/${docType}-${Date.now()}`;
         
+        console.log(`Uploading ${docType} to ${filePath}`);
+
         const { error: uploadError } = await supabase.storage
           .from("documents")
           .upload(filePath, file);
@@ -69,28 +72,34 @@ const DocumentSubmissionHandler = ({
         }
 
         successCount++;
+        console.log(`Successfully uploaded ${docType}`);
       }
 
       setSuccessCount(successCount);
 
       if (successCount > 0) {
+        console.log("Documents uploaded successfully, preparing to navigate...");
+        
         toast({
           title: "Documents Submitted Successfully",
           description: `${successCount} documents have been uploaded and are pending review.`,
           duration: 5000,
         });
 
-        // Immediate navigation after successful submission
-        navigate('/dashboard', { 
-          replace: true,
-          state: { 
-            documentSubmission: {
-              timestamp: new Date().toLocaleString(),
-              visaType,
-              documentCount: successCount
+        // Force a small delay to ensure toast is shown before navigation
+        setTimeout(() => {
+          console.log("Navigating to dashboard...");
+          navigate("/dashboard", {
+            replace: true,
+            state: {
+              documentSubmission: {
+                timestamp: new Date().toLocaleString(),
+                visaType,
+                documentCount: successCount
+              }
             }
-          }
-        });
+          });
+        }, 100);
       } else {
         toast({
           title: "Submission Failed",

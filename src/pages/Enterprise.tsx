@@ -1,176 +1,137 @@
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ArrowRight, Clock, LineChart, Users, Briefcase, Globe } from "lucide-react";
+import { ArrowRight, Building, Globe, Users, LineChart, Briefcase } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import PageHeader from "@/components/PageHeader";
 
 const Enterprise = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="min-h-screen bg-background">
-      {/* Hero Section */}
-      <section className="relative py-20 px-4 bg-[#002B5C]">
-        <div className="absolute inset-0 bg-gradient-to-b from-black/50 to-black/20"></div>
-        <div className="max-w-7xl mx-auto relative z-10 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
-            Empowering Immigration Consultants and Businesses to Serve Clients Seamlessly
-          </h1>
-          <p className="text-xl text-white/80 mb-8 max-w-3xl mx-auto">
-            Streamline client management, track applications, and grow your business with NAVISA's all-in-one platform
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button className="bg-[#00A9A5] hover:bg-[#00A9A5]/90 text-white">
-              Get Started Today
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </Button>
-            <Button variant="outline" className="text-white border-white hover:bg-white/10">
-              Learn More
-            </Button>
+      <PageHeader 
+        title="Transform Your Immigration Practice"
+        subtitle="Streamline operations, enhance client experience, and scale your business with NAVISA's enterprise solutions"
+        ctaText="Start Free Trial"
+        ctaLink="/enterprise/signup"
+      />
+
+      {/* Features Grid */}
+      <section className="py-24 px-4">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="glass-effect p-8 rounded-xl hover-lift">
+              <Building className="w-10 h-10 text-white/80 mb-6" />
+              <h3 className="text-xl font-semibold mb-3 text-white">Streamlined Operations</h3>
+              <p className="text-white/70">
+                Automate client onboarding, document collection, and case management
+              </p>
+            </div>
+            <div className="glass-effect p-8 rounded-xl hover-lift">
+              <Globe className="w-10 h-10 text-white/80 mb-6" />
+              <h3 className="text-xl font-semibold mb-3 text-white">Global Reach</h3>
+              <p className="text-white/70">
+                Connect with clients worldwide through our secure platform
+              </p>
+            </div>
+            <div className="glass-effect p-8 rounded-xl hover-lift">
+              <Users className="w-10 h-10 text-white/80 mb-6" />
+              <h3 className="text-xl font-semibold mb-3 text-white">Team Collaboration</h3>
+              <p className="text-white/70">
+                Enable seamless communication between team members and clients
+              </p>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Why NAVISA Section */}
-      <section className="py-20 px-4">
-        <div className="max-w-7xl mx-auto">
+      {/* Process Section */}
+      <section className="py-24 px-4 relative">
+        <div className="absolute inset-0 bg-gradient-to-b from-accent/5 to-background/95"></div>
+        <div className="max-w-7xl mx-auto relative">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-4">Why NAVISA?</h2>
-            <p className="text-xl text-muted">Streamline Your Operations, Elevate Your Service</p>
+            <h2 className="text-3xl font-bold mb-4 text-white">How It Works</h2>
+            <p className="text-lg text-white/70 max-w-2xl mx-auto">
+              Get started with NAVISA Enterprise in three simple steps
+            </p>
           </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <Card className="bg-card hover:bg-card/90 transition-colors">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Clock className="h-6 w-6" />
-                  Automated Onboarding
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted">Save time with automated onboarding and document management</p>
-              </CardContent>
-            </Card>
-            <Card className="bg-card hover:bg-card/90 transition-colors">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <LineChart className="h-6 w-6" />
-                  Real-time Tracking
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted">Track client applications with real-time updates</p>
-              </CardContent>
-            </Card>
-            <Card className="bg-card hover:bg-card/90 transition-colors">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Briefcase className="h-6 w-6" />
-                  Resource Hub
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted">Access a comprehensive resource hub for evidence and templates</p>
-              </CardContent>
-            </Card>
-            <Card className="bg-card hover:bg-card/90 transition-colors">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Globe className="h-6 w-6" />
-                  Marketplace
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted">Expand your reach through the consultant marketplace</p>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </section>
-
-      {/* Features Section */}
-      <section className="py-20 px-4 bg-card">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-4">What NAVISA Offers</h2>
-            <p className="text-xl text-muted">Everything you need to manage your clients' global migration journeys in one place</p>
-          </div>
-          <div className="grid md:grid-cols-2 gap-8">
-            <div className="space-y-4">
-              <h3 className="text-2xl font-semibold">Customer Onboarding Made Easy</h3>
-              <p className="text-muted">Streamline your client onboarding process with our intuitive interface</p>
+          <div className="grid md:grid-cols-3 gap-8">
+            <div className="glass-effect p-8 rounded-xl text-center hover-lift">
+              <div className="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                <span className="text-2xl font-bold text-white">1</span>
+              </div>
+              <h3 className="text-xl font-semibold mb-3 text-white">Setup Your Account</h3>
+              <p className="text-white/70">Create your enterprise profile and customize settings</p>
             </div>
-            <div className="space-y-4">
-              <h3 className="text-2xl font-semibold">Application Tracking</h3>
-              <p className="text-muted">Monitor application progress and keep clients informed at every step</p>
+            <div className="glass-effect p-8 rounded-xl text-center hover-lift">
+              <div className="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                <span className="text-2xl font-bold text-white">2</span>
+              </div>
+              <h3 className="text-xl font-semibold mb-3 text-white">Invite Your Team</h3>
+              <p className="text-white/70">Add team members and assign roles</p>
             </div>
-            <div className="space-y-4">
-              <h3 className="text-2xl font-semibold">Resource Hub</h3>
-              <p className="text-muted">Access comprehensive documentation and templates</p>
+            <div className="glass-effect p-8 rounded-xl text-center hover-lift">
+              <div className="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                <span className="text-2xl font-bold text-white">3</span>
+              </div>
+              <h3 className="text-xl font-semibold mb-3 text-white">Start Managing Cases</h3>
+              <p className="text-white/70">Begin onboarding clients and managing cases</p>
             </div>
-            <div className="space-y-4">
-              <h3 className="text-2xl font-semibold">Consultant Marketplace</h3>
-              <p className="text-muted">Connect with clients and grow your business</p>
-            </div>
-          </div>
-          <div className="text-center mt-12">
-            <Button className="bg-[#00A9A5] hover:bg-[#00A9A5]/90">
-              Explore the Platform
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </Button>
           </div>
         </div>
       </section>
 
       {/* Benefits Section */}
-      <section className="py-20 px-4">
+      <section className="py-24 px-4">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-4">Benefits for Your Business</h2>
+            <h2 className="text-3xl font-bold mb-4 text-white">Why Choose NAVISA Enterprise</h2>
+            <p className="text-lg text-white/70 max-w-2xl mx-auto">
+              Designed specifically for immigration consultants and law firms
+            </p>
           </div>
-          <div className="grid md:grid-cols-3 gap-8">
-            <Card className="bg-card hover:bg-card/90 transition-colors">
-              <CardHeader>
-                <CardTitle>Efficiency</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted">Automate onboarding and document management to save time</p>
-              </CardContent>
-            </Card>
-            <Card className="bg-card hover:bg-card/90 transition-colors">
-              <CardHeader>
-                <CardTitle>Transparency</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted">Keep clients informed with real-time updates and clear timelines</p>
-              </CardContent>
-            </Card>
-            <Card className="bg-card hover:bg-card/90 transition-colors">
-              <CardHeader>
-                <CardTitle>Scalability</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted">Effortlessly manage multiple clients and grow your business</p>
-              </CardContent>
-            </Card>
-          </div>
-          <div className="text-center mt-12">
-            <p className="text-xl text-muted mb-6">Join hundreds of consultants already thriving with NAVISA</p>
-            <Button className="bg-[#00A9A5] hover:bg-[#00A9A5]/90">
-              Get Started Now
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </Button>
+          <div className="grid md:grid-cols-2 gap-8">
+            <div className="glass-effect p-8 rounded-xl hover-lift">
+              <LineChart className="w-10 h-10 text-white/80 mb-6" />
+              <h3 className="text-xl font-semibold mb-3 text-white">Data-Driven Insights</h3>
+              <p className="text-white/70">
+                Access detailed analytics and reports to optimize your operations
+              </p>
+            </div>
+            <div className="glass-effect p-8 rounded-xl hover-lift">
+              <Briefcase className="w-10 h-10 text-white/80 mb-6" />
+              <h3 className="text-xl font-semibold mb-3 text-white">Resource Library</h3>
+              <p className="text-white/70">
+                Access templates, guides, and best practices
+              </p>
+            </div>
           </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 px-4 bg-card">
-        <div className="max-w-7xl mx-auto text-center">
-          <h2 className="text-4xl font-bold mb-4">Join the NAVISA Network Today</h2>
-          <p className="text-xl text-muted mb-8">Grow your business, enhance your client relationships, and simplify your workflow</p>
+      <section className="py-24 px-4 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-accent/5 to-background/95"></div>
+        <div className="max-w-3xl mx-auto text-center relative">
+          <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white">
+            Ready to Transform Your Practice?
+          </h2>
+          <p className="text-lg text-white/70 mb-8">
+            Join leading immigration consultants and law firms already using NAVISA Enterprise
+          </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button className="bg-[#00A9A5] hover:bg-[#00A9A5]/90">
-              Sign Up for NAVISA Enterprise
+            <Button 
+              onClick={() => navigate('/enterprise/signup')}
+              className="bg-white hover:bg-white/90 text-black px-8 py-6 text-lg"
+            >
+              Start Free Trial
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
-            <Button variant="outline">
-              Request a Demo
+            <Button 
+              variant="outline"
+              onClick={() => navigate('/enterprise/demo')}
+              className="border-white text-white hover:bg-white/10 px-8 py-6 text-lg"
+            >
+              Request Demo
             </Button>
           </div>
         </div>

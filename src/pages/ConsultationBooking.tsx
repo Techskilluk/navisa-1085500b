@@ -38,8 +38,8 @@ const ConsultationBooking = () => {
                     style={{height: "100%", width: "100%", overflow: "hidden"}}
                     config={{
                       layout: 'month_view',
-                      hideEventTypeDetails: false,
-                      hideLandingPageDetails: false
+                      hideEventTypeDetails: "false",
+                      hideLandingPageDetails: "false"
                     }}
                   />
                 </div>

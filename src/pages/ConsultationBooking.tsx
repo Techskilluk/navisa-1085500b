@@ -2,20 +2,26 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 import BookingCalendar from "@/components/consultation/BookingCalendar";
-import ConsultationDetails from "@/components/consultation/ConsultationDetails";
+import TimeZoneSelector from "@/components/consultation/TimeZoneSelector";
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const ConsultationBooking = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
-  const [isLoading, setIsLoading] = useState(false);
+  const [selectedTimeZone, setSelectedTimeZone] = useState("");
+
+  const handleBookingConfirmed = () => {
+    toast({
+      title: "Consultation Booked!",
+      description: "You will receive a confirmation email shortly.",
+    });
+  };
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Header */}
+    <div className="min-h-screen bg-background pt-16">
       <div className="w-full bg-card/50 backdrop-blur-sm border-b border-border/10 p-6">
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-3xl mx-auto">
           <Button
             variant="ghost"
             className="mb-4"
@@ -33,18 +39,16 @@ const ConsultationBooking = () => {
         </div>
       </div>
 
-      {/* Main Content */}
-      <div className="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {/* Left Column - Calendar */}
-          <div className="order-2 lg:order-1">
-            <BookingCalendar />
-          </div>
-
-          {/* Right Column - Details */}
-          <div className="order-1 lg:order-2">
-            <ConsultationDetails />
-          </div>
+      <div className="max-w-3xl mx-auto py-8 px-4">
+        <div className="space-y-6">
+          <TimeZoneSelector 
+            selectedTimeZone={selectedTimeZone}
+            onTimeZoneChange={setSelectedTimeZone}
+          />
+          <BookingCalendar 
+            timeZone={selectedTimeZone}
+            onBookingConfirmed={handleBookingConfirmed}
+          />
         </div>
       </div>
     </div>

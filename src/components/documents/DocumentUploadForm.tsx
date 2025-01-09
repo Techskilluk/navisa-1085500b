@@ -52,15 +52,31 @@ const DocumentUploadForm = ({ visaType, documents, onFileUpload }: DocumentUploa
         })
       );
 
+      const timestamp = new Date().toLocaleString('en-US', {
+        month: 'short',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: '2-digit',
+        hour12: true
+      });
+
       toast({
         title: "Documents uploaded successfully",
-        description: `${successCount} documents have been uploaded and will be reviewed soon.`,
+        description: `Your documents were submitted on ${timestamp}. Our team will review them shortly.`,
         duration: 5000,
       });
 
       // Short delay before navigation to ensure toast is visible
       setTimeout(() => {
-        navigate('/dashboard');
+        navigate('/dashboard', { 
+          state: { 
+            documentSubmission: {
+              timestamp,
+              visaType,
+              documentCount: successCount
+            }
+          }
+        });
       }, 2000);
 
     } catch (error) {

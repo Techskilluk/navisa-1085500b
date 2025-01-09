@@ -20,7 +20,7 @@ const Hero = () => {
             At Navisa.co, we specialize in simplifying the complexities of international mobility. Whether you're a professional, employer, student, or consultant, our platform offers comprehensive support.
           </p>
           <Button 
-            className="px-8 py-6 text-lg bg-white text-black hover:bg-white/90 flex items-center gap-2"
+            className="px-8 py-6 text-lg bg-[#F2FF44] text-black hover:bg-[#F2FF44]/90 flex items-center gap-2"
             onClick={handleEligibilityCheck}
           >
             Check Your Eligibility To Get Started

@@ -33,8 +33,8 @@ export default {
           foreground: "#141413",
         },
         accent: {
-          DEFAULT: "#F2FF44",
-          foreground: "#141413",
+          DEFAULT: "#F2FF44",  // Updated to match sign out button color
+          foreground: "#141413", // Updated to black for contrast
         },
         muted: {
           DEFAULT: "#828179",

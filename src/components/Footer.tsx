@@ -1,4 +1,4 @@
-import { Mail, Phone, Instagram, Twitter, Linkedin, TikTok } from "lucide-react";
+import { Mail, Phone, Instagram, Twitter, Linkedin, Youtube } from "lucide-react";
 import { Button } from "./ui/button";
 
 const Footer = () => {
@@ -89,7 +89,7 @@ const Footer = () => {
               { Icon: Instagram, href: "#" },
               { Icon: Twitter, href: "#" },
               { Icon: Linkedin, href: "#" },
-              { Icon: TikTok, href: "#" }
+              { Icon: Youtube, href: "#" }
             ].map(({ Icon, href }, index) => (
               <Button
                 key={index}

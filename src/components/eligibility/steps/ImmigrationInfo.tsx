@@ -12,7 +12,7 @@ interface ImmigrationInfoProps {
 const ImmigrationInfo = ({ form }: ImmigrationInfoProps) => {
   return (
     <FormSection
-      title="Immigration Information Form"
+      title="Immigration Information"
       description="Please complete all required fields (*) regarding your current immigration status and intended purpose. Your accurate responses help us better assist you with your immigration needs."
     >
       <div className="space-y-8">

@@ -1,78 +1,54 @@
 import { UseFormReturn } from "react-hook-form";
-import { FormField } from "@/components/ui/form";
-import { Select } from "@/components/ui/select";
-import { Input } from "@/components/ui/input";
+import { EligibilityData } from "../../EligibilityForm";
+import SelectField from "../../form-fields/SelectField";
+import FormField from "../../form-fields/FormField";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
-import { EligibilityData } from "../../EligibilityForm";
+import { FormField as BaseFormField } from "@/components/ui/form";
 
 interface CurrentStatusSectionProps {
   form: UseFormReturn<EligibilityData>;
 }
 
-const CurrentStatusSection = ({ form }: CurrentStatusSectionProps) => {
-  const { watch, formState: { errors } } = form;
-  const currentStatus = watch("immigrationInfo.currentStatus");
+const immigrationStatuses = [
+  { value: "student", label: "Student Visa (F-1/M-1)" },
+  { value: "work", label: "Work Visa (H-1B/L-1/O-1)" },
+  { value: "permanent_resident", label: "Permanent Resident (Green Card)" },
+  { value: "tps", label: "Temporary Protected Status (TPS)" },
+  { value: "asylum", label: "Asylum/Refugee Status" },
+  { value: "tourist", label: "Tourist/Business Visa (B-1/B-2)" },
+  { value: "other", label: "Other (Please specify)" }
+];
 
-  const immigrationStatuses = [
-    { value: "student", label: "Student Visa (F-1/M-1)" },
-    { value: "work", label: "Work Visa (H-1B/L-1/O-1)" },
-    { value: "permanent_resident", label: "Permanent Resident (Green Card)" },
-    { value: "tps", label: "Temporary Protected Status (TPS)" },
-    { value: "asylum", label: "Asylum/Refugee Status" },
-    { value: "tourist", label: "Tourist/Business Visa (B-1/B-2)" },
-    { value: "other", label: "Other (Please specify)" }
-  ];
+const CurrentStatusSection = ({ form }: CurrentStatusSectionProps) => {
+  const currentStatus = form.watch("immigrationInfo.currentStatus");
 
   return (
     <div className="space-y-6">
       <h3 className="text-lg font-semibold">Current Status</h3>
       
-      <FormField
+      <SelectField
+        form={form}
         name="immigrationInfo.currentStatus"
-        render={({ field }) => (
-          <div className="space-y-2">
-            <label className="text-sm font-medium">Current Immigration Status*</label>
-            <Select
-              value={field.value}
-              onValueChange={field.onChange}
-            >
-              <option value="">Select status</option>
-              {immigrationStatuses.map((status) => (
-                <option key={status.value} value={status.value}>
-                  {status.label}
-                </option>
-              ))}
-            </Select>
-            {errors.immigrationInfo?.currentStatus && (
-              <p className="text-sm text-red-500">{errors.immigrationInfo.currentStatus.message}</p>
-            )}
-          </div>
-        )}
+        label="Current Immigration Status*"
+        options={immigrationStatuses}
+        placeholder="Select status"
       />
 
       {currentStatus === "other" && (
         <FormField
+          form={form}
           name="immigrationInfo.otherStatusSpecification"
-          render={({ field }) => (
-            <div className="space-y-2">
-              <label className="text-sm font-medium">Please specify your status*</label>
-              <Input {...field} placeholder="Enter your current status" />
-              {errors.immigrationInfo?.otherStatusSpecification && (
-                <p className="text-sm text-red-500">
-                  {errors.immigrationInfo.otherStatusSpecification.message}
-                </p>
-              )}
-            </div>
-          )}
+          label="Please specify your status*"
+          placeholder="Enter your current status"
         />
       )}
 
-      <FormField
+      <BaseFormField
         name="immigrationInfo.hasValidVisa"
         render={({ field }) => (
           <div className="space-y-3">
-            <label className="text-sm font-medium">Valid Immigration Document Status*</label>
+            <Label className="text-sm font-medium">Valid Immigration Document Status*</Label>
             <RadioGroup
               onValueChange={field.onChange}
               defaultValue={field.value}
@@ -87,9 +63,6 @@ const CurrentStatusSection = ({ form }: CurrentStatusSectionProps) => {
                 <Label htmlFor="valid-no">No, I do not have a current valid visa/permit</Label>
               </div>
             </RadioGroup>
-            {errors.immigrationInfo?.hasValidVisa && (
-              <p className="text-sm text-red-500">{errors.immigrationInfo.hasValidVisa.message}</p>
-            )}
           </div>
         )}
       />

@@ -28,15 +28,25 @@ const DocumentUploadForm = ({
     <Card className="p-6 bg-card">
       <h2 className="text-xl font-semibold mb-4">Document Upload</h2>
       
-      {documents.map((doc) => (
-        <DocumentUploadZone
-          key={doc.type}
-          document={doc}
-          onFileUpload={handleFileUpload}
-          uploadedFile={uploadedFiles[doc.type]}
-          disabled={isUploading}
-        />
-      ))}
+      <div className="space-y-4">
+        {documents.map((doc) => (
+          <div key={doc.type} className="space-y-2">
+            <label className="text-sm font-medium">
+              {doc.label}
+              {doc.required && <span className="text-destructive ml-1">*</span>}
+            </label>
+            <DocumentUploadZone
+              onFileSelect={(file) => handleFileUpload(doc.type, file)}
+              file={uploadedFiles[doc.type]}
+              accept={doc.formats}
+              maxSize={doc.maxSize / (1024 * 1024)} // Convert bytes to MB
+            />
+            {doc.description && (
+              <p className="text-sm text-muted-foreground">{doc.description}</p>
+            )}
+          </div>
+        ))}
+      </div>
 
       <UploadProgress
         totalFiles={documents.length}

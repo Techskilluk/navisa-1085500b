@@ -1,69 +1,52 @@
-import { useState } from "react";
+import { useAuth } from "@/contexts/AuthContext";
+import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 import DashboardSidebar from "./DashboardSidebar";
-import DashboardBanner from "./DashboardBanner";
-import DashboardActions from "./DashboardActions";
-import MobileMenuButton from "./MobileMenuButton";
-import VisaSelectionModal from "./VisaSelectionModal";
-import SelectedVisaDetails from "./SelectedVisaDetails";
+import { BookOpen, Calendar } from "lucide-react";
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [isVisaModalOpen, setIsVisaModalOpen] = useState(false);
-  const [selectedVisa, setSelectedVisa] = useState<any>(null);
+  const { user } = useAuth();
+  const navigate = useNavigate();
 
   const handleBookConsultation = () => {
     window.open('https://calendly.com/techskilluk/techskilluk-consultation', '_blank');
   };
 
-  const handleStartApplication = () => {
-    setIsVisaModalOpen(true);
-  };
-
-  const handleVisaSelection = (visa: any) => {
-    setSelectedVisa(visa);
-    setIsVisaModalOpen(false);
-  };
-
   return (
-    <div className="min-h-screen bg-background">
-      <MobileMenuButton 
-        isOpen={isSidebarOpen} 
-        onClick={() => setIsSidebarOpen(!isSidebarOpen)} 
-      />
-
-      <DashboardSidebar 
-        isOpen={isSidebarOpen} 
-        onClose={() => setIsSidebarOpen(false)} 
-      />
-      
-      <div className="lg:ml-64 min-h-screen flex flex-col">
-        <DashboardBanner />
-
-        <DashboardActions
-          onBookConsultation={handleBookConsultation}
-          onStartApplication={handleStartApplication}
-        />
-
-        {selectedVisa && (
-          <div className="w-full p-4 mt-4 animate-fade-in">
-            <div className="max-w-7xl mx-auto">
-              <SelectedVisaDetails visa={selectedVisa} />
-            </div>
+    <div className="min-h-screen bg-background pt-16"> {/* Added pt-16 for navbar height */}
+      <DashboardSidebar />
+      <div className="ml-64 p-8">
+        <header className="flex flex-col md:flex-row md:justify-between md:items-center gap-4 mb-8">
+          <div>
+            <h1 className="text-2xl font-semibold text-white mb-2">
+              Welcome back, {user?.email?.split('@')[0] || 'User'}! 👋
+            </h1>
+            <p className="text-muted-foreground">
+              Manage your visa application process and track your progress
+            </p>
           </div>
-        )}
-
-        <main className="flex-1 p-6 lg:p-8 mt-4">
-          <div className="max-w-7xl mx-auto">
-            {children}
+          <div className="flex flex-col sm:flex-row gap-3">
+            <Button
+              onClick={handleBookConsultation}
+              className="bg-secondary hover:bg-secondary/90 text-secondary-foreground w-full sm:w-auto"
+              size="lg"
+            >
+              <Calendar className="w-4 h-4 mr-2" />
+              Book Consultation
+            </Button>
+            <Button
+              onClick={() => navigate('/eligibility')}
+              variant="outline"
+              size="lg"
+              className="w-full sm:w-auto"
+            >
+              <BookOpen className="w-4 h-4 mr-2" />
+              Start Application
+            </Button>
           </div>
-        </main>
+        </header>
+        <main>{children}</main>
       </div>
-
-      <VisaSelectionModal
-        isOpen={isVisaModalOpen}
-        onClose={() => setIsVisaModalOpen(false)}
-        onSelect={handleVisaSelection}
-      />
     </div>
   );
 };

@@ -38,12 +38,12 @@ const App = () => (
                     <Route path="/" element={<Index />} />
                     <Route path="*" element={<Navigate to="/" replace />} />
                   </Routes>
-                  <Toaster />
-                  <Sonner />
                 </>
               }
             />
           </Routes>
+          <Toaster />
+          <Sonner />
         </TooltipProvider>
       </AuthProvider>
     </BrowserRouter>

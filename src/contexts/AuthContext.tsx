@@ -19,8 +19,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const { toast } = useToast();
 
   useEffect(() => {
-    console.log("AuthProvider mounted");
-    
     // Get initial session
     supabase.auth.getSession().then(({ data: { session } }) => {
       console.log("Initial session check:", session);
@@ -93,27 +91,15 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       }
     });
 
-    return () => {
-      console.log("AuthProvider unmounting, cleaning up subscription");
-      subscription.unsubscribe();
-    };
+    return () => subscription.unsubscribe();
   }, [navigate, toast]);
 
   const signOut = async () => {
-    console.log("Signing out...");
     await supabase.auth.signOut();
   };
 
-  const value = {
-    session,
-    user,
-    signOut,
-  };
-
-  console.log("AuthProvider rendering with value:", value);
-
   return (
-    <AuthContext.Provider value={value}>
+    <AuthContext.Provider value={{ session, user, signOut }}>
       {children}
     </AuthContext.Provider>
   );

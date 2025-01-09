@@ -3,25 +3,57 @@ import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import DashboardSidebar from "./DashboardSidebar";
 import { BookOpen, Calendar } from "lucide-react";
+import { useState } from "react";
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   const { user } = useAuth();
   const navigate = useNavigate();
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const handleBookConsultation = () => {
     window.open('https://calendly.com/techskilluk/techskilluk-consultation', '_blank');
   };
 
   return (
-    <div className="min-h-screen bg-background pt-16"> {/* Added pt-16 for navbar height */}
-      <DashboardSidebar />
-      <div className="ml-64 p-8">
+    <div className="min-h-screen bg-background">
+      {/* Mobile Menu Button */}
+      <button
+        onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+        className="lg:hidden fixed top-4 left-4 z-50 p-2 rounded-lg bg-accent/10 text-white"
+      >
+        <svg
+          className="w-6 h-6"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          {isSidebarOpen ? (
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M6 18L18 6M6 6l12 12"
+            />
+          ) : (
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M4 6h16M4 12h16M4 18h16"
+            />
+          )}
+        </svg>
+      </button>
+
+      <DashboardSidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
+      
+      <div className="lg:ml-64 p-4 lg:p-8 pt-16 lg:pt-8">
         <header className="flex flex-col md:flex-row md:justify-between md:items-center gap-4 mb-8">
           <div>
-            <h1 className="text-2xl font-semibold text-white mb-2">
+            <h1 className="text-xl lg:text-2xl font-semibold text-white mb-2">
               Welcome back, {user?.email?.split('@')[0] || 'User'}! 👋
             </h1>
-            <p className="text-muted-foreground">
+            <p className="text-sm lg:text-base text-muted-foreground">
               Manage your visa application process and track your progress
             </p>
           </div>

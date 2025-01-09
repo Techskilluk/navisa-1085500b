@@ -1,90 +1,85 @@
-import { UserPlus, ListChecks, FolderOpen, UserRound, Sparkles } from "lucide-react";
+import { Shield, Users2, FileCheck, Network, Sparkles } from "lucide-react";
 import FeatureCard from "./FeatureCard";
 
 const features = [
   {
-    icon: <UserPlus className="w-12 h-12 text-white/80" />,
-    title: "Customer Onboarding Made Easy",
-    shortDesc: "Streamline your client intake process with our intuitive system",
+    icon: <Shield className="w-12 h-12 text-white/80" />,
+    title: "Secure Document Management",
+    shortDesc: "Enterprise-grade security for all your immigration documents",
     benefits: [
-      "Automated document collection",
-      "Smart form validation",
-      "Digital signature integration",
-      "Progress tracking dashboard"
+      "End-to-end encryption",
+      "Automated backups",
+      "Access control",
+      "Audit trails"
     ]
   },
   {
-    icon: <ListChecks className="w-12 h-12 text-white/80" />,
-    title: "Application Tracking & Management",
-    shortDesc: "Monitor all immigration cases in one centralized platform",
+    icon: <Users2 className="w-12 h-12 text-white/80" />,
+    title: "Team Collaboration",
+    shortDesc: "Streamline workflow across your immigration team",
     benefits: [
-      "Real-time status updates",
-      "Automated deadline reminders",
-      "Case milestone tracking",
-      "Custom workflow templates"
+      "Real-time updates",
+      "Role-based access",
+      "Team chat",
+      "Task assignment"
     ]
   },
   {
-    icon: <FolderOpen className="w-12 h-12 text-white/80" />,
-    title: "Resource Hub",
-    shortDesc: "Access comprehensive immigration resources and templates",
+    icon: <FileCheck className="w-12 h-12 text-white/80" />,
+    title: "Smart Processing",
+    shortDesc: "Automated document processing and verification",
     benefits: [
-      "Document templates library",
-      "Country-specific guides",
-      "Policy updates alerts",
-      "Best practices repository"
+      "AI-powered validation",
+      "Auto-fill forms",
+      "Error detection",
+      "Compliance checks"
     ]
   },
   {
-    icon: <UserRound className="w-12 h-12 text-white/80" />,
-    title: "Consultant Marketplace",
-    shortDesc: "Connect with specialized immigration consultants worldwide",
+    icon: <Network className="w-12 h-12 text-white/80" />,
+    title: "Global Network",
+    shortDesc: "Access to worldwide immigration expertise",
     benefits: [
-      "Expert network access",
-      "Secure collaboration tools",
-      "Revenue sharing platform",
-      "Quality rating system"
+      "Expert consultants",
+      "Local partners",
+      "24/7 support",
+      "Multi-language"
     ]
   },
   {
     icon: <Sparkles className="w-12 h-12 text-white/80" />,
-    title: "AI Tools for Documentation",
-    shortDesc: "Leverage AI to streamline document generation and evidence management",
+    title: "Advanced Analytics",
+    shortDesc: "Data-driven insights for better decision making",
     benefits: [
-      "AI-powered document templates",
-      "Automated evidence validation",
-      "Smart research assistance",
-      "Regulatory compliance checks"
+      "Custom reports",
+      "Success metrics",
+      "Trend analysis",
+      "ROI tracking"
     ]
   }
 ];
 
 const FeaturesSection = () => {
   return (
-    <section className="py-24 px-4 relative overflow-hidden bg-background">
-      <div className="absolute inset-0 bg-gradient-to-b from-accent/5 to-background/95 pointer-events-none"></div>
-      <div className="max-w-7xl mx-auto relative">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold mb-4 text-white bg-clip-text text-transparent bg-gradient-to-r from-white to-white/90">
-            Comprehensive Features
+    <section className="py-16 md:py-24 px-4 relative overflow-hidden bg-background">
+      <div className="absolute inset-0 bg-gradient-to-b from-accent/5 to-background/95 pointer-events-none" />
+      <div className="max-w-6xl mx-auto relative">
+        <div className="text-center mb-12 md:mb-16">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white bg-clip-text">
+            Enterprise Features
           </h2>
-          <p className="text-lg text-white/70 max-w-2xl mx-auto">
-            Everything you need to manage your immigration practice effectively
+          <p className="text-base md:text-lg text-white/70 max-w-2xl mx-auto">
+            Powerful tools designed for immigration teams
           </p>
-          <div className="mt-4 flex justify-center space-x-2">
-            <div className="w-2 h-2 rounded-full bg-white/40 animate-pulse"></div>
-            <div className="w-2 h-2 rounded-full bg-white/40 animate-pulse delay-100"></div>
-            <div className="w-2 h-2 rounded-full bg-white/40 animate-pulse delay-200"></div>
-          </div>
         </div>
         
-        <div className="grid md:grid-cols-2 gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {features.map((feature, index) => (
             <div 
               key={index}
               className="opacity-0 animate-fade-in"
               style={{ 
-                animationDelay: `${index * 150}ms`, 
+                animationDelay: `${index * 100}ms`, 
                 animationFillMode: 'forwards' 
               }}
             >

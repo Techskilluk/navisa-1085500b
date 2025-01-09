@@ -39,7 +39,7 @@ const VisaProcessBanner = () => {
         
         <div className="relative">
           {/* Connection Line */}
-          <div className="absolute top-1/2 left-0 w-full h-0.5 bg-accent/20 -translate-y-1/2 hidden lg:block" />
+          <div className="absolute top-1/2 left-0 w-full h-0.5 bg-white/20 hidden lg:block" />
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {steps.map((step, index) => (
@@ -53,13 +53,13 @@ const VisaProcessBanner = () => {
                 )}
               >
                 {/* Step Number */}
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-accent flex items-center justify-center text-white font-bold">
+                <div className="absolute -top-4 left-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-white flex items-center justify-center text-background font-bold">
                   {index + 1}
                 </div>
                 
                 {/* Icon */}
-                <div className="mb-6 p-4 rounded-full bg-accent/10 group-hover:bg-accent/20 transition-colors">
-                  <step.icon className="w-8 h-8 text-accent" />
+                <div className="mb-6 p-4 rounded-full bg-white/10 group-hover:bg-white/20 transition-colors">
+                  <step.icon className="w-8 h-8 text-white" />
                 </div>
                 
                 {/* Content */}
@@ -72,7 +72,7 @@ const VisaProcessBanner = () => {
                 
                 {/* Arrow for mobile */}
                 {index < steps.length - 1 && (
-                  <div className="w-px h-8 bg-accent/20 my-4 lg:hidden" />
+                  <div className="w-px h-8 bg-white/20 my-4 lg:hidden" />
                 )}
               </div>
             ))}

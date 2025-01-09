@@ -16,7 +16,7 @@ const Download = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button className="px-8 py-6 text-lg bg-white text-black hover:bg-white/90 flex items-center gap-2">
               <Mail className="w-5 h-5 text-black" />
-              contact@navisa.com
+              contact@navisa.co
             </Button>
             <Button className="px-8 py-6 text-lg glass-effect hover:bg-white/10 flex items-center gap-2">
               <Phone className="w-5 h-5 text-white" />

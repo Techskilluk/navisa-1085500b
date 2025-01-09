@@ -5,6 +5,7 @@ import { useAuthError } from "@/hooks/useAuthError";
 import { AuthFormHeader } from "./AuthFormHeader";
 import { authUiConfig } from "@/config/authUiConfig";
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
 
 interface AuthFormProps {
   error: string;
@@ -47,6 +48,24 @@ const AuthForm = ({ error: propError, preserveFormData }: AuthFormProps) => {
           redirectTo={redirectTo}
           appearance={authUiConfig}
         />
+
+        <div className="mt-6 text-center space-y-2">
+          <Link 
+            to="/reset-password"
+            className="text-sm text-gray-600 hover:text-gray-900 block"
+          >
+            Forgot your password?
+          </Link>
+          <p className="text-sm text-gray-600">
+            Don't have an account?{" "}
+            <Link 
+              to="/signin?view=sign_up" 
+              className="font-medium text-primary hover:text-primary/80"
+            >
+              Sign up
+            </Link>
+          </p>
+        </div>
       </div>
     </div>
   );

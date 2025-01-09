@@ -4,7 +4,7 @@ import SelectField from "../../form-fields/SelectField";
 import FormField from "../../form-fields/FormField";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
-import { FormField as BaseFormField } from "@/components/ui/form";
+import { FormControl, FormField as BaseFormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 
 interface CurrentStatusSectionProps {
   form: UseFormReturn<EligibilityData>;
@@ -45,25 +45,34 @@ const CurrentStatusSection = ({ form }: CurrentStatusSectionProps) => {
       )}
 
       <BaseFormField
+        control={form.control}
         name="immigrationInfo.hasValidVisa"
         render={({ field }) => (
-          <div className="space-y-3">
-            <Label className="text-sm font-medium">Valid Immigration Document Status*</Label>
-            <RadioGroup
-              onValueChange={field.onChange}
-              defaultValue={field.value}
-              className="flex flex-col space-y-1"
-            >
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="Yes" id="valid-yes" />
-                <Label htmlFor="valid-yes">Yes, I have a current valid visa/permit</Label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="No" id="valid-no" />
-                <Label htmlFor="valid-no">No, I do not have a current valid visa/permit</Label>
-              </div>
-            </RadioGroup>
-          </div>
+          <FormItem className="space-y-3">
+            <FormLabel>Valid Immigration Document Status*</FormLabel>
+            <FormControl>
+              <RadioGroup
+                onValueChange={field.onChange}
+                defaultValue={field.value}
+                value={field.value}
+                className="flex flex-col space-y-3"
+              >
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="Yes" id="valid-yes" />
+                  <Label htmlFor="valid-yes" className="text-sm">
+                    Yes, I have a current valid visa/permit
+                  </Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="No" id="valid-no" />
+                  <Label htmlFor="valid-no" className="text-sm">
+                    No, I do not have a current valid visa/permit
+                  </Label>
+                </div>
+              </RadioGroup>
+            </FormControl>
+            <FormMessage />
+          </FormItem>
         )}
       />
     </div>

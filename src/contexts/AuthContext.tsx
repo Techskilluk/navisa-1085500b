@@ -64,7 +64,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           }
           break;
 
-        case "EMAIL_CONFIRMATION_REQUIRED":
+        case "PASSWORD_RECOVERY":
+          // Handle verification required notification
           toast({
             title: "Verification Required",
             description: "Please check your email to verify your account.",

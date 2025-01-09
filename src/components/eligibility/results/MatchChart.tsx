@@ -46,7 +46,7 @@ const MatchChart = ({ data }: MatchChartProps) => {
               />
               <Bar 
                 dataKey="match" 
-                fill="#8989DE" 
+                fill="#FFFFFF" 
                 name="Match %" 
                 radius={[4, 4, 0, 0]}
                 className="hover:opacity-80 transition-opacity"

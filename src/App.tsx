@@ -11,7 +11,6 @@ import Dashboard from "./pages/Dashboard";
 import EligibilityAssessment from "./pages/EligibilityAssessment";
 import HowItWorks from "./pages/HowItWorks";
 import Pathways from "./pages/Pathways";
-import Enterprise from "./pages/Enterprise";
 
 const queryClient = new QueryClient();
 
@@ -32,7 +31,6 @@ const App = () => (
                     <Route path="/eligibility" element={<EligibilityAssessment />} />
                     <Route path="/how-it-works" element={<HowItWorks />} />
                     <Route path="/pathways" element={<Pathways />} />
-                    <Route path="/enterprise" element={<Enterprise />} />
                     <Route path="/" element={<Index />} />
                     <Route path="*" element={<Navigate to="/" replace />} />
                   </Routes>

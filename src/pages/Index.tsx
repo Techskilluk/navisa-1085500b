@@ -1,4 +1,3 @@
-import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import ServiceCards from "@/components/ServiceCards";
 import VisaProcessBanner from "@/components/VisaProcessBanner";
@@ -12,7 +11,6 @@ import { Separator } from "@/components/ui/separator";
 const Index = () => {
   return (
     <div className="min-h-screen">
-      <Navbar />
       <Hero />
       <Separator className="bg-white/10" />
       <ServiceCards />

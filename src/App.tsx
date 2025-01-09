@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
+import Navbar from "@/components/Navbar";
 import Index from "./pages/Index";
 import SignIn from "./pages/SignIn";
 import EligibilityAssessment from "./pages/EligibilityAssessment";
@@ -17,6 +18,7 @@ const App = () => (
     <BrowserRouter>
       <AuthProvider>
         <TooltipProvider>
+          <Navbar />
           <Toaster />
           <Sonner />
           <Routes>

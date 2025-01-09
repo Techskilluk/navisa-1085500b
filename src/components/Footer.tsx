@@ -48,7 +48,7 @@ const Footer = () => {
           <div className="space-y-4">
             <h4 className="text-lg font-semibold text-white">Contact</h4>
             <ul className="space-y-2">
-              <li className="text-white/60">Email: contact@navisa.co</li>
+              <li className="text-white/60">Email: navisa.co</li>
               <li className="text-white/60">Phone: +447816247864</li>
             </ul>
           </div>

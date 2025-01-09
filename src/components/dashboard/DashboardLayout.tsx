@@ -47,37 +47,48 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
 
       <DashboardSidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
       
-      <div className="lg:ml-64 p-4 lg:p-8 pt-16 lg:pt-8">
-        <header className="flex flex-col md:flex-row md:justify-between md:items-center gap-4 mb-8">
-          <div>
-            <h1 className="text-xl lg:text-2xl font-semibold text-white mb-2">
-              Welcome back, {user?.email?.split('@')[0] || 'User'}! 👋
-            </h1>
-            <p className="text-sm lg:text-base text-muted-foreground">
-              Manage your visa application process and track your progress
-            </p>
-          </div>
-          <div className="flex flex-col sm:flex-row gap-3">
-            <Button
-              onClick={handleBookConsultation}
-              className="bg-secondary hover:bg-secondary/90 text-secondary-foreground w-full sm:w-auto"
-              size="lg"
-            >
-              <Calendar className="w-4 h-4 mr-2" />
-              Book Consultation
-            </Button>
-            <Button
-              onClick={() => navigate('/eligibility')}
-              variant="outline"
-              size="lg"
-              className="w-full sm:w-auto"
-            >
-              <BookOpen className="w-4 h-4 mr-2" />
-              Start Application
-            </Button>
+      <div className="lg:ml-64 min-h-screen flex flex-col">
+        {/* Banner Section */}
+        <header className="w-full bg-card/50 backdrop-blur-sm border-b border-border/10 p-6 lg:p-8">
+          <div className="max-w-7xl mx-auto">
+            <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4">
+              <div>
+                <h1 className="text-xl lg:text-2xl font-semibold text-white mb-2">
+                  Welcome back, {user?.email?.split('@')[0] || 'User'}! 👋
+                </h1>
+                <p className="text-sm lg:text-base text-muted-foreground">
+                  Manage your visa application process and track your progress
+                </p>
+              </div>
+              <div className="flex flex-col sm:flex-row gap-3">
+                <Button
+                  onClick={handleBookConsultation}
+                  className="bg-secondary hover:bg-secondary/90 text-secondary-foreground w-full sm:w-auto"
+                  size="lg"
+                >
+                  <Calendar className="w-4 h-4 mr-2" />
+                  Book Consultation
+                </Button>
+                <Button
+                  onClick={() => navigate('/eligibility')}
+                  variant="outline"
+                  size="lg"
+                  className="w-full sm:w-auto"
+                >
+                  <BookOpen className="w-4 h-4 mr-2" />
+                  Start Application
+                </Button>
+              </div>
+            </div>
           </div>
         </header>
-        <main>{children}</main>
+
+        {/* Main Content */}
+        <main className="flex-1 p-6 lg:p-8">
+          <div className="max-w-7xl mx-auto">
+            {children}
+          </div>
+        </main>
       </div>
     </div>
   );

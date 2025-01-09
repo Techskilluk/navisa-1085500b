@@ -6,21 +6,36 @@ export const useAuthError = (propError: string) => {
   const [authError, setAuthError] = useState<string>("");
 
   const getErrorMessage = (error: AuthError) => {
-    console.log("Processing error:", error);
-    const errorBody = error.message;
+    console.log("Processing auth error:", error);
     
+    // Parse the error body if it's a string
+    let errorBody = error.message;
+    try {
+      if (typeof error.message === 'string' && error.message.includes('{')) {
+        const parsedError = JSON.parse(error.message);
+        errorBody = parsedError.message || error.message;
+      }
+    } catch (e) {
+      console.log("Error parsing error message:", e);
+    }
+    
+    // Check for specific error conditions
     if (errorBody.includes("Email not confirmed")) {
       return "Please check your email and click the verification link to confirm your account before signing in.";
     }
     
-    if (errorBody.includes("Invalid login credentials") || 
-        errorBody.includes("invalid_credentials") || 
-        error.message.includes("invalid_credentials")) {
+    // Handle invalid credentials errors - check multiple possible error formats
+    if (
+      errorBody.includes("Invalid login credentials") || 
+      errorBody.includes("invalid_credentials") || 
+      error.message.includes("invalid_credentials") ||
+      (error as any).code === "invalid_credentials"
+    ) {
       return "The email or password you entered is incorrect. Please try again.";
     }
     
     // Handle generic errors
-    return error.message || "An error occurred during authentication. Please try again.";
+    return errorBody || "An error occurred during authentication. Please try again.";
   };
 
   useEffect(() => {
@@ -41,7 +56,7 @@ export const useAuthError = (propError: string) => {
     return () => subscription.unsubscribe();
   }, []);
 
-  // Clear error when propError changes
+  // Update error when propError changes
   useEffect(() => {
     if (propError) {
       setAuthError(propError);

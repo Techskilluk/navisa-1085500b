@@ -6,7 +6,9 @@ const benefits = [
   "Personalized immigration strategy",
   "Document checklist review",
   "Eligibility assessment",
-  "Application guidance"
+  "Application guidance",
+  "Actionable advice to improve success chances",
+  "Detailed explanation of visa pathways"
 ];
 
 const ConsultationDetails = () => {

@@ -77,10 +77,10 @@ const FeaturesSection = () => {
           {features.map((feature, index) => (
             <div 
               key={index}
-              className="opacity-0 animate-fade-in"
+              className="animate-scale-in"
               style={{ 
-                animationDelay: `${index * 100}ms`, 
-                animationFillMode: 'forwards' 
+                animationDelay: `${index * 100}ms`,
+                animationFillMode: 'forwards'
               }}
             >
               <FeatureCard {...feature} />

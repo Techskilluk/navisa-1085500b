@@ -14,7 +14,7 @@ const FeatureCard = ({ icon, title, shortDesc, benefits }: FeatureCardProps) => 
 
   return (
     <Card 
-      className={`group transition-all duration-300 cursor-pointer h-full
+      className={`group transition-all duration-300 cursor-pointer h-full bg-card
         ${isExpanded 
           ? 'bg-gradient-to-br from-white/10 to-white/5 shadow-lg shadow-white/5' 
           : 'hover:bg-white/5 hover:shadow-md hover:shadow-white/5'

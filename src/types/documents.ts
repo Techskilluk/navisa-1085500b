@@ -18,108 +18,197 @@ export interface VisaDocuments {
   };
 }
 
-export const VISA_DOCUMENTS: VisaDocuments = {
+export const VISA_DOCUMENTS: Record<string, {
+  requirements: DocumentRequirement[];
+  resources: {
+    title: string;
+    description: string;
+    url: string;
+  }[];
+}> = {
   "global-talent": {
     requirements: [
       {
-        type: "resume",
-        label: "Resume",
+        type: "cv",
+        label: "Curriculum Vitae",
+        description: "Detailed CV highlighting achievements and experience",
         required: true,
-        maxSize: 5,
-        formats: [".pdf", ".doc", ".docx"],
-        description: "Your professional CV highlighting key achievements"
-      },
-      {
-        type: "personal-statement",
-        label: "Personal Statement",
-        required: true,
-        maxSize: 5,
-        formats: [".pdf", ".doc", ".docx"],
-        description: "Statement explaining your expertise and achievements"
+        formats: ["pdf"],
+        maxSize: 5000000
       },
       {
         type: "recommendation",
         label: "Letters of Recommendation",
+        description: "At least 3 letters from recognized experts",
         required: true,
-        maxSize: 5,
-        formats: [".pdf"],
-        description: "Minimum 2 letters from recognized experts"
+        formats: ["pdf"],
+        maxSize: 5000000
       },
       {
         type: "portfolio",
-        label: "Achievement Portfolio",
+        label: "Portfolio of Work",
+        description: "Evidence of significant contributions",
         required: true,
-        maxSize: 5,
-        formats: [".pdf"],
-        description: "Evidence of professional recognition and impact"
+        formats: ["pdf"],
+        maxSize: 10000000
       }
     ],
     resources: [
       {
-        title: "Resume Template",
-        description: "Tailored template for Global Talent visa applications",
-        url: "/templates/global-talent-resume.pdf"
-      },
-      {
-        title: "Recommendation Letter Guide",
-        description: "Guidelines for obtaining strong recommendation letters",
-        url: "/templates/recommendation-guide.pdf"
+        title: "Global Talent Visa Guide",
+        description: "Official guidance on application process",
+        url: "https://www.gov.uk/global-talent"
       }
     ]
   },
-  "express-entry": {
+  "high-potential": {
     requirements: [
       {
-        type: "resume",
-        label: "Resume",
+        type: "degree",
+        label: "Degree Certificate",
+        description: "From eligible university",
         required: true,
-        maxSize: 5,
-        formats: [".pdf", ".doc", ".docx"],
-        description: "Canadian-style resume format"
+        formats: ["pdf"],
+        maxSize: 5000000
       },
       {
-        type: "personal-statement",
-        label: "Personal Statement",
+        type: "transcript",
+        label: "Academic Transcript",
+        description: "Official transcript with grades",
         required: true,
-        maxSize: 5,
-        formats: [".pdf", ".doc", ".docx"],
-        description: "Statement of purpose for immigration"
-      },
-      {
-        type: "language",
-        label: "Language Proficiency Results",
-        required: true,
-        maxSize: 5,
-        formats: [".pdf"],
-        description: "IELTS or CELPIP test results"
-      },
-      {
-        type: "education",
-        label: "Educational Credentials",
-        required: true,
-        maxSize: 5,
-        formats: [".pdf"],
-        description: "Degree certificates and transcripts"
-      },
-      {
-        type: "funds",
-        label: "Proof of Funds",
-        required: true,
-        maxSize: 5,
-        formats: [".pdf"],
-        description: "Bank statements or other financial documents"
+        formats: ["pdf"],
+        maxSize: 5000000
       }
     ],
     resources: [
       {
-        title: "Canadian Resume Guide",
-        description: "Format your resume for Canadian employers",
-        url: "/templates/canadian-resume.pdf"
+        title: "HPI Visa Guide",
+        description: "Eligibility and application process",
+        url: "https://www.gov.uk/high-potential-individual-visa"
+      }
+    ]
+  },
+  "scale-up": {
+    requirements: [
+      {
+        type: "job_offer",
+        label: "Job Offer",
+        description: "From approved Scale-up sponsor",
+        required: true,
+        formats: ["pdf"],
+        maxSize: 5000000
       },
       {
-        title: "Funds Calculator",
-        description: "Calculate required proof of funds",
-        url: "/templates/funds-calculator.pdf"
+        type: "qualification",
+        label: "Qualifications",
+        description: "Relevant certificates and transcripts",
+        required: true,
+        formats: ["pdf"],
+        maxSize: 5000000
+      }
+    ],
+    resources: [
+      {
+        title: "Scale-up Visa Guide",
+        description: "Requirements and process",
+        url: "https://www.gov.uk/scale-up-visa"
+      }
+    ]
+  },
+  "tech-talent": {
+    requirements: [
+      {
+        type: "cv",
+        label: "Technical CV",
+        description: "Highlighting technical skills and projects",
+        required: true,
+        formats: ["pdf"],
+        maxSize: 5000000
+      },
+      {
+        type: "certificates",
+        label: "Technical Certifications",
+        description: "Relevant technical qualifications",
+        required: false,
+        formats: ["pdf"],
+        maxSize: 5000000
+      }
+    ],
+    resources: [
+      {
+        title: "Tech Talent Guide",
+        description: "Sponsorship process for tech roles",
+        url: "https://www.gov.uk/skilled-worker-visa"
+      }
+    ]
+  },
+  "healthcare": {
+    requirements: [
+      {
+        type: "qualification",
+        label: "Medical Qualification",
+        description: "Medical degree or nursing qualification",
+        required: true,
+        formats: ["pdf"],
+        maxSize: 5000000
+      },
+      {
+        type: "registration",
+        label: "Professional Registration",
+        description: "GMC/NMC registration certificate",
+        required: true,
+        formats: ["pdf"],
+        maxSize: 5000000
+      },
+      {
+        type: "experience",
+        label: "Experience Certificates",
+        description: "Clinical experience documentation",
+        required: true,
+        formats: ["pdf"],
+        maxSize: 5000000
+      }
+    ],
+    resources: [
+      {
+        title: "Healthcare Worker Visa",
+        description: "Guide for medical professionals",
+        url: "https://www.gov.uk/health-care-worker-visa"
+      }
+    ]
+  },
+  "academic": {
+    requirements: [
+      {
+        type: "cv",
+        label: "Academic CV",
+        description: "Including publications and research",
+        required: true,
+        formats: ["pdf"],
+        maxSize: 5000000
+      },
+      {
+        type: "publications",
+        label: "Key Publications",
+        description: "Selected research papers",
+        required: true,
+        formats: ["pdf"],
+        maxSize: 10000000
+      },
+      {
+        type: "research",
+        label: "Research Proposal",
+        description: "If applicable",
+        required: false,
+        formats: ["pdf"],
+        maxSize: 5000000
+      }
+    ],
+    resources: [
+      {
+        title: "Academic Visa Guide",
+        description: "Information for researchers and academics",
+        url: "https://www.gov.uk/government/publications/uk-points-based-immigration-system-sponsor-guidance"
       }
     ]
   }

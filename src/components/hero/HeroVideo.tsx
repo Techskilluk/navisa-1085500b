@@ -18,7 +18,7 @@ const HeroVideo = () => {
   }, []);
 
   return (
-    <div className="relative h-[500px] lg:h-[700px] rounded-3xl overflow-hidden animate-scale-in">
+    <div className="relative h-full w-full">
       {videos.map((video, index) => (
         <div
           key={index}
@@ -27,7 +27,7 @@ const HeroVideo = () => {
           }`}
         >
           <video
-            className="w-full h-full object-cover rounded-3xl"
+            className="w-full h-full object-cover"
             autoPlay
             muted
             loop
@@ -38,7 +38,7 @@ const HeroVideo = () => {
           </video>
         </div>
       ))}
-      <div className="absolute inset-0 bg-gradient-to-t from-background/20 to-transparent rounded-3xl"></div>
+      <div className="absolute inset-0 bg-gradient-to-r from-background/50 to-transparent"></div>
     </div>
   );
 };

@@ -1,35 +1,55 @@
 import { Button } from "@/components/ui/button";
-import { ChevronRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const Hero = () => {
+  const navigate = useNavigate();
+
+  const handleEligibilityCheck = () => {
+    navigate("/eligibility");
+  };
+
   return (
-    <div className="relative min-h-[80vh] flex items-center justify-center overflow-hidden bg-background">
-      <div className="absolute inset-0 bg-accent/5 backdrop-blur-3xl"></div>
-      <div className="relative z-10 container mx-auto px-4">
-        <div className="text-center max-w-4xl mx-auto">
-          <h1 className="text-5xl md:text-6xl font-bold text-white mb-6 leading-tight">
-            Explore Global Talent Migration Pathways
+    <div className="min-h-screen flex items-center justify-center px-4 pt-20 bg-background">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+        <div className="space-y-8">
+          <h1 className="text-5xl md:text-6xl font-bold text-white leading-tight">
+            Transform Your Career Across Borders
           </h1>
-          <p className="text-xl md:text-2xl text-white/60 mb-4">
-            Opportunities Await:
+          <p className="text-lg text-white/80 max-w-xl">
+            Navigate global opportunities with confidence. NAVISA connects ambitious professionals with international employers, simplifies migration pathways, and turns your dream of a global career into reality.
           </p>
-          <p className="text-lg md:text-xl text-white/80 mb-8 max-w-3xl mx-auto">
-            Whether you're a seasoned professional, recent graduate, or immigrant exploring new pathways, NAVISA connects you to:
-          </p>
-          <ul className="text-white/70 text-lg space-y-3 mb-8 max-w-2xl mx-auto">
-            <li>Skilled worker programs</li>
-            <li>Talent visas for professionals</li>
-            <li>Startup and innovation-focused pathways</li>
-            <li>Study-to-work transition programs</li>
-            <li>Employer-sponsored migration schemes</li>
-          </ul>
           <Button 
-            size="lg" 
-            className="bg-white text-black hover:bg-white/90 font-semibold"
+            className="px-8 py-6 text-lg bg-white text-black hover:bg-white/90 flex items-center gap-2"
+            onClick={handleEligibilityCheck}
           >
-            Learn More
-            <ChevronRight className="ml-2 h-4 w-4" />
+            Begin Your Global Journey
+            <ArrowRight className="w-5 h-5 text-black" />
           </Button>
+          <div className="grid grid-cols-3 gap-8 pt-8">
+            <div>
+              <div className="text-3xl font-bold text-white">5000+</div>
+              <div className="text-white/60">Success Stories</div>
+            </div>
+            <div>
+              <div className="text-3xl font-bold text-white">100+</div>
+              <div className="text-white/60">Countries</div>
+            </div>
+            <div>
+              <div className="text-3xl font-bold text-white">24/7</div>
+              <div className="text-white/60">Expert Support</div>
+            </div>
+          </div>
+        </div>
+        <div className="relative">
+          <div className="relative z-10 rounded-3xl overflow-hidden shadow-2xl">
+            <img 
+              src="https://images.unsplash.com/photo-1557804506-669a67965ba0?q=80&w=2574&auto=format&fit=crop"
+              alt="Global Mobility"
+              className="w-full h-auto"
+            />
+          </div>
+          <div className="absolute -bottom-4 -right-4 w-72 h-72 bg-accent/20 rounded-full blur-3xl"></div>
         </div>
       </div>
     </div>

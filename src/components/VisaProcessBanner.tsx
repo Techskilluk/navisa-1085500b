@@ -4,23 +4,23 @@ import { cn } from "@/lib/utils";
 const steps = [
   {
     icon: CheckCircle,
-    title: "Check Your Options",
-    description: "Instant assessment of your global mobility potential with our smart eligibility tool"
+    title: "Assess Your Eligibility",
+    description: "Use our AI-powered tools to evaluate your profile against migration programs worldwide"
   },
   {
     icon: ClipboardList,
-    title: "Personalized Roadmap",
-    description: "Get a custom action plan and expert guidance for your unique career path"
+    title: "Tailored Support",
+    description: "Get personalized advice and step-by-step guidance to navigate global migration pathways and career transitions"
   },
   {
     icon: Send,
-    title: "Direct Employer Access",
-    description: "Match with companies actively seeking international talent like you"
+    title: "Connect with Employers",
+    description: "Discover career opportunities with global employers actively hiring skilled professionals"
   },
   {
     icon: Activity,
-    title: "Seamless Transition",
-    description: "Move confidently into your new role and life abroad with comprehensive support"
+    title: "Thrive Globally",
+    description: "Land your dream role, relocate with confidence, and achieve your global career aspirations"
   }
 ];
 
@@ -30,10 +30,10 @@ const VisaProcessBanner = () => {
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold text-white mb-4">
-            Your Journey to Success
+            How It Works
           </h2>
           <p className="text-xl text-white/60 max-w-2xl mx-auto">
-            A clear path to your international career
+            Your path to international success starts here
           </p>
         </div>
         

@@ -5,11 +5,13 @@ import DashboardActions from "./DashboardActions";
 import MobileMenuButton from "./MobileMenuButton";
 import VisaSelectionModal from "./VisaSelectionModal";
 import SelectedVisaDetails from "./SelectedVisaDetails";
+import DocumentUpload from "../documents/DocumentUpload";
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isVisaModalOpen, setIsVisaModalOpen] = useState(false);
   const [selectedVisa, setSelectedVisa] = useState<any>(null);
+  const [showDocumentUpload, setShowDocumentUpload] = useState(false);
 
   const handleBookConsultation = () => {
     window.open('https://calendly.com/techskilluk/techskilluk-consultation', '_blank');
@@ -23,6 +25,18 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
     setSelectedVisa(visa);
     setIsVisaModalOpen(false);
   };
+
+  const handleContinueApplication = () => {
+    setShowDocumentUpload(true);
+  };
+
+  if (showDocumentUpload && selectedVisa) {
+    return (
+      <DocumentUpload 
+        visaType={selectedVisa.id} 
+      />
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background">
@@ -47,7 +61,10 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
         {selectedVisa && (
           <div className="w-full p-4 mt-4 animate-fade-in">
             <div className="max-w-7xl mx-auto">
-              <SelectedVisaDetails visa={selectedVisa} />
+              <SelectedVisaDetails 
+                visa={selectedVisa} 
+                onContinue={handleContinueApplication}
+              />
             </div>
           </div>
         )}

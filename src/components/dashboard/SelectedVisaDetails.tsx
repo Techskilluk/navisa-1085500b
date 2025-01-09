@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ArrowRight, Calendar, Star, Clock } from "lucide-react";
-import { useNavigate } from "react-router-dom";
 
 interface SelectedVisaDetailsProps {
   visa: {
@@ -10,11 +9,10 @@ interface SelectedVisaDetailsProps {
     rating: number;
     processingTime: string;
   };
+  onContinue: () => void;
 }
 
-const SelectedVisaDetails = ({ visa }: SelectedVisaDetailsProps) => {
-  const navigate = useNavigate();
-
+const SelectedVisaDetails = ({ visa, onContinue }: SelectedVisaDetailsProps) => {
   return (
     <Card className="bg-card/50 backdrop-blur-sm border-accent/20">
       <CardHeader>
@@ -48,7 +46,7 @@ const SelectedVisaDetails = ({ visa }: SelectedVisaDetailsProps) => {
             "You're on the right path! Let's make your visa application journey smooth and successful."
           </p>
           <Button
-            onClick={() => navigate("/eligibility")}
+            onClick={onContinue}
             className="w-full sm:w-auto"
           >
             Continue Application <ArrowRight className="w-4 h-4 ml-2" />

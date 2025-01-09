@@ -34,18 +34,18 @@ const Features = () => {
   ];
 
   return (
-    <div className="py-20 px-4 bg-background relative overflow-hidden">
+    <div className="py-12 lg:py-20 px-4 bg-background relative overflow-hidden">
       <div className="absolute inset-0 bg-white/5 backdrop-blur-3xl"></div>
       <div className="max-w-7xl mx-auto relative z-10">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-white mb-4">
+        <div className="text-center mb-12 lg:mb-16">
+          <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4">
             Explore Global Talent Migration Pathways
           </h2>
-          <p className="text-xl text-white/80 max-w-3xl mx-auto mb-8">
+          <p className="text-lg lg:text-xl text-white/80 max-w-3xl mx-auto mb-8">
             Whether you're a seasoned professional, recent graduate, or immigrant exploring new pathways, NAVISA connects you to opportunities worldwide.
           </p>
         </div>
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
           {pathways.map((pathway, index) => (
             <Card 
               key={index} 
@@ -62,7 +62,7 @@ const Features = () => {
         <div className="text-center">
           <Button 
             onClick={handleLearnMore}
-            className="bg-white hover:bg-white/90 text-black px-8 py-6 text-lg inline-flex items-center gap-2"
+            className="bg-white hover:bg-white/90 text-black px-6 lg:px-8 py-4 lg:py-6 text-base lg:text-lg inline-flex items-center gap-2"
           >
             Learn More
             <ArrowRight className="w-5 h-5" />

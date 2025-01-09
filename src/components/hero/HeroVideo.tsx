@@ -18,7 +18,7 @@ const HeroVideo = () => {
   }, []);
 
   return (
-    <div className="relative h-full w-full overflow-hidden">
+    <div className="relative h-full w-full">
       {videos.map((video, index) => (
         <div
           key={index}
@@ -32,6 +32,7 @@ const HeroVideo = () => {
             muted
             loop
             playsInline
+            style={{ objectFit: 'cover' }}
           >
             <source src={video} type="video/mp4" />
             Your browser does not support the video tag.

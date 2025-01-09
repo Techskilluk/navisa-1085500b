@@ -11,7 +11,7 @@ const Hero = () => {
         </div>
         
         {/* Right side - Video */}
-        <div className="w-full lg:w-1/2 lg:fixed lg:right-0 lg:top-0 lg:bottom-0 h-[50vh] lg:h-screen">
+        <div className="w-full lg:w-1/2 h-[50vh] lg:h-screen fixed lg:relative right-0 top-0">
           <HeroVideo />
         </div>
       </div>

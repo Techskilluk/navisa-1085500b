@@ -37,8 +37,8 @@ const DashboardSidebar = () => {
   const { signOut } = useAuth();
 
   return (
-    <aside className="h-full min-h-screen w-64 bg-card border-r border-border/10">
-      <div className="p-6 hidden lg:block">
+    <aside className="fixed left-0 top-0 h-screen w-64 bg-card border-r border-border/10">
+      <div className="p-6">
         <Link to="/" className="flex items-center gap-2">
           <img src="/navisa-logo.svg" alt="Navisa" className="h-8" />
         </Link>
@@ -52,7 +52,7 @@ const DashboardSidebar = () => {
                 <Link
                   to={item.path}
                   className={cn(
-                    "flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors min-h-[44px]",
+                    "flex items-center gap-3 px-4 py-2 rounded-lg text-sm font-medium transition-colors",
                     location.pathname === item.path
                       ? "bg-accent/10 text-accent"
                       : "text-muted-foreground hover:text-accent hover:bg-accent/5"
@@ -69,7 +69,7 @@ const DashboardSidebar = () => {
       <div className="absolute bottom-8 left-0 right-0 px-4">
         <button
           onClick={() => signOut()}
-          className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-muted-foreground hover:text-accent hover:bg-accent/5 transition-colors min-h-[44px]"
+          className="w-full flex items-center gap-3 px-4 py-2 rounded-lg text-sm font-medium text-muted-foreground hover:text-accent hover:bg-accent/5 transition-colors"
         >
           <LogOut className="h-5 w-5" />
           Log out

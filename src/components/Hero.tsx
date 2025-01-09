@@ -26,10 +26,10 @@ const Hero = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col lg:flex-row items-center justify-center px-4 pt-24 lg:pt-0 bg-background">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 w-full">
-        <div className="space-y-6 lg:space-y-8 text-center lg:text-left order-2 lg:order-1">
-          <h1 className="text-3xl lg:text-6xl font-bold text-white leading-tight">
+    <div className="min-h-screen flex items-center justify-center px-4 pt-20 lg:pt-0 bg-background">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div className="space-y-8 text-center lg:text-left">
+          <h1 className="text-4xl lg:text-6xl font-bold text-white leading-tight">
             Transform Your Career Across Borders
           </h1>
           <p className="text-base lg:text-lg text-white/80 max-w-xl mx-auto lg:mx-0">
@@ -37,16 +37,16 @@ const Hero = () => {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
             <Button 
-              className="px-6 py-4 text-base lg:text-lg bg-white text-black hover:bg-white/90 flex items-center gap-2 w-full sm:w-auto"
+              className="px-6 lg:px-8 py-4 lg:py-6 text-base lg:text-lg bg-white text-black hover:bg-white/90 flex items-center gap-2"
               onClick={handleEligibilityCheck}
             >
               Begin Your Global Journey
               <ArrowRight className="w-5 h-5 text-black" />
             </Button>
-            <Link to="/enterprise" className="w-full sm:w-auto">
+            <Link to="/enterprise">
               <Button 
                 variant="outline"
-                className="px-6 py-4 text-base lg:text-lg border-white text-white hover:bg-white/10 flex items-center gap-2 w-full"
+                className="px-6 lg:px-8 py-4 lg:py-6 text-base lg:text-lg border-white text-white hover:bg-white/10 flex items-center gap-2"
               >
                 For Businesses
                 <Building className="w-5 h-5" />
@@ -55,21 +55,21 @@ const Hero = () => {
           </div>
           <div className="grid grid-cols-3 gap-4 lg:gap-8 pt-8">
             <div>
-              <div className="text-xl lg:text-3xl font-bold text-white">150+</div>
+              <div className="text-2xl lg:text-3xl font-bold text-white">150+</div>
               <div className="text-sm lg:text-base text-white/60">Success Stories</div>
             </div>
             <div>
-              <div className="text-xl lg:text-3xl font-bold text-white">35+</div>
+              <div className="text-2xl lg:text-3xl font-bold text-white">35+</div>
               <div className="text-sm lg:text-base text-white/60">Countries</div>
             </div>
             <div>
-              <div className="text-xl lg:text-3xl font-bold text-white">24/7</div>
+              <div className="text-2xl lg:text-3xl font-bold text-white">24/7</div>
               <div className="text-sm lg:text-base text-white/60">Expert Support</div>
             </div>
           </div>
         </div>
-        <div className="relative mt-8 lg:mt-0 order-1 lg:order-2">
-          <div className="relative z-10 rounded-3xl overflow-hidden shadow-2xl h-[250px] sm:h-[300px] lg:h-[600px]">
+        <div className="relative mt-8 lg:mt-0">
+          <div className="relative z-10 rounded-3xl overflow-hidden shadow-2xl h-[300px] lg:h-[600px]">
             {videos.map((video, index) => (
               <div
                 key={index}

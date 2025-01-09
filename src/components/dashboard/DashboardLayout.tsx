@@ -13,7 +13,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background pt-16"> {/* Added pt-16 for navbar height */}
       <DashboardSidebar />
       <div className="ml-64 p-8">
         <header className="flex flex-col md:flex-row md:justify-between md:items-center gap-4 mb-8">

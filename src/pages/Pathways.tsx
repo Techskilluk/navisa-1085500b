@@ -1,6 +1,6 @@
 import PageHeader from "@/components/PageHeader";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Globe, Flag, Passport } from "lucide-react";
+import { ArrowRight, Globe, Flag, Landmark } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const Pathways = () => {
@@ -44,7 +44,7 @@ const Pathways = () => {
           {/* EB-1/EB-2 */}
           <div className="bg-accent/5 rounded-xl p-8 space-y-4 hover:bg-accent/10 transition-colors">
             <div className="flex items-center gap-3 mb-2">
-              <Passport className="h-6 w-6 text-primary" />
+              <Landmark className="h-6 w-6 text-primary" />
               <h3 className="text-2xl font-bold text-white">EB-1/EB-2 (USA)</h3>
             </div>
             <p className="text-white/60">For professionals with extraordinary abilities or exceptional achievements in fields like science, business, or arts who want to stay in the U.S.</p>

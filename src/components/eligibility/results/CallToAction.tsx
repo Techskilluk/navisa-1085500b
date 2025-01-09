@@ -7,6 +7,11 @@ interface CallToActionProps {
 }
 
 const CallToAction = ({ onBookConsultation }: CallToActionProps) => {
+  const handleBookConsultation = () => {
+    window.open('https://calendly.com/techskilluk/techskilluk-consultation', '_blank');
+    onBookConsultation(); // Keep the existing callback for any side effects
+  };
+
   return (
     <Card className="p-8 bg-accent/10">
       <div className="text-center space-y-4">
@@ -16,7 +21,7 @@ const CallToAction = ({ onBookConsultation }: CallToActionProps) => {
           and create a personalized immigration strategy.
         </p>
         <Button 
-          onClick={onBookConsultation}
+          onClick={handleBookConsultation}
           size="lg"
           className="bg-secondary hover:bg-secondary/90 text-secondary-foreground space-x-2 px-6 py-4 text-base rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl"
         >

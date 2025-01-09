@@ -14,13 +14,13 @@ interface AuthFormProps {
 const AuthForm = ({ error: propError, preserveFormData }: AuthFormProps) => {
   console.log("Auth form rendered with error:", propError);
   const { error, setAuthError } = useAuthError(propError);
+  // Update redirectTo to use the current origin
   const redirectTo = `${window.location.origin}/signin`;
 
   useEffect(() => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       console.log("Auth state changed in AuthForm:", event, session);
       if (event === 'USER_UPDATED' || event === 'SIGNED_IN') {
-        // Clear any existing errors when user successfully signs in
         setAuthError("");
       }
     });

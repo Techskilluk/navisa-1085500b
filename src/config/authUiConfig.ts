@@ -6,7 +6,7 @@ export const authUiConfig = {
     default: {
       colors: {
         brand: '#141413',
-        brandAccent: '#8989DE',
+        brandAccent: '#FFFFFF',
         inputBackground: 'white',
         inputBorder: '#E6E4DD',
         inputText: '#141413',

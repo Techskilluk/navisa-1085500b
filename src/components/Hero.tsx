@@ -4,9 +4,14 @@ import HeroVideo from "./hero/HeroVideo";
 const Hero = () => {
   return (
     <div className="relative min-h-screen bg-background">
-      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 pt-20 lg:pt-32">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      <div className="flex flex-col lg:flex-row min-h-screen">
+        {/* Left Panel */}
+        <div className="w-full lg:w-1/2 bg-[#F8F8F8] dark:bg-background p-8 lg:p-16 flex items-center justify-center">
           <HeroContent />
+        </div>
+        
+        {/* Right Panel */}
+        <div className="w-full lg:w-1/2 relative">
           <HeroVideo />
         </div>
       </div>

@@ -18,7 +18,7 @@ const CallToAction = ({ onBookConsultation }: CallToActionProps) => {
         <Button 
           onClick={onBookConsultation}
           size="lg"
-          className="bg-accent hover:bg-accent/90 space-x-2 px-6 py-4 text-base rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl"
+          className="bg-secondary hover:bg-secondary/90 text-secondary-foreground space-x-2 px-6 py-4 text-base rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl"
         >
           <Calendar className="h-5 w-5" />
           <span>Book Immigration Consultation</span>

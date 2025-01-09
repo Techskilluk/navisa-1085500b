@@ -2,6 +2,13 @@ import { Card } from "@/components/ui/card";
 import { Quote } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 
 const Testimonials = () => {
   const testimonials = [
@@ -32,26 +39,34 @@ const Testimonials = () => {
         <p className="text-lg text-white/80 text-center mb-12 max-w-2xl mx-auto">
           Hear from professionals who achieved global career success with NAVISA's help.
         </p>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-          {testimonials.map((testimonial, index) => (
-            <Card key={index} className="p-8 hover-lift glass-effect">
-              <div className="flex items-start gap-4 mb-6">
-                <Avatar className="w-16 h-16 border-2 border-accent/20">
-                  <AvatarImage src={testimonial.avatar} alt={testimonial.author} />
-                  <AvatarFallback>{testimonial.author[0]}</AvatarFallback>
-                </Avatar>
-                <div className="flex-1">
-                  <Quote className="w-8 h-8 text-accent/60 mb-2" />
-                  <p className="text-white/90 text-lg italic mb-4">{testimonial.quote}</p>
-                  <div className="flex items-center gap-2">
-                    <span className="text-white font-semibold">– {testimonial.author}</span>
-                    <span className="text-white/60">{testimonial.role}</span>
+        
+        <Carousel className="w-full max-w-4xl mx-auto mb-12">
+          <CarouselContent>
+            {testimonials.map((testimonial, index) => (
+              <CarouselItem key={index}>
+                <Card className="p-8 hover-lift glass-effect mx-4">
+                  <div className="flex items-start gap-4 mb-6">
+                    <Avatar className="w-16 h-16 border-2 border-accent/20">
+                      <AvatarImage src={testimonial.avatar} alt={testimonial.author} />
+                      <AvatarFallback>{testimonial.author[0]}</AvatarFallback>
+                    </Avatar>
+                    <div className="flex-1">
+                      <Quote className="w-8 h-8 text-accent/60 mb-2" />
+                      <p className="text-white/90 text-lg italic mb-4">{testimonial.quote}</p>
+                      <div className="flex items-center gap-2">
+                        <span className="text-white font-semibold">– {testimonial.author}</span>
+                        <span className="text-white/60">{testimonial.role}</span>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
-            </Card>
-          ))}
-        </div>
+                </Card>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          <CarouselPrevious className="hidden md:flex" />
+          <CarouselNext className="hidden md:flex" />
+        </Carousel>
+
         <div className="text-center">
           <Button 
             variant="secondary" 

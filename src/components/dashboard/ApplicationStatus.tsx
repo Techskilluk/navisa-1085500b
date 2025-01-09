@@ -3,6 +3,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/contexts/AuthContext";
 
 interface Stage {
   label: string;
@@ -13,35 +15,80 @@ interface Stage {
 
 const ApplicationStatus = () => {
   const location = useLocation();
+  const { user } = useAuth();
   const [stages, setStages] = useState<Stage[]>([]);
   
   useEffect(() => {
-    const submission = location.state?.documentSubmission;
-    
-    setStages([
-      {
-        label: "Documents Uploaded",
-        status: submission ? "completed" : "pending",
-        timestamp: submission?.timestamp,
-        tooltip: "All required documents have been successfully uploaded"
-      },
-      {
-        label: "Expert Review",
-        status: submission ? "active" : "pending",
-        tooltip: "Documents currently under review by our team"
-      },
-      {
-        label: "Application Submitted",
-        status: "pending",
-        tooltip: "Pending review completion"
-      },
-      {
-        label: "Final Result",
-        status: "pending",
-        tooltip: "Awaiting visa decision"
+    const fetchDocumentStatus = async () => {
+      if (!user) return;
+
+      const { data: documents, error } = await supabase
+        .from('documents')
+        .select('*')
+        .eq('user_id', user.id)
+        .order('created_at', { ascending: false })
+        .limit(1);
+
+      console.log('Fetched documents:', documents);
+      console.log('Fetch error:', error);
+
+      if (error) {
+        console.error('Error fetching documents:', error);
+        return;
       }
-    ]);
-  }, [location.state]);
+
+      const latestDocument = documents?.[0];
+      
+      setStages([
+        {
+          label: "Documents Uploaded",
+          status: latestDocument ? "completed" : "pending",
+          timestamp: latestDocument?.created_at,
+          tooltip: "All required documents have been successfully uploaded"
+        },
+        {
+          label: "Expert Review",
+          status: latestDocument?.status === 'pending' ? "active" : 
+                 latestDocument?.status === 'approved' ? "completed" : "pending",
+          tooltip: "Documents currently under review by our team"
+        },
+        {
+          label: "Application Submitted",
+          status: latestDocument?.status === 'approved' ? "completed" : "pending",
+          tooltip: "Review completion status"
+        },
+        {
+          label: "Final Result",
+          status: latestDocument?.status === 'approved' ? "active" : "pending",
+          tooltip: "Awaiting final visa decision"
+        }
+      ]);
+    };
+
+    fetchDocumentStatus();
+
+    // Set up real-time subscription
+    const channel = supabase
+      .channel('document-updates')
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'documents',
+          filter: `user_id=eq.${user?.id}`
+        },
+        () => {
+          console.log('Document status changed, refreshing...');
+          fetchDocumentStatus();
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [user, location.state]);
 
   return (
     <Card className="bg-card/50 backdrop-blur-sm border-accent/20">
@@ -88,7 +135,7 @@ const ApplicationStatus = () => {
                   </div>
                   {stage.timestamp && (
                     <span className="text-sm text-muted-foreground">
-                      {stage.timestamp}
+                      {new Date(stage.timestamp).toLocaleDateString()}
                     </span>
                   )}
                 </div>

@@ -15,7 +15,6 @@ interface AuthFormProps {
 const AuthForm = ({ error: propError, preserveFormData }: AuthFormProps) => {
   console.log("Auth form rendered with error:", propError);
   const { error, setAuthError } = useAuthError(propError);
-  // Update redirectTo to use the current origin
   const redirectTo = `${window.location.origin}/signin`;
 
   useEffect(() => {
@@ -52,7 +51,7 @@ const AuthForm = ({ error: propError, preserveFormData }: AuthFormProps) => {
         <div className="mt-6 text-center space-y-2">
           <Link 
             to="/reset-password"
-            className="text-sm text-gray-600 hover:text-gray-900 block"
+            className="text-primary hover:text-[#9b87f5] underline transition-colors duration-300 cursor-pointer text-sm block"
           >
             Forgot your password?
           </Link>
@@ -60,7 +59,7 @@ const AuthForm = ({ error: propError, preserveFormData }: AuthFormProps) => {
             Don't have an account?{" "}
             <Link 
               to="/signin?view=sign_up" 
-              className="font-medium text-primary hover:text-primary/80"
+              className="font-medium text-primary hover:text-[#9b87f5] underline transition-colors duration-300 cursor-pointer"
             >
               Sign up
             </Link>

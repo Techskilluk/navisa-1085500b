@@ -30,7 +30,7 @@ const BookingCalendar = ({ timeZone, onBookingConfirmed }: BookingCalendarProps)
         </CardTitle>
       </CardHeader>
       <CardContent className="p-6">
-        <div className="w-full min-h-[600px]">
+        <div className="w-full">
           <Cal 
             calLink="techskilluk/techskilluk-consultation"
             style={{height: "100%", width: "100%", overflow: "hidden"}}

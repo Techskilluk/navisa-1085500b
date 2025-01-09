@@ -8,6 +8,7 @@ import Index from "./pages/Index";
 import SignIn from "./pages/SignIn";
 import EligibilityAssessment from "./pages/EligibilityAssessment";
 import HowItWorks from "./pages/HowItWorks";
+import Pathways from "./pages/Pathways";
 
 const queryClient = new QueryClient();
 
@@ -22,6 +23,7 @@ const App = () => (
             <Route path="/signin" element={<SignIn />} />
             <Route path="/eligibility" element={<EligibilityAssessment />} />
             <Route path="/how-it-works" element={<HowItWorks />} />
+            <Route path="/pathways" element={<Pathways />} />
             <Route path="/" element={<Index />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>

@@ -16,7 +16,7 @@ const Navbar = () => {
           <span className="text-2xl font-bold text-white">Navisa</span>
         </div>
         <div className="hidden md:flex items-center space-x-8">
-          <a href="#" className="text-white/80 hover:text-white transition-colors">Pathways</a>
+          <Link to="/pathways" className="text-white/80 hover:text-white transition-colors">Pathways</Link>
           <Link to="/how-it-works" className="text-white/80 hover:text-white transition-colors">How it works</Link>
           <Link to="/eligibility" className="text-white/80 hover:text-white transition-colors">Check your eligibility</Link>
           {user ? (

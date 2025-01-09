@@ -57,8 +57,9 @@ const DocumentUploadForm = ({ visaType, documents, onFileUpload }: DocumentUploa
         const { error: uploadError } = await supabase.storage
           .from('documents')
           .upload(filePath, file, {
-            onUploadProgress: (progress) => {
-              const percentage = (progress.loaded / progress.total) * 100;
+            upsert: false,
+            onProgress: ({ loaded, total }) => {
+              const percentage = (loaded / total) * 100;
               setUploadProgress(prev => ({ ...prev, [type]: percentage }));
               console.log(`Upload progress for ${type}: ${percentage}%`);
             }

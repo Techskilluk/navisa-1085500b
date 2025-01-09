@@ -33,15 +33,15 @@ export default {
           foreground: "#141413",
         },
         accent: {
-          DEFAULT: "#F2FF44",  // Updated to match sign out button color
-          foreground: "#141413", // Updated to black for contrast
+          DEFAULT: "#8989DE",
+          foreground: "#FFFFFF",
         },
         muted: {
           DEFAULT: "#828179",
           foreground: "#FAFAF8",
         },
         card: {
-          DEFAULT: "#1A1B1E",
+          DEFAULT: "#1A1B1E",  // Slightly lighter background for cards
           foreground: "#FFFFFF",
         },
       },

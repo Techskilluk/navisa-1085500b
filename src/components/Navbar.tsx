@@ -20,16 +20,16 @@ const Navbar = () => {
           {user ? (
             <Button 
               onClick={() => signOut()} 
-              className="bg-[#F2FF44] text-black hover:bg-[#F2FF44]/90"
+              className="bg-[#F2FF44] text-black hover:bg-[#E2EF34]"
             >
               Sign out
-              <LogOut className="w-4 h-4 ml-2 text-black" />
+              <LogOut className="w-4 h-4 ml-2" />
             </Button>
           ) : (
             <Link to="/signin">
-              <Button className="bg-[#F2FF44] text-black hover:bg-[#F2FF44]/90">
+              <Button className="bg-[#F2FF44] text-black hover:bg-[#E2EF34]">
                 Sign in
-                <LogIn className="w-4 h-4 ml-2 text-black" />
+                <LogIn className="w-4 h-4 ml-2" />
               </Button>
             </Link>
           )}

@@ -17,13 +17,13 @@ const Footer = () => {
             </p>
             <div className="flex space-x-4">
               <Button variant="ghost" size="icon" className="hover:bg-white/10">
-                <Twitter className="w-5 h-5 text-white" />
+                <Twitter className="w-5 h-5" />
               </Button>
               <Button variant="ghost" size="icon" className="hover:bg-white/10">
-                <Github className="w-5 h-5 text-white" />
+                <Github className="w-5 h-5" />
               </Button>
               <Button variant="ghost" size="icon" className="hover:bg-white/10">
-                <Linkedin className="w-5 h-5 text-white" />
+                <Linkedin className="w-5 h-5" />
               </Button>
             </div>
           </div>

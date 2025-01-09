@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Home } from "lucide-react";
-import { useNavigate, Link } from "react-router-dom";
+import { ArrowRight } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 const Hero = () => {
@@ -27,20 +27,8 @@ const Hero = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center px-4 pt-20 lg:pt-0 bg-background">
-      <div className="absolute top-4 left-4">
-        <Link to="/" className="flex items-center space-x-2 text-white hover:text-white/80 transition-colors">
-          <Home className="w-6 h-6" />
-          <span className="font-medium">Home</span>
-        </Link>
-      </div>
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
         <div className="space-y-8 text-center lg:text-left">
-          <div className="flex items-center justify-center lg:justify-start mb-6">
-            <Link to="/" className="flex items-center space-x-3">
-              <img src="/navisa-logo.svg" alt="Navisa" className="h-10 w-auto" />
-              <span className="text-2xl font-bold text-white">NAVISA</span>
-            </Link>
-          </div>
           <h1 className="text-4xl lg:text-6xl font-bold text-white leading-tight">
             Transform Your Career Across Borders
           </h1>

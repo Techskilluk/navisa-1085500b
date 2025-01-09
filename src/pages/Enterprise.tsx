@@ -1,16 +1,27 @@
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Building, Globe, Users, LineChart, Briefcase, UserPlus, ListChecks, FolderOpen, UserRound } from "lucide-react";
+import { Card } from "@/components/ui/card";
+import {
+  ArrowRight,
+  UserPlus,
+  ListChecks,
+  FolderOpen,
+  UserRound,
+  ChevronDown,
+  ChevronUp,
+} from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import PageHeader from "@/components/PageHeader";
+import { useState } from "react";
 
 const Enterprise = () => {
   const navigate = useNavigate();
+  const [expandedFeature, setExpandedFeature] = useState<number | null>(null);
 
   const features = [
     {
       icon: <UserPlus className="w-12 h-12 text-white/80" />,
       title: "Customer Onboarding Made Easy",
-      description: "Streamline your client intake process with our intuitive onboarding system. Automate document collection, verification, and initial assessments to save time and reduce manual work.",
+      shortDesc: "Streamline your client intake process with our intuitive system",
       benefits: [
         "Automated document collection",
         "Smart form validation",
@@ -21,7 +32,7 @@ const Enterprise = () => {
     {
       icon: <ListChecks className="w-12 h-12 text-white/80" />,
       title: "Application Tracking & Management",
-      description: "Keep track of all your immigration cases in one centralized platform. Monitor progress, set reminders, and manage deadlines efficiently with our comprehensive tracking system.",
+      shortDesc: "Monitor all immigration cases in one centralized platform",
       benefits: [
         "Real-time status updates",
         "Automated deadline reminders",
@@ -32,7 +43,7 @@ const Enterprise = () => {
     {
       icon: <FolderOpen className="w-12 h-12 text-white/80" />,
       title: "Resource Hub",
-      description: "Access a comprehensive library of immigration resources, templates, and country-specific documentation requirements. Stay updated with the latest immigration policies and procedures.",
+      shortDesc: "Access comprehensive immigration resources and templates",
       benefits: [
         "Document templates library",
         "Country-specific guides",
@@ -43,7 +54,7 @@ const Enterprise = () => {
     {
       icon: <UserRound className="w-12 h-12 text-white/80" />,
       title: "Consultant Marketplace",
-      description: "Connect with specialized immigration consultants worldwide. Expand your service offerings and collaborate with experts to handle complex cases across different jurisdictions.",
+      shortDesc: "Connect with specialized immigration consultants worldwide",
       benefits: [
         "Expert network access",
         "Secure collaboration tools",
@@ -52,6 +63,10 @@ const Enterprise = () => {
       ]
     }
   ];
+
+  const toggleFeature = (index: number) => {
+    setExpandedFeature(expandedFeature === index ? null : index);
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -62,43 +77,68 @@ const Enterprise = () => {
         ctaLink="/enterprise/signup"
       />
 
-      {/* Features Grid */}
+      {/* Interactive Features Grid */}
       <section className="py-24 px-4 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-accent/5 to-background/95"></div>
         <div className="max-w-7xl mx-auto relative">
           <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold mb-4 text-white">Comprehensive Features</h2>
+            <h2 className="text-3xl font-bold mb-4 text-white">
+              Comprehensive Features
+            </h2>
             <p className="text-lg text-white/70 max-w-2xl mx-auto">
               Everything you need to manage your immigration practice effectively
             </p>
           </div>
+          
           <div className="grid md:grid-cols-2 gap-8">
             {features.map((feature, index) => (
-              <div 
+              <Card 
                 key={index}
-                className="glass-effect p-8 rounded-xl hover-lift relative overflow-hidden group"
+                className={`glass-effect transition-all duration-300 ${
+                  expandedFeature === index 
+                    ? 'bg-gradient-to-br from-white/10 to-white/5' 
+                    : 'hover:bg-white/5'
+                }`}
+                onClick={() => toggleFeature(index)}
               >
-                <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                <div className="relative z-10">
-                  <div className="w-16 h-16 rounded-2xl bg-white/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                    {feature.icon}
+                <div className="p-8 cursor-pointer">
+                  <div className="flex items-start justify-between">
+                    <div className="flex items-center gap-4">
+                      <div className="w-16 h-16 rounded-2xl bg-white/10 flex items-center justify-center">
+                        {feature.icon}
+                      </div>
+                      <div className="flex-1">
+                        <h3 className="text-xl font-semibold text-white mb-2">
+                          {feature.title}
+                        </h3>
+                        <p className="text-white/70">
+                          {feature.shortDesc}
+                        </p>
+                      </div>
+                    </div>
+                    {expandedFeature === index ? (
+                      <ChevronUp className="w-6 h-6 text-white/60" />
+                    ) : (
+                      <ChevronDown className="w-6 h-6 text-white/60" />
+                    )}
                   </div>
-                  <h3 className="text-2xl font-semibold mb-4 text-white">
-                    {feature.title}
-                  </h3>
-                  <p className="text-white/70 mb-6 leading-relaxed">
-                    {feature.description}
-                  </p>
-                  <ul className="space-y-2">
-                    {feature.benefits.map((benefit, idx) => (
-                      <li key={idx} className="flex items-center text-white/60">
-                        <div className="w-1.5 h-1.5 rounded-full bg-white/40 mr-2"></div>
-                        {benefit}
-                      </li>
-                    ))}
-                  </ul>
+                  
+                  <div className={`grid grid-rows-[0fr] transition-all duration-300 ${
+                    expandedFeature === index ? 'grid-rows-[1fr] mt-6' : ''
+                  }`}>
+                    <div className="overflow-hidden">
+                      <ul className="space-y-3">
+                        {feature.benefits.map((benefit, idx) => (
+                          <li key={idx} className="flex items-center text-white/60">
+                            <div className="w-1.5 h-1.5 rounded-full bg-white/40 mr-2"></div>
+                            {benefit}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
                 </div>
-              </div>
+              </Card>
             ))}
           </div>
         </div>

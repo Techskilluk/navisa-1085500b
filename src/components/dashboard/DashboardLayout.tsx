@@ -62,7 +62,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
       
       <div className="lg:ml-64 min-h-screen flex flex-col">
         {/* Banner Section */}
-        <header className="w-full bg-card/50 backdrop-blur-sm border-b border-border/10 p-6 lg:p-8 sticky top-0 z-10">
+        <header className="w-full bg-card/50 backdrop-blur-sm border-b border-border/10 p-6 lg:p-8 sticky top-0 z-30">
           <div className="max-w-7xl mx-auto">
             <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4">
               <div>
@@ -77,8 +77,8 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
           </div>
         </header>
 
-        {/* Action Buttons Section */}
-        <div className="w-full bg-background/50 border-b border-border/10 p-4">
+        {/* Action Buttons Section - Now positioned below the banner with proper spacing */}
+        <div className="w-full bg-background/50 border-b border-border/10 p-4 mt-4">
           <div className="max-w-7xl mx-auto flex flex-col sm:flex-row justify-center gap-3">
             <Button
               onClick={handleBookConsultation}
@@ -99,17 +99,17 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
           </div>
         </div>
 
-        {/* Selected Visa Details */}
+        {/* Selected Visa Details - Added spacing */}
         {selectedVisa && (
-          <div className="w-full p-4 animate-fade-in">
+          <div className="w-full p-4 mt-4 animate-fade-in">
             <div className="max-w-7xl mx-auto">
               <SelectedVisaDetails visa={selectedVisa} />
             </div>
           </div>
         )}
 
-        {/* Main Content */}
-        <main className="flex-1 p-6 lg:p-8">
+        {/* Main Content - Added spacing */}
+        <main className="flex-1 p-6 lg:p-8 mt-4">
           <div className="max-w-7xl mx-auto">
             {children}
           </div>

@@ -49,7 +49,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
       
       <div className="lg:ml-64 min-h-screen flex flex-col">
         {/* Banner Section */}
-        <header className="w-full bg-card/50 backdrop-blur-sm border-b border-border/10 p-6 lg:p-8 sticky top-0 z-10">
+        <header className="w-full bg-card/50 backdrop-blur-sm border-b border-border/10 p-6 lg:p-8">
           <div className="max-w-7xl mx-auto">
             <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4">
               <div>
@@ -60,31 +60,28 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
                   Manage your visa application process and track your progress
                 </p>
               </div>
+              <div className="flex flex-col sm:flex-row gap-3">
+                <Button
+                  onClick={handleBookConsultation}
+                  className="bg-secondary hover:bg-secondary/90 text-secondary-foreground w-full sm:w-auto"
+                  size="lg"
+                >
+                  <Calendar className="w-4 h-4 mr-2" />
+                  Book Consultation
+                </Button>
+                <Button
+                  onClick={() => navigate('/eligibility')}
+                  variant="outline"
+                  size="lg"
+                  className="w-full sm:w-auto"
+                >
+                  <BookOpen className="w-4 h-4 mr-2" />
+                  Start Application
+                </Button>
+              </div>
             </div>
           </div>
         </header>
-
-        {/* Action Buttons Section */}
-        <div className="w-full bg-background/50 border-b border-border/10 p-4">
-          <div className="max-w-7xl mx-auto flex flex-col sm:flex-row justify-center gap-3">
-            <Button
-              onClick={handleBookConsultation}
-              className="bg-secondary hover:bg-secondary/90 text-secondary-foreground"
-              size="lg"
-            >
-              <Calendar className="w-4 h-4 mr-2" />
-              Book Consultation
-            </Button>
-            <Button
-              onClick={() => navigate('/eligibility')}
-              variant="outline"
-              size="lg"
-            >
-              <BookOpen className="w-4 h-4 mr-2" />
-              Start Application
-            </Button>
-          </div>
-        </div>
 
         {/* Main Content */}
         <main className="flex-1 p-6 lg:p-8">

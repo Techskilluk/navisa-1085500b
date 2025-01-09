@@ -1,5 +1,5 @@
 import { Card } from "@/components/ui/card";
-import { Briefcase, Building2, GraduationCap } from "lucide-react";
+import { Briefcase, Building2, GraduationCap, Mail, Phone, Clock } from "lucide-react";
 import { Button } from "./ui/button";
 
 const ServiceCards = () => {
@@ -21,6 +21,27 @@ const ServiceCards = () => {
       title: "Global Opportunities",
       description: "Unlock access to international job markets in tech, business, healthcare, academia, and more.",
       cta: "Explore Opportunities"
+    },
+    {
+      icon: <Mail className="w-6 h-6 text-white" />,
+      title: "Let's Get Started",
+      description: (
+        <div className="space-y-3">
+          <div className="flex items-center gap-2">
+            <Mail className="w-4 h-4 text-white/60" />
+            <span>contact@navisa.com</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <Phone className="w-4 h-4 text-white/60" />
+            <span>+447816 247864 | +234 901 546 6402</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <Clock className="w-4 h-4 text-white/60" />
+            <span>Monday–Friday, 9 AM–5 PM (GMT)</span>
+          </div>
+        </div>
+      ),
+      cta: "Contact Us"
     }
   ];
 
@@ -36,7 +57,7 @@ const ServiceCards = () => {
             Your trusted partner in achieving international success
           </p>
         </div>
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
           {services.map((service, index) => (
             <Card 
               key={index} 
@@ -47,7 +68,7 @@ const ServiceCards = () => {
                   {service.icon}
                 </div>
                 <h3 className="text-xl font-semibold mb-3 text-white">{service.title}</h3>
-                <p className="text-white/60 mb-6">{service.description}</p>
+                <div className="text-white/60 mb-6">{service.description}</div>
               </div>
               <Button variant="outline" className="w-full bg-white text-black hover:bg-white/90 transition-colors">
                 {service.cta}

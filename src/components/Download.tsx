@@ -20,11 +20,11 @@ const Download = () => {
             </Button>
             <Button className="px-8 py-6 text-lg glass-effect hover:bg-white/10 flex items-center gap-2">
               <Phone className="w-5 h-5 text-white" />
-              +1 (800) 123-4567
+              +447816247864
             </Button>
             <Button className="px-8 py-6 text-lg glass-effect hover:bg-white/10 flex items-center gap-2">
               <Globe className="w-5 h-5 text-white" />
-              Visit Website
+              Contact Us
             </Button>
           </div>
         </div>

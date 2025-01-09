@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import DashboardLayout from "@/components/dashboard/DashboardLayout";
@@ -9,18 +9,17 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { FileText } from "lucide-react";
-
-const data = [
-  { name: 'EB-1/EB-2', value: 75 },
-  { name: 'Express Entry', value: 85 },
-  { name: 'Global Talent', value: 65 },
-];
+import VisaSelectionModal from "@/components/visa/VisaSelectionModal";
+import SelectedVisaDetails from "@/components/visa/SelectedVisaDetails";
+import { useToast } from "@/components/ui/use-toast";
 
 const Dashboard = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
+  const { toast } = useToast();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedVisa, setSelectedVisa] = useState<any>(null);
 
   useEffect(() => {
     if (!user) {
@@ -28,51 +27,36 @@ const Dashboard = () => {
     }
   }, [user, navigate]);
 
+  const handleStartApplication = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleVisaSelect = (visa: any) => {
+    setSelectedVisa(visa);
+    setIsModalOpen(false);
+    toast({
+      title: "Visa Selected",
+      description: `You've selected the ${visa.name} pathway. Let's get started!`,
+    });
+  };
+
+  const handleDeleteVisa = () => {
+    setSelectedVisa(null);
+    toast({
+      title: "Application Removed",
+      description: "Your visa application has been removed.",
+    });
+  };
+
+  const handleContinueApplication = () => {
+    navigate("/eligibility");
+  };
+
   if (!user) return null;
 
   return (
-    <DashboardLayout>
+    <DashboardLayout onStartApplication={handleStartApplication}>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <Card className="bg-card">
-          <CardHeader>
-            <CardTitle>Success Probability</CardTitle>
-            <CardDescription>
-              Based on your profile assessment
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="h-[300px]">
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={data}>
-                  <CartesianGrid strokeDasharray="3 3" className="stroke-border/50" />
-                  <XAxis 
-                    dataKey="name" 
-                    tick={{ fill: '#FFFFFF', fontSize: 12 }}
-                    tickLine={{ stroke: '#FFFFFF' }}
-                  />
-                  <YAxis 
-                    tick={{ fill: '#FFFFFF', fontSize: 12 }}
-                    tickLine={{ stroke: '#FFFFFF' }}
-                  />
-                  <Tooltip 
-                    contentStyle={{ 
-                      backgroundColor: '#1A1B1E',
-                      border: '1px solid rgba(255,255,255,0.1)',
-                      borderRadius: '8px',
-                      color: '#FFFFFF'
-                    }}
-                  />
-                  <Bar 
-                    dataKey="value" 
-                    fill="#FFFFFF"
-                    radius={[4, 4, 0, 0]}
-                  />
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
-          </CardContent>
-        </Card>
-
         <Card className="bg-card">
           <CardHeader>
             <CardTitle>Active Applications</CardTitle>
@@ -81,13 +65,29 @@ const Dashboard = () => {
             </CardDescription>
           </CardHeader>
           <CardContent className="flex flex-col items-center justify-center min-h-[300px] text-center">
-            <FileText className="h-16 w-16 text-muted mb-4" />
-            <p className="text-muted">
-              You currently do not have any active/pending applications
-            </p>
+            {!selectedVisa ? (
+              <>
+                <FileText className="h-16 w-16 text-muted mb-4" />
+                <p className="text-muted">
+                  You currently do not have any active/pending applications
+                </p>
+              </>
+            ) : (
+              <SelectedVisaDetails
+                visa={selectedVisa}
+                onContinue={handleContinueApplication}
+                onDelete={handleDeleteVisa}
+              />
+            )}
           </CardContent>
         </Card>
       </div>
+
+      <VisaSelectionModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onSelect={handleVisaSelect}
+      />
     </DashboardLayout>
   );
 };

@@ -4,7 +4,12 @@ import { useNavigate } from "react-router-dom";
 import DashboardSidebar from "./DashboardSidebar";
 import { BookOpen, Calendar } from "lucide-react";
 
-const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
+interface DashboardLayoutProps {
+  children: React.ReactNode;
+  onStartApplication?: () => void;
+}
+
+const DashboardLayout = ({ children, onStartApplication }: DashboardLayoutProps) => {
   const { user } = useAuth();
   const navigate = useNavigate();
 
@@ -13,7 +18,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   };
 
   return (
-    <div className="min-h-screen bg-background pt-16"> {/* Added pt-16 for navbar height */}
+    <div className="min-h-screen bg-background pt-16">
       <DashboardSidebar />
       <div className="ml-64 p-8">
         <header className="flex flex-col md:flex-row md:justify-between md:items-center gap-4 mb-8">
@@ -35,7 +40,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
               Book Consultation
             </Button>
             <Button
-              onClick={() => navigate('/eligibility')}
+              onClick={onStartApplication}
               variant="outline"
               size="lg"
               className="w-full sm:w-auto"

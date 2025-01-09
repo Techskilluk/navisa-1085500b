@@ -15,7 +15,7 @@ interface AuthFormProps {
 const AuthForm = ({ error: propError, preserveFormData }: AuthFormProps) => {
   console.log("Auth form rendered with error:", propError);
   const { error, setAuthError } = useAuthError(propError);
-  const redirectTo = 'https://navisa.lovable.app/signin';
+  const redirectTo = `${window.location.origin}/signin`;
   const [searchParams] = useSearchParams();
   const view = searchParams.get('view') === 'sign_up' ? 'sign_up' : 'sign_in';
 
@@ -48,6 +48,10 @@ const AuthForm = ({ error: propError, preserveFormData }: AuthFormProps) => {
           providers={[]}
           redirectTo={redirectTo}
           appearance={authUiConfig}
+          onError={(error) => {
+            console.error("Auth error:", error);
+            setAuthError(error.message);
+          }}
         />
 
         <div className="mt-6 text-center space-y-2">

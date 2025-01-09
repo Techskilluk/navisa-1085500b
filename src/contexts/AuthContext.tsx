@@ -23,6 +23,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
       setUser(session?.user ?? null);
+      if (session?.user) {
+        navigate("/dashboard");
+      }
     });
 
     // Listen for auth changes
@@ -38,7 +41,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           title: "Welcome back!",
           description: "You have successfully signed in.",
         });
-        navigate("/");
+        navigate("/dashboard");
       }
       if (event === "SIGNED_OUT") {
         toast({

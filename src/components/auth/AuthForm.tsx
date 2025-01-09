@@ -5,7 +5,7 @@ import { useAuthError } from "@/hooks/useAuthError";
 import { AuthFormHeader } from "./AuthFormHeader";
 import { authUiConfig } from "@/config/authUiConfig";
 import { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 
 interface AuthFormProps {
   error: string;
@@ -16,6 +16,8 @@ const AuthForm = ({ error: propError, preserveFormData }: AuthFormProps) => {
   console.log("Auth form rendered with error:", propError);
   const { error, setAuthError } = useAuthError(propError);
   const redirectTo = `${window.location.origin}/signin`;
+  const [searchParams] = useSearchParams();
+  const view = searchParams.get('view') === 'sign_up' ? 'sign_up' : 'sign_in';
 
   useEffect(() => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
@@ -41,7 +43,7 @@ const AuthForm = ({ error: propError, preserveFormData }: AuthFormProps) => {
 
         <Auth
           supabaseClient={supabase}
-          view="sign_in"
+          view={view}
           showLinks={true}
           providers={[]}
           redirectTo={redirectTo}

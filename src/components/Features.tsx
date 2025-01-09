@@ -5,25 +5,25 @@ import { Button } from "./ui/button";
 const Features = () => {
   const audiences = [
     {
-      icon: <Briefcase className="w-6 h-6 text-accent" />,
+      icon: <Briefcase className="w-6 h-6 text-white" />,
       title: "International Professionals",
       description: "Navigate visa processes, secure employment abroad, and settle with confidence. Perfect for skilled workers, tech professionals, and healthcare workers.",
       cta: "Book a Consultation"
     },
     {
-      icon: <Building2 className="w-6 h-6 text-accent" />,
+      icon: <Building2 className="w-6 h-6 text-white" />,
       title: "Employers & Recruiters",
       description: "Simplify sponsorship processes, streamline talent acquisition, and access end-to-end recruitment solutions for your global hiring needs.",
       cta: "Expand Your Team"
     },
     {
-      icon: <GraduationCap className="w-6 h-6 text-accent" />,
+      icon: <GraduationCap className="w-6 h-6 text-white" />,
       title: "Students & Institutions",
       description: "Get comprehensive study abroad assistance, visa guidance, and support for educational institutions in managing international students.",
       cta: "Start Your Journey"
     },
     {
-      icon: <Users className="w-6 h-6 text-accent" />,
+      icon: <Users className="w-6 h-6 text-white" />,
       title: "Immigration Consultants",
       description: "Access comprehensive resources, process management tools, and partnership opportunities to enhance your client services.",
       cta: "Partner With Us"
@@ -55,7 +55,7 @@ const Features = () => {
                 <h3 className="text-xl font-semibold mb-3 text-white">{audience.title}</h3>
                 <p className="text-white/60 mb-6">{audience.description}</p>
               </div>
-              <Button variant="outline" className="w-full hover:bg-white hover:text-black transition-colors">
+              <Button variant="outline" className="w-full hover:bg-[#F2FF44] hover:text-black transition-colors">
                 {audience.cta}
               </Button>
             </Card>

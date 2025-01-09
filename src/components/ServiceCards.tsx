@@ -74,7 +74,7 @@ const ServiceCards = () => {
               <ul className="space-y-3 mb-6">
                 {service.points.map((point, idx) => (
                   <li key={idx} className="text-white/80 text-sm flex items-start">
-                    <ArrowRight className="w-4 h-4 text-accent mr-2 mt-1 flex-shrink-0" />
+                    <ArrowRight className="w-4 h-4 text-white mr-2 mt-1 flex-shrink-0" />
                     <span>{point}</span>
                   </li>
                 ))}

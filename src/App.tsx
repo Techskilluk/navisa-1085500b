@@ -7,6 +7,7 @@ import { AuthProvider } from "@/contexts/AuthContext";
 import Index from "./pages/Index";
 import SignIn from "./pages/SignIn";
 import EligibilityAssessment from "./pages/EligibilityAssessment";
+import HowItWorks from "./pages/HowItWorks";
 
 const queryClient = new QueryClient();
 
@@ -20,6 +21,7 @@ const App = () => (
           <Routes>
             <Route path="/signin" element={<SignIn />} />
             <Route path="/eligibility" element={<EligibilityAssessment />} />
+            <Route path="/how-it-works" element={<HowItWorks />} />
             <Route path="/" element={<Index />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>

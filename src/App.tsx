@@ -7,6 +7,7 @@ import { AuthProvider } from "@/contexts/AuthContext";
 import Navbar from "@/components/Navbar";
 import Index from "./pages/Index";
 import SignIn from "./pages/SignIn";
+import Dashboard from "./pages/Dashboard";
 import EligibilityAssessment from "./pages/EligibilityAssessment";
 import HowItWorks from "./pages/HowItWorks";
 import Pathways from "./pages/Pathways";
@@ -18,17 +19,27 @@ const App = () => (
     <BrowserRouter>
       <AuthProvider>
         <TooltipProvider>
-          <Navbar />
+          <Routes>
+            <Route
+              path="/*"
+              element={
+                <>
+                  <Navbar />
+                  <Routes>
+                    <Route path="/signin" element={<SignIn />} />
+                    <Route path="/dashboard" element={<Dashboard />} />
+                    <Route path="/eligibility" element={<EligibilityAssessment />} />
+                    <Route path="/how-it-works" element={<HowItWorks />} />
+                    <Route path="/pathways" element={<Pathways />} />
+                    <Route path="/" element={<Index />} />
+                    <Route path="*" element={<Navigate to="/" replace />} />
+                  </Routes>
+                </>
+              }
+            />
+          </Routes>
           <Toaster />
           <Sonner />
-          <Routes>
-            <Route path="/signin" element={<SignIn />} />
-            <Route path="/eligibility" element={<EligibilityAssessment />} />
-            <Route path="/how-it-works" element={<HowItWorks />} />
-            <Route path="/pathways" element={<Pathways />} />
-            <Route path="/" element={<Index />} />
-            <Route path="*" element={<Navigate to="/" replace />} />
-          </Routes>
         </TooltipProvider>
       </AuthProvider>
     </BrowserRouter>

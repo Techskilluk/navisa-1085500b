@@ -1,60 +1,71 @@
-import { Shield, Users2, FileCheck, Network, Sparkles } from "lucide-react";
+import { ClipboardList, Users2, FileCheck, Network, Sparkles, Bot } from "lucide-react";
 import FeatureCard from "./FeatureCard";
 
 const features = [
   {
-    icon: <Shield className="w-12 h-12 text-white/80" />,
-    title: "Secure Document Management",
-    shortDesc: "Enterprise-grade security for all your immigration documents",
+    icon: <ClipboardList className="w-12 h-12 text-white/80" />,
+    title: "Customer Onboarding Made Easy",
+    shortDesc: "Streamlined client information collection and management",
     benefits: [
-      "End-to-end encryption",
-      "Automated backups",
-      "Access control",
-      "Audit trails"
-    ]
-  },
-  {
-    icon: <Users2 className="w-12 h-12 text-white/80" />,
-    title: "Team Collaboration",
-    shortDesc: "Streamline workflow across your immigration team",
-    benefits: [
-      "Real-time updates",
-      "Role-based access",
-      "Team chat",
-      "Task assignment"
+      "Intuitive onboarding system",
+      "Automated form collection",
+      "Secure data storage",
+      "Seamless client experience"
     ]
   },
   {
     icon: <FileCheck className="w-12 h-12 text-white/80" />,
-    title: "Smart Processing",
-    shortDesc: "Automated document processing and verification",
+    title: "Application Tracking",
+    shortDesc: "Real-time monitoring of client application progress",
     benefits: [
-      "AI-powered validation",
-      "Auto-fill forms",
-      "Error detection",
-      "Compliance checks"
+      "Live status updates",
+      "Milestone tracking",
+      "Deadline notifications",
+      "Progress reporting"
     ]
   },
   {
     icon: <Network className="w-12 h-12 text-white/80" />,
-    title: "Global Network",
-    shortDesc: "Access to worldwide immigration expertise",
+    title: "Resource Hub",
+    shortDesc: "Centralized repository for documentation and evidence",
     benefits: [
-      "Expert consultants",
-      "Local partners",
-      "24/7 support",
-      "Multi-language"
+      "Document templates",
+      "Best practices library",
+      "Evidence validation",
+      "Secure file management"
+    ]
+  },
+  {
+    icon: <Users2 className="w-12 h-12 text-white/80" />,
+    title: "Consultant Marketplace",
+    shortDesc: "Connect with clients and grow your practice",
+    benefits: [
+      "Professional showcase",
+      "Client matching",
+      "Industry networking",
+      "Business growth tools"
+    ]
+  },
+  {
+    icon: <Bot className="w-12 h-12 text-white/80" />,
+    title: "AI-Powered Tools",
+    shortDesc: "Advanced automation for document and evidence management",
+    benefits: [
+      "Automated document generation",
+      "Smart evidence validation",
+      "AI research assistance",
+      "Regulatory updates"
     ]
   },
   {
     icon: <Sparkles className="w-12 h-12 text-white/80" />,
-    title: "Advanced Analytics",
-    shortDesc: "Data-driven insights for better decision making",
+    title: "Evidence Management",
+    shortDesc: "Comprehensive tools for handling client documentation",
     benefits: [
-      "Custom reports",
-      "Success metrics",
-      "Trend analysis",
-      "ROI tracking"
+      "Document scanning",
+      "Automated validation",
+      "Organized storage",
+      "Quick retrieval"
     ]
   }
 ];
@@ -66,10 +77,10 @@ const FeaturesSection = () => {
       <div className="max-w-6xl mx-auto relative">
         <div className="text-center mb-12 md:mb-16">
           <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white bg-clip-text">
-            Enterprise Features
+            What NAVISA Offers
           </h2>
           <p className="text-base md:text-lg text-white/70 max-w-2xl mx-auto">
-            Powerful tools designed for immigration teams
+            Comprehensive tools designed for modern immigration consultants
           </p>
         </div>
         

@@ -14,6 +14,18 @@ interface TimeZoneSelectorProps {
   onTimeZoneChange: (value: string) => void;
 }
 
+// Common timezone list
+const TIMEZONES = [
+  "Africa/Lagos",
+  "Europe/London",
+  "America/New_York",
+  "Asia/Dubai",
+  "Asia/Tokyo",
+  "Australia/Sydney",
+  "Pacific/Auckland",
+  // Add more as needed
+];
+
 const TimeZoneSelector = ({ selectedTimeZone, onTimeZoneChange }: TimeZoneSelectorProps) => {
   useEffect(() => {
     // Set default timezone on component mount
@@ -37,7 +49,7 @@ const TimeZoneSelector = ({ selectedTimeZone, onTimeZoneChange }: TimeZoneSelect
             <SelectValue placeholder="Select time zone" />
           </SelectTrigger>
           <SelectContent>
-            {Intl.supportedValuesOf('timeZone').map((zone) => (
+            {TIMEZONES.map((zone) => (
               <SelectItem key={zone} value={zone}>
                 {zone}
               </SelectItem>

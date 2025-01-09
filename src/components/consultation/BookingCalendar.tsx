@@ -14,7 +14,8 @@ const BookingCalendar = ({ timeZone, onBookingConfirmed }: BookingCalendarProps)
   useEffect(() => {
     (async function () {
       const cal = await getCalApi();
-      cal.on('bookingSuccessful', () => {
+      // Type assertion to access the 'on' method
+      (cal as any).on('bookingSuccessful', () => {
         console.log('Booking was successful');
         onBookingConfirmed?.();
       });
@@ -35,8 +36,8 @@ const BookingCalendar = ({ timeZone, onBookingConfirmed }: BookingCalendarProps)
             style={{height: "100%", width: "100%", overflow: "hidden"}}
             config={{
               layout: 'month_view',
-              hideEventTypeDetails: false,
-              hideLandingPageDetails: false,
+              hideEventTypeDetails: "false",
+              hideLandingPageDetails: "false",
               timeZone: timeZone,
               name: user?.email,
               email: user?.email,

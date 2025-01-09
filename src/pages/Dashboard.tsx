@@ -32,23 +32,26 @@ const Dashboard = () => {
 
   return (
     <DashboardLayout>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
         <Card className="bg-card">
           <CardHeader>
-            <CardTitle>Success Probability</CardTitle>
+            <CardTitle className="text-lg lg:text-xl">Success Probability</CardTitle>
             <CardDescription>
               Based on your profile assessment
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="h-[300px]">
+            <div className="h-[300px] w-full">
               <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={data}>
+                <BarChart data={data} margin={{ top: 20, right: 30, left: 0, bottom: 20 }}>
                   <CartesianGrid strokeDasharray="3 3" className="stroke-border/50" />
                   <XAxis 
                     dataKey="name" 
                     tick={{ fill: '#FFFFFF', fontSize: 12 }}
                     tickLine={{ stroke: '#FFFFFF' }}
+                    angle={-45}
+                    textAnchor="end"
+                    height={60}
                   />
                   <YAxis 
                     tick={{ fill: '#FFFFFF', fontSize: 12 }}
@@ -75,14 +78,14 @@ const Dashboard = () => {
 
         <Card className="bg-card">
           <CardHeader>
-            <CardTitle>Active Applications</CardTitle>
+            <CardTitle className="text-lg lg:text-xl">Active Applications</CardTitle>
             <CardDescription>
               Track your ongoing applications
             </CardDescription>
           </CardHeader>
-          <CardContent className="flex flex-col items-center justify-center min-h-[300px] text-center">
-            <FileText className="h-16 w-16 text-muted mb-4" />
-            <p className="text-muted">
+          <CardContent className="flex flex-col items-center justify-center min-h-[300px] text-center p-4">
+            <FileText className="h-12 w-12 lg:h-16 lg:w-16 text-muted mb-4" />
+            <p className="text-sm lg:text-base text-muted">
               You currently do not have any active/pending applications
             </p>
           </CardContent>

@@ -1,4 +1,4 @@
-import { Github, Twitter, Linkedin, Mail, Phone, Clock } from "lucide-react";
+import { Github, Twitter, Linkedin } from "lucide-react";
 import { Button } from "./ui/button";
 
 const Footer = () => {
@@ -15,23 +15,6 @@ const Footer = () => {
             <p className="text-white/60">
               Redefining the future of global mobility with innovative solutions.
             </p>
-            <div className="space-y-3">
-              <div className="flex items-center gap-2 text-white/60 hover:text-white transition-colors">
-                <Mail className="w-4 h-4" />
-                <a href="mailto:contact@navisa.com">contact@navisa.com</a>
-              </div>
-              <div className="flex items-start gap-2 text-white/60">
-                <Phone className="w-4 h-4 mt-1" />
-                <div>
-                  <p>+447816 247864</p>
-                  <p>+234 901 546 6402</p>
-                </div>
-              </div>
-              <div className="flex items-center gap-2 text-white/60">
-                <Clock className="w-4 h-4" />
-                <p>Monday–Friday, 9 AM–5 PM (GMT)</p>
-              </div>
-            </div>
             <div className="flex space-x-4">
               <Button variant="ghost" size="icon" className="hover:bg-white/10">
                 <Twitter className="w-5 h-5 text-white" />
@@ -73,10 +56,8 @@ const Footer = () => {
               <li><a href="#" className="text-white/60 hover:text-white transition-colors">Cookies</a></li>
               <li><a href="#" className="text-white/60 hover:text-white transition-colors">Licenses</a></li>
             </ul>
-            <Button variant="default" className="w-full">
-              Contact Us
-            </Button>
           </div>
+          
         </div>
         
         <div className="mt-12 pt-8 border-t border-white/10">

@@ -5,25 +5,25 @@ import { Button } from "./ui/button";
 const Features = () => {
   const audiences = [
     {
-      icon: <Briefcase className="w-6 h-6 text-white" />,
+      icon: <Briefcase className="w-6 h-6 text-accent" />,
       title: "International Professionals",
       description: "Navigate visa processes, secure employment abroad, and settle with confidence. Perfect for skilled workers, tech professionals, and healthcare workers.",
       cta: "Book a Consultation"
     },
     {
-      icon: <Building2 className="w-6 h-6 text-white" />,
+      icon: <Building2 className="w-6 h-6 text-accent" />,
       title: "Employers & Recruiters",
       description: "Simplify sponsorship processes, streamline talent acquisition, and access end-to-end recruitment solutions for your global hiring needs.",
       cta: "Expand Your Team"
     },
     {
-      icon: <GraduationCap className="w-6 h-6 text-white" />,
+      icon: <GraduationCap className="w-6 h-6 text-accent" />,
       title: "Students & Institutions",
       description: "Get comprehensive study abroad assistance, visa guidance, and support for educational institutions in managing international students.",
       cta: "Start Your Journey"
     },
     {
-      icon: <Users className="w-6 h-6 text-white" />,
+      icon: <Users className="w-6 h-6 text-accent" />,
       title: "Immigration Consultants",
       description: "Access comprehensive resources, process management tools, and partnership opportunities to enhance your client services.",
       cta: "Partner With Us"

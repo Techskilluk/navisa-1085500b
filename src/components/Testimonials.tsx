@@ -34,7 +34,7 @@ const Testimonials = () => {
           {testimonials.map((testimonial, index) => (
             <Card key={index} className="p-6 hover-lift glass-effect">
               <div className="w-12 h-12 rounded-full bg-accent/10 flex items-center justify-center mb-4">
-                <Quote className="w-6 h-6 text-white" />
+                <Quote className="w-6 h-6 text-accent" />
               </div>
               <p className="text-white/80 mb-4 italic">{testimonial.quote}</p>
               <div className="text-white font-semibold">{testimonial.author}</div>

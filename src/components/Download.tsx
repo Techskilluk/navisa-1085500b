@@ -15,15 +15,15 @@ const Download = () => {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button className="px-8 py-6 text-lg bg-white text-black hover:bg-white/90 flex items-center gap-2">
-              <Mail className="w-5 h-5" />
+              <Mail className="w-5 h-5 text-accent" />
               info@navisa.co
             </Button>
             <Button className="px-8 py-6 text-lg glass-effect hover:bg-white/10 flex items-center gap-2">
-              <Phone className="w-5 h-5" />
+              <Phone className="w-5 h-5 text-accent" />
               +1 (800) 123-4567
             </Button>
             <Button className="px-8 py-6 text-lg glass-effect hover:bg-white/10 flex items-center gap-2">
-              <Globe className="w-5 h-5" />
+              <Globe className="w-5 h-5 text-accent" />
               Visit Website
             </Button>
           </div>

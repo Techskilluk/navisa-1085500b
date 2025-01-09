@@ -5,6 +5,7 @@ import { useAuthError } from "@/hooks/useAuthError";
 import { AuthFormHeader } from "./AuthFormHeader";
 import { authUiConfig } from "@/config/authUiConfig";
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
 
 interface AuthFormProps {
   error: string;
@@ -29,7 +30,7 @@ const AuthForm = ({ error: propError, preserveFormData }: AuthFormProps) => {
   }, [setAuthError]);
 
   return (
-    <div className="w-full lg:w-1/2 flex items-center justify-center p-8 bg-white">
+    <div className="w-full lg:w-1/2 flex flex-col items-center justify-between p-8 bg-white min-h-screen">
       <div className="w-full max-w-md space-y-8">
         <AuthFormHeader preserveFormData={preserveFormData} />
 
@@ -47,6 +48,23 @@ const AuthForm = ({ error: propError, preserveFormData }: AuthFormProps) => {
           redirectTo={redirectTo}
           appearance={authUiConfig}
         />
+      </div>
+      
+      <div className="w-full max-w-md mt-8 pt-8 border-t border-gray-200">
+        <div className="text-center space-y-4">
+          <p className="text-muted-foreground">
+            Don't have an account yet?
+          </p>
+          <Link 
+            to="/signin?view=sign_up" 
+            className="inline-block px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors duration-200"
+          >
+            Create an Account
+          </Link>
+          <p className="text-sm text-muted-foreground">
+            Join thousands of professionals who trust Navisa for their international mobility journey.
+          </p>
+        </div>
       </div>
     </div>
   );

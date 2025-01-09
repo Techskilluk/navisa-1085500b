@@ -17,13 +17,13 @@ const Footer = () => {
             </p>
             <div className="flex space-x-4">
               <Button variant="ghost" size="icon" className="hover:bg-white/10" asChild>
-                <a href="https://twitter.com/navisa" target="_blank" rel="noopener noreferrer">
-                  <Twitter className="w-5 h-5 text-white" />
+                <a href="https://instagram.com/navisa" target="_blank" rel="noopener noreferrer">
+                  <Instagram className="w-5 h-5 text-white" />
                 </a>
               </Button>
               <Button variant="ghost" size="icon" className="hover:bg-white/10" asChild>
-                <a href="https://instagram.com/navisa" target="_blank" rel="noopener noreferrer">
-                  <Instagram className="w-5 h-5 text-white" />
+                <a href="https://twitter.com/navisa" target="_blank" rel="noopener noreferrer">
+                  <Twitter className="w-5 h-5 text-white" />
                 </a>
               </Button>
               <Button variant="ghost" size="icon" className="hover:bg-white/10" asChild>

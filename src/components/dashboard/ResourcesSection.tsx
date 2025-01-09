@@ -45,7 +45,8 @@ const ResourcesSection = () => {
                 </Button>
               </div>
             </div>
-          ))}
+          );
+        })}
       </CardContent>
     </Card>
   );

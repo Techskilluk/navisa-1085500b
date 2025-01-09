@@ -49,7 +49,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
       
       <div className="lg:ml-64 min-h-screen flex flex-col">
         {/* Banner Section */}
-        <header className="w-full bg-card/50 backdrop-blur-sm border-b border-border/10 p-6 lg:p-8">
+        <header className="w-full bg-card/50 backdrop-blur-sm border-b border-border/10 p-6 lg:p-8 sticky top-0 z-10">
           <div className="max-w-7xl mx-auto">
             <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4">
               <div>
@@ -84,7 +84,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
         </header>
 
         {/* Main Content */}
-        <main className="flex-1 p-6 lg:p-8">
+        <main className="flex-1 p-6 lg:p-8 mt-4">
           <div className="max-w-7xl mx-auto">
             {children}
           </div>

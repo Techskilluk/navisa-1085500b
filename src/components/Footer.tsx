@@ -1,4 +1,4 @@
-import { Instagram, Twitter, Linkedin, BrandTiktok } from "lucide-react";
+import { Instagram, Twitter, Linkedin } from "lucide-react";
 import { Button } from "./ui/button";
 
 const Footer = () => {
@@ -29,11 +29,6 @@ const Footer = () => {
               <Button variant="ghost" size="icon" className="hover:bg-white/10" asChild>
                 <a href="https://linkedin.com/company/navisa" target="_blank" rel="noopener noreferrer">
                   <Linkedin className="w-5 h-5 text-white" />
-                </a>
-              </Button>
-              <Button variant="ghost" size="icon" className="hover:bg-white/10" asChild>
-                <a href="https://tiktok.com/@navisa" target="_blank" rel="noopener noreferrer">
-                  <BrandTiktok className="w-5 h-5 text-white" />
                 </a>
               </Button>
             </div>

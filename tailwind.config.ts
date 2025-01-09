@@ -44,6 +44,10 @@ export default {
           DEFAULT: "#1A1B1E",
           foreground: "#FFFFFF",
         },
+        modal: {
+          DEFAULT: "#0A0B0E", // Darker background for modals
+          foreground: "#FFFFFF",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",

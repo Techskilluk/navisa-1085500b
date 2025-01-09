@@ -10,22 +10,28 @@ export const useAuthError = (propError: string) => {
     
     // Handle AuthApiError specifically
     if (error instanceof AuthApiError) {
-      console.log("Auth API Error:", {
+      console.log("Auth API Error details:", {
         status: error.status,
         message: error.message,
         name: error.name,
-        code: (error as any).code
+        code: error.message
       });
       
-      // Handle specific API error cases
-      if (error.status === 400) {
+      // Check for invalid credentials first
+      if (error.message.includes("Invalid login credentials")) {
         return "The email or password you entered is incorrect. Please try again.";
       }
-      if (error.status === 422) {
-        return "Please check your input and try again.";
-      }
-      if (error.status === 429) {
-        return "Too many attempts. Please try again later.";
+
+      // Handle other specific status codes
+      switch (error.status) {
+        case 400:
+          return "Invalid email or password format. Please check your credentials.";
+        case 422:
+          return "Please check your input and try again.";
+        case 429:
+          return "Too many attempts. Please try again later.";
+        default:
+          return "An error occurred during authentication. Please try again.";
       }
     }
 
@@ -33,7 +39,8 @@ export const useAuthError = (propError: string) => {
     try {
       const errorMessage = error.message;
       if (typeof errorMessage === 'string') {
-        if (errorMessage.includes('"code":"invalid_credentials"')) {
+        const parsedError = JSON.parse(errorMessage);
+        if (parsedError.code === "invalid_credentials") {
           return "The email or password you entered is incorrect. Please try again.";
         }
         if (errorMessage.includes("Email not confirmed")) {
@@ -44,7 +51,6 @@ export const useAuthError = (propError: string) => {
       console.log("Error parsing error message:", e);
     }
     
-    // Return a generic error message if no specific case matches
     return "An error occurred during authentication. Please try again.";
   };
 
@@ -56,6 +62,9 @@ export const useAuthError = (propError: string) => {
         if (error) {
           console.error("Auth error in state change:", error);
           setAuthError(getErrorMessage(error));
+        } else {
+          // Clear error on successful auth
+          setAuthError("");
         }
       }
       if (event === 'SIGNED_OUT') {
@@ -74,7 +83,7 @@ export const useAuthError = (propError: string) => {
   }, [propError]);
 
   return {
-    error: propError || authError,
+    error: authError || propError,
     setAuthError
   };
 };

@@ -4,6 +4,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import DashboardLayout from "@/components/dashboard/DashboardLayout";
 import ApplicationStatus from "@/components/dashboard/ApplicationStatus";
 import TimelineSection from "@/components/dashboard/TimelineSection";
+import ResourcesSection from "@/components/dashboard/ResourcesSection";
 import {
   Card,
   CardContent,
@@ -85,9 +86,11 @@ const Dashboard = () => {
           </div>
         </div>
 
-        {/* Timeline and Active Applications */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <TimelineSection />
+        {/* Timeline, Active Applications, and Resources */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="lg:col-span-1">
+            <TimelineSection />
+          </div>
           
           <Card className="bg-card">
             <CardHeader>
@@ -119,6 +122,10 @@ const Dashboard = () => {
               )}
             </CardContent>
           </Card>
+
+          <div className="lg:col-span-1">
+            <ResourcesSection />
+          </div>
         </div>
       </div>
     </DashboardLayout>

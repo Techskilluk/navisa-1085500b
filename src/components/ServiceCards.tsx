@@ -5,7 +5,7 @@ import { ArrowRight, Globe, Users, GraduationCap, Building2 } from "lucide-react
 const ServiceCards = () => {
   const services = [
     {
-      icon: <Globe className="w-8 h-8 text-accent" />,
+      icon: <Globe className="w-8 h-8 text-white" />,
       title: "Global Mobility Solutions",
       tagline: "Navigate your immigration journey with confidence and expert guidance",
       points: [
@@ -16,7 +16,7 @@ const ServiceCards = () => {
       cta: "Start Your Journey"
     },
     {
-      icon: <Building2 className="w-8 h-8 text-accent" />,
+      icon: <Building2 className="w-8 h-8 text-white" />,
       title: "Corporate Immigration",
       tagline: "Empower your business with seamless global talent mobility",
       points: [
@@ -27,7 +27,7 @@ const ServiceCards = () => {
       cta: "Partner With Us"
     },
     {
-      icon: <GraduationCap className="w-8 h-8 text-accent" />,
+      icon: <GraduationCap className="w-8 h-8 text-white" />,
       title: "Study Abroad Success",
       tagline: "Transform your educational aspirations into reality worldwide",
       points: [
@@ -38,7 +38,7 @@ const ServiceCards = () => {
       cta: "Explore Programs"
     },
     {
-      icon: <Users className="w-8 h-8 text-accent" />,
+      icon: <Users className="w-8 h-8 text-white" />,
       title: "Family Reunification",
       tagline: "Bring your loved ones closer with trusted immigration support",
       points: [

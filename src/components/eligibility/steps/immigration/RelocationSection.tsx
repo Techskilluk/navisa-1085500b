@@ -1,117 +1,99 @@
 import { UseFormReturn } from "react-hook-form";
-import { EligibilityData } from "../../EligibilityForm";
-import {
-  FormField,
-  FormItem,
-  FormLabel,
-  FormControl,
-  FormMessage,
-} from "@/components/ui/form";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { FormField } from "@/components/ui/form";
+import { Select } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
+import { EligibilityData } from "../../EligibilityForm";
 
 interface RelocationSectionProps {
   form: UseFormReturn<EligibilityData>;
 }
 
-const RELOCATION_PURPOSES = [
-  { value: "employment", label: "Employment/Work Authorization" },
-  { value: "academic", label: "Academic Studies/Research" },
-  { value: "family", label: "Family Reunification" },
-  { value: "business", label: "Business Investment" },
-  { value: "humanitarian", label: "Humanitarian Protection" },
-  { value: "tourism", label: "Tourism/Temporary Visit" },
-  { value: "other", label: "Other (Please specify)" },
-];
-
-const STAY_DURATIONS = [
-  { value: "1", label: "Less than 6 months" },
-  { value: "2", label: "6 months to 1 year" },
-  { value: "3", label: "1-3 years" },
-  { value: "4", label: "3-5 years" },
-  { value: "5", label: "5+ years" },
-  { value: "6", label: "Permanent residency intended" },
-];
-
 const RelocationSection = ({ form }: RelocationSectionProps) => {
-  const relocationPurpose = form.watch("immigrationInfo.relocationPurpose");
+  const { formState: { errors } } = form;
+
+  const relocationPurposes = [
+    { value: "employment", label: "Employment/Work Authorization" },
+    { value: "academic", label: "Academic Studies/Research" },
+    { value: "family", label: "Family Reunification" },
+    { value: "business", label: "Business Investment" },
+    { value: "humanitarian", label: "Humanitarian Protection" },
+    { value: "tourism", label: "Tourism/Temporary Visit" },
+    { value: "other", label: "Other (Please specify)" }
+  ];
+
+  const stayDurations = [
+    { value: "less_than_6", label: "Less than 6 months" },
+    { value: "6_to_12", label: "6 months to 1 year" },
+    { value: "1_to_3", label: "1-3 years" },
+    { value: "3_to_5", label: "3-5 years" },
+    { value: "5_plus", label: "5+ years" },
+    { value: "permanent", label: "Permanent residency intended" }
+  ];
 
   return (
     <div className="space-y-6">
       <h3 className="text-lg font-semibold">Purpose & Plans</h3>
 
       <FormField
-        control={form.control}
         name="immigrationInfo.relocationPurpose"
         render={({ field }) => (
-          <FormItem>
-            <FormLabel>Primary Purpose of Relocation*</FormLabel>
-            <Select onValueChange={field.onChange} defaultValue={field.value}>
-              <FormControl>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select your purpose" />
-                </SelectTrigger>
-              </FormControl>
-              <SelectContent>
-                {RELOCATION_PURPOSES.map((purpose) => (
-                  <SelectItem key={purpose.value} value={purpose.value}>
-                    {purpose.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
+          <div className="space-y-2">
+            <label className="text-sm font-medium">Primary Purpose of Relocation*</label>
+            <Select
+              value={field.value}
+              onValueChange={field.onChange}
+            >
+              <option value="">Select purpose</option>
+              {relocationPurposes.map((purpose) => (
+                <option key={purpose.value} value={purpose.value}>
+                  {purpose.label}
+                </option>
+              ))}
             </Select>
-            <FormMessage />
-          </FormItem>
+            {errors.immigrationInfo?.relocationPurpose && (
+              <p className="text-sm text-red-500">{errors.immigrationInfo.relocationPurpose.message}</p>
+            )}
+          </div>
         )}
       />
 
-      {relocationPurpose === "other" && (
+      {form.watch("immigrationInfo.relocationPurpose") === "other" && (
         <FormField
-          control={form.control}
           name="immigrationInfo.otherPurposeSpecification"
           render={({ field }) => (
-            <FormItem>
-              <FormLabel>Please specify your purpose*</FormLabel>
-              <FormControl>
-                <Input {...field} placeholder="Enter your relocation purpose" />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Please specify your purpose*</label>
+              <Input {...field} placeholder="Enter your relocation purpose" />
+              {errors.immigrationInfo?.otherPurposeSpecification && (
+                <p className="text-sm text-red-500">
+                  {errors.immigrationInfo.otherPurposeSpecification.message}
+                </p>
+              )}
+            </div>
           )}
         />
       )}
 
       <FormField
-        control={form.control}
         name="immigrationInfo.stayDuration"
         render={({ field }) => (
-          <FormItem>
-            <FormLabel>Intended Length of Stay*</FormLabel>
-            <Select 
-              onValueChange={(value) => field.onChange(parseInt(value))} 
-              defaultValue={field.value?.toString()}
+          <div className="space-y-2">
+            <label className="text-sm font-medium">Intended Length of Stay*</label>
+            <Select
+              value={field.value}
+              onValueChange={field.onChange}
             >
-              <FormControl>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select duration" />
-                </SelectTrigger>
-              </FormControl>
-              <SelectContent>
-                {STAY_DURATIONS.map((duration) => (
-                  <SelectItem key={duration.value} value={duration.value}>
-                    {duration.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
+              <option value="">Select duration</option>
+              {stayDurations.map((duration) => (
+                <option key={duration.value} value={duration.value}>
+                  {duration.label}
+                </option>
+              ))}
             </Select>
-            <FormMessage />
-          </FormItem>
+            {errors.immigrationInfo?.stayDuration && (
+              <p className="text-sm text-red-500">{errors.immigrationInfo.stayDuration.message}</p>
+            )}
+          </div>
         )}
       />
     </div>

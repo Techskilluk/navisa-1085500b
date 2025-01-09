@@ -16,13 +16,13 @@ const Testimonials = () => {
       quote: "NAVISA guided me through my journey to secure a skilled worker visa and land a tech job in the UK!",
       author: "Maria",
       role: "Software Engineer",
-      avatar: "/lovable-uploads/942c5089-8393-456e-a19d-8b235d467925.png"
+      avatar: "/lovable-uploads/40412cbb-dfc0-4d5e-9eb8-96437e121af6.png"
     },
     {
       quote: "With their support, I transitioned from a temporary work visa to permanent residency in Canada!",
       author: "James",
       role: "Business Analyst",
-      avatar: "/lovable-uploads/912220b2-7eb0-449e-b1e6-23f7926d7091.png"
+      avatar: "/lovable-uploads/ae4007e5-9928-4825-9c35-b6ce1819a9dd.png"
     }
   ];
 

@@ -11,18 +11,18 @@ const benefits = [
 
 const ConsultationDetails = () => {
   return (
-    <Card className="bg-white shadow-lg h-full">
-      <CardHeader className="border-b border-gray-100">
-        <CardTitle className="text-[#002B5C] text-xl font-bold">
+    <Card className="bg-card/50 backdrop-blur-sm border-accent/20">
+      <CardHeader className="border-b border-border/10">
+        <CardTitle className="text-xl font-bold text-white">
           Consultation Details
         </CardTitle>
       </CardHeader>
       <CardContent className="p-6">
         <div className="mb-6">
-          <h3 className="text-2xl font-bold text-[#002B5C] mb-2">
+          <h3 className="text-2xl font-bold text-white mb-2">
             ₦20,000 / session
           </h3>
-          <p className="text-gray-600">
+          <p className="text-muted-foreground">
             60-minute comprehensive consultation
           </p>
         </div>
@@ -33,21 +33,21 @@ const ConsultationDetails = () => {
               <div className="flex-shrink-0">
                 <Check className="h-5 w-5 text-[#28A745]" />
               </div>
-              <span className="text-gray-700">{benefit}</span>
+              <span className="text-muted-foreground">{benefit}</span>
             </div>
           ))}
         </div>
 
-        <div className="space-y-4">
-          <div className="flex items-center gap-3 text-gray-600">
+        <div className="space-y-4 border-t border-border/10 pt-6">
+          <div className="flex items-center gap-3 text-muted-foreground">
             <Clock className="h-5 w-5" />
             <span>60 minutes</span>
           </div>
-          <div className="flex items-center gap-3 text-gray-600">
+          <div className="flex items-center gap-3 text-muted-foreground">
             <Globe className="h-5 w-5" />
             <span>Online consultation</span>
           </div>
-          <div className="flex items-center gap-3 text-gray-600">
+          <div className="flex items-center gap-3 text-muted-foreground">
             <CalendarDays className="h-5 w-5" />
             <span>Flexible scheduling</span>
           </div>

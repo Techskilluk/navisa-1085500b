@@ -3,9 +3,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 const BookingCalendar = () => {
   return (
-    <Card className="bg-white shadow-lg h-full">
-      <CardHeader className="border-b border-gray-100">
-        <CardTitle className="text-[#002B5C] text-xl font-bold">
+    <Card className="bg-card/50 backdrop-blur-sm border-accent/20">
+      <CardHeader className="border-b border-border/10">
+        <CardTitle className="text-xl font-bold text-white">
           Schedule Your Consultation
         </CardTitle>
       </CardHeader>

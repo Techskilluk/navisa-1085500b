@@ -31,26 +31,55 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     // Listen for auth changes
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange((event, session) => {
-      console.log("Auth state changed:", event);
+    } = supabase.auth.onAuthStateChange(async (event, session) => {
+      console.log("Auth state changed:", event, session);
       setSession(session);
       setUser(session?.user ?? null);
 
-      if (event === "SIGNED_IN") {
-        toast({
-          title: "Welcome back!",
-          description: "You have successfully signed in.",
-        });
-        navigate("/dashboard");
-      }
-      if (event === "SIGNED_OUT") {
-        toast({
-          title: "Signed out",
-          description: "You have been signed out successfully.",
-        });
-        navigate("/signin");
+      switch (event) {
+        case "SIGNED_IN":
+          toast({
+            title: "Welcome back!",
+            description: "You have successfully signed in.",
+          });
+          navigate("/dashboard");
+          break;
+
+        case "SIGNED_OUT":
+          toast({
+            title: "Signed out",
+            description: "You have been signed out successfully.",
+          });
+          navigate("/signin");
+          break;
+
+        case "USER_UPDATED":
+          // Handle email verification
+          if (session?.user.email_confirmed_at) {
+            toast({
+              title: "Email verified!",
+              description: "Your email has been successfully verified.",
+            });
+            navigate("/verify-success");
+          }
+          break;
+
+        case "EMAIL_CONFIRMATION_REQUIRED":
+          toast({
+            title: "Verification Required",
+            description: "Please check your email to verify your account.",
+          });
+          break;
       }
     });
+
+    // Check for email confirmation in URL
+    const hashParams = new URLSearchParams(window.location.hash.substring(1));
+    const type = hashParams.get("type");
+    
+    if (type === "email_confirmation") {
+      navigate("/verify-success");
+    }
 
     return () => subscription.unsubscribe();
   }, [navigate, toast]);

@@ -4,14 +4,27 @@ import { useNavigate } from "react-router-dom";
 import DashboardSidebar from "./DashboardSidebar";
 import { BookOpen, Calendar } from "lucide-react";
 import { useState } from "react";
+import VisaSelectionModal from "./VisaSelectionModal";
+import SelectedVisaDetails from "./SelectedVisaDetails";
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   const { user } = useAuth();
   const navigate = useNavigate();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isVisaModalOpen, setIsVisaModalOpen] = useState(false);
+  const [selectedVisa, setSelectedVisa] = useState<any>(null);
 
   const handleBookConsultation = () => {
     window.open('https://calendly.com/techskilluk/techskilluk-consultation', '_blank');
+  };
+
+  const handleStartApplication = () => {
+    setIsVisaModalOpen(true);
+  };
+
+  const handleVisaSelection = (visa: any) => {
+    setSelectedVisa(visa);
+    setIsVisaModalOpen(false);
   };
 
   return (
@@ -76,7 +89,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
               Book Consultation
             </Button>
             <Button
-              onClick={() => navigate('/eligibility')}
+              onClick={handleStartApplication}
               variant="outline"
               size="lg"
             >
@@ -86,6 +99,15 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
           </div>
         </div>
 
+        {/* Selected Visa Details */}
+        {selectedVisa && (
+          <div className="w-full p-4 animate-fade-in">
+            <div className="max-w-7xl mx-auto">
+              <SelectedVisaDetails visa={selectedVisa} />
+            </div>
+          </div>
+        )}
+
         {/* Main Content */}
         <main className="flex-1 p-6 lg:p-8">
           <div className="max-w-7xl mx-auto">
@@ -93,6 +115,13 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
           </div>
         </main>
       </div>
+
+      {/* Visa Selection Modal */}
+      <VisaSelectionModal
+        isOpen={isVisaModalOpen}
+        onClose={() => setIsVisaModalOpen(false)}
+        onSelect={handleVisaSelection}
+      />
     </div>
   );
 };

@@ -29,7 +29,7 @@ const ServiceCards = () => {
         <div className="space-y-3">
           <div className="flex items-center gap-2">
             <Mail className="w-4 h-4 text-white/60" />
-            <span>contact@navisa.com</span>
+            <span>info@navisa.co</span>
           </div>
           <div className="flex items-center gap-2">
             <Phone className="w-4 h-4 text-white/60" />

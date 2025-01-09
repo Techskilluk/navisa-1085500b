@@ -13,7 +13,9 @@ export const useAuthError = (propError: string) => {
       return "Please check your email and click the verification link to confirm your account before signing in.";
     }
     
-    if (errorBody.includes("Invalid login credentials") || error.message.includes("invalid_credentials")) {
+    if (errorBody.includes("Invalid login credentials") || 
+        errorBody.includes("invalid_credentials") || 
+        error.message.includes("invalid_credentials")) {
       return "The email or password you entered is incorrect. Please try again.";
     }
     

@@ -16,7 +16,7 @@ const Navbar = () => {
         <div className="hidden md:flex items-center space-x-8">
           <a href="#" className="text-white/80 hover:text-white transition-colors">Pathways</a>
           <a href="#" className="text-white/80 hover:text-white transition-colors">How it works</a>
-          <a href="#" className="text-white/80 hover:text-white transition-colors">Check your eligibility</a>
+          <Link to="/eligibility" className="text-white/80 hover:text-white transition-colors">Check your eligibility</Link>
           {user ? (
             <Button 
               onClick={() => signOut()} 

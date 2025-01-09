@@ -66,18 +66,17 @@ const DocumentUploadForm = ({ visaType, documents, onFileUpload }: DocumentUploa
         duration: 5000,
       });
 
-      // Short delay before navigation to ensure toast is visible
-      setTimeout(() => {
-        navigate('/dashboard', { 
-          state: { 
-            documentSubmission: {
-              timestamp,
-              visaType,
-              documentCount: successCount
-            }
+      // Ensure we're using replace to prevent back navigation
+      navigate('/dashboard', { 
+        replace: true,
+        state: { 
+          documentSubmission: {
+            timestamp,
+            visaType,
+            documentCount: successCount
           }
-        });
-      }, 2000);
+        }
+      });
 
     } catch (error) {
       console.error('Error in document submission:', error);

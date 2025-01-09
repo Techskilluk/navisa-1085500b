@@ -53,16 +53,19 @@ const DocumentUploadForm = ({ visaType, documents, onFileUpload }: DocumentUploa
         const filePath = `${user.id}/${visaType}/${type}-${Date.now()}.${file.name.split('.').pop()}`;
         
         console.log(`Uploading ${type} to ${filePath}`);
+
+        // Create a channel to track upload progress
+        const channel = supabase.channel('upload-progress');
+        channel.subscribe((status) => {
+          if (status === 'SUBSCRIBED') {
+            console.log('Subscribed to upload progress');
+          }
+        });
         
         const { error: uploadError } = await supabase.storage
           .from('documents')
           .upload(filePath, file, {
-            upsert: false,
-            onProgress: ({ loaded, total }) => {
-              const percentage = (loaded / total) * 100;
-              setUploadProgress(prev => ({ ...prev, [type]: percentage }));
-              console.log(`Upload progress for ${type}: ${percentage}%`);
-            }
+            upsert: false
           });
 
         if (uploadError) {
@@ -83,6 +86,7 @@ const DocumentUploadForm = ({ visaType, documents, onFileUpload }: DocumentUploa
         }
 
         successCount++;
+        setUploadProgress(prev => ({ ...prev, [type]: 100 }));
         console.log(`Successfully uploaded ${type}`);
       });
 

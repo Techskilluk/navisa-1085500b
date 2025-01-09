@@ -6,27 +6,27 @@ const Features = () => {
   const audiences = [
     {
       icon: <Briefcase className="w-6 h-6 text-white" />,
-      title: "International Professionals",
-      description: "Navigate visa processes, secure employment abroad, and settle with confidence. Perfect for skilled workers, tech professionals, and healthcare workers.",
-      cta: "Book a Consultation"
+      title: "Clear Path Forward",
+      description: "We handle the complexity of global migration, letting you focus on what matters - your career growth.",
+      cta: "Start Assessment"
     },
     {
       icon: <Building2 className="w-6 h-6 text-white" />,
-      title: "Employers & Recruiters",
-      description: "Simplify sponsorship processes, streamline talent acquisition, and access end-to-end recruitment solutions for your global hiring needs.",
-      cta: "Expand Your Team"
+      title: "Expert Support Team",
+      description: "Access migration specialists and career coaches dedicated to your success abroad.",
+      cta: "Meet Our Experts"
     },
     {
       icon: <GraduationCap className="w-6 h-6 text-white" />,
-      title: "Students & Institutions",
-      description: "Get comprehensive study abroad assistance, visa guidance, and support for educational institutions in managing international students.",
-      cta: "Start Your Journey"
+      title: "World of Possibilities",
+      description: "Connect with premium employers in tech, healthcare, finance, and more across leading destinations.",
+      cta: "Explore Opportunities"
     },
     {
       icon: <Users className="w-6 h-6 text-white" />,
-      title: "Immigration Consultants",
-      description: "Access comprehensive resources, process management tools, and partnership opportunities to enhance your client services.",
-      cta: "Partner With Us"
+      title: "Global Network",
+      description: "Join an elite community of professionals shaping international careers through expert-led sessions and premium opportunities.",
+      cta: "Join Network"
     }
   ];
 
@@ -36,10 +36,10 @@ const Features = () => {
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold text-white mb-4">
-            Who We Serve
+            The NAVISA Advantage
           </h2>
           <p className="text-xl text-white/60 max-w-2xl mx-auto">
-            Tailored solutions for every journey in global mobility
+            Your trusted partner in achieving international success
           </p>
         </div>
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">

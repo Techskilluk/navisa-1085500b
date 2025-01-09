@@ -3,10 +3,15 @@ import HeroVideo from "./hero/HeroVideo";
 
 const Hero = () => {
   return (
-    <div className="relative min-h-screen bg-background">
-      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 pt-20 lg:pt-32">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+    <div className="relative min-h-screen bg-background overflow-hidden">
+      <div className="max-w-[1400px] mx-auto h-screen flex flex-col lg:flex-row">
+        {/* Left side - Hero content */}
+        <div className="w-full lg:w-1/2 px-4 sm:px-6 lg:px-8 pt-20 lg:pt-32 flex items-center">
           <HeroContent />
+        </div>
+        
+        {/* Right side - Video */}
+        <div className="w-full lg:w-1/2 h-full">
           <HeroVideo />
         </div>
       </div>

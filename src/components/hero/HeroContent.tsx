@@ -10,7 +10,7 @@ const HeroContent = () => {
   };
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 w-full">
       <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-white leading-[1.1] tracking-tight animate-fade-in">
         Transform Your Career Across Borders
       </h1>

@@ -5,23 +5,26 @@ import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
+import DocumentChecklistItem from "./DocumentChecklistItem";
+import DocumentUploadZone from "./DocumentUploadZone";
+import DocumentResources from "./DocumentResources";
 
 interface DocumentRequirement {
   type: string;
   label: string;
   required: boolean;
-  maxSize: number; // in MB
+  maxSize: number;
   formats: string[];
 }
 
 const VISA_DOCUMENTS: Record<string, DocumentRequirement[]> = {
   "express-entry": [
-    { type: "resume", label: "Resume", required: true, maxSize: 5, formats: ["pdf", "doc", "docx"] },
-    { type: "personal-statement", label: "Personal Statement", required: true, maxSize: 5, formats: ["pdf", "doc", "docx"] },
-    { type: "recommendation", label: "Letter of Recommendation", required: true, maxSize: 5, formats: ["pdf"] },
-    { type: "degree", label: "Degree Certificate", required: true, maxSize: 5, formats: ["pdf", "jpg", "png"] },
-    { type: "language", label: "Language Proficiency Result", required: true, maxSize: 5, formats: ["pdf"] },
-    { type: "funds", label: "Proof of Funds", required: true, maxSize: 5, formats: ["pdf"] },
+    { type: "resume", label: "Resume", required: true, maxSize: 5, formats: [".pdf", ".doc", ".docx"] },
+    { type: "personal-statement", label: "Personal Statement", required: true, maxSize: 5, formats: [".pdf", ".doc", ".docx"] },
+    { type: "recommendation", label: "Letter of Recommendation", required: true, maxSize: 5, formats: [".pdf"] },
+    { type: "degree", label: "Degree Certificate", required: true, maxSize: 5, formats: [".pdf", ".jpg", ".png"] },
+    { type: "language", label: "Language Proficiency Result", required: true, maxSize: 5, formats: [".pdf"] },
+    { type: "funds", label: "Proof of Funds", required: true, maxSize: 5, formats: [".pdf"] },
   ],
   // Add more visa types here
 };
@@ -40,32 +43,6 @@ const DocumentUpload = ({ visaType }: DocumentUploadProps) => {
   const documents = VISA_DOCUMENTS[visaType] || [];
 
   const handleFileUpload = async (type: string, file: File) => {
-    if (!file) return;
-
-    const requirement = documents.find(doc => doc.type === type);
-    if (!requirement) return;
-
-    // Validate file size
-    if (file.size > requirement.maxSize * 1024 * 1024) {
-      toast({
-        title: "File too large",
-        description: `Maximum file size is ${requirement.maxSize}MB`,
-        variant: "destructive"
-      });
-      return;
-    }
-
-    // Validate file format
-    const fileExt = file.name.split('.').pop()?.toLowerCase();
-    if (!requirement.formats.includes(fileExt || '')) {
-      toast({
-        title: "Invalid file format",
-        description: `Allowed formats: ${requirement.formats.join(', ')}`,
-        variant: "destructive"
-      });
-      return;
-    }
-
     setUploadedFiles(prev => ({ ...prev, [type]: file }));
   };
 
@@ -121,6 +98,19 @@ const DocumentUpload = ({ visaType }: DocumentUploadProps) => {
     !doc.required || uploadedFiles[doc.type]
   );
 
+  const resources = [
+    {
+      title: "Resume Template",
+      description: "A professional template tailored for your visa application",
+      url: "/templates/resume.pdf"
+    },
+    {
+      title: "Personal Statement Guide",
+      description: "Guidelines and examples for writing your personal statement",
+      url: "/templates/personal-statement.pdf"
+    }
+  ];
+
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
       <div className="mb-8">
@@ -148,12 +138,12 @@ const DocumentUpload = ({ visaType }: DocumentUploadProps) => {
           
           <div className="space-y-4">
             {documents.map((doc) => (
-              <div key={doc.type} className="flex items-center gap-3">
-                <div className={`w-5 h-5 rounded-full border ${
-                  uploadedFiles[doc.type] ? 'bg-primary border-primary' : 'border-muted'
-                }`} />
-                <span className="text-sm">{doc.label}</span>
-              </div>
+              <DocumentChecklistItem
+                key={doc.type}
+                label={doc.label}
+                isComplete={!!uploadedFiles[doc.type]}
+                required={doc.required}
+              />
             ))}
           </div>
         </div>
@@ -163,42 +153,12 @@ const DocumentUpload = ({ visaType }: DocumentUploadProps) => {
             {documents.map((doc) => (
               <div key={doc.type} className="space-y-2">
                 <label className="text-sm font-medium">{doc.label}</label>
-                <div
-                  className={`border-2 border-dashed rounded-lg p-6 text-center cursor-pointer hover:border-primary transition-colors ${
-                    uploadedFiles[doc.type] ? 'border-primary bg-primary/5' : 'border-muted'
-                  }`}
-                  onDragOver={(e) => e.preventDefault()}
-                  onDrop={(e) => {
-                    e.preventDefault();
-                    const file = e.dataTransfer.files[0];
-                    if (file) handleFileUpload(doc.type, file);
-                  }}
-                  onClick={() => {
-                    const input = document.createElement('input');
-                    input.type = 'file';
-                    input.accept = doc.formats.map(f => `.${f}`).join(',');
-                    input.onchange = (e) => {
-                      const file = (e.target as HTMLInputElement).files?.[0];
-                      if (file) handleFileUpload(doc.type, file);
-                    };
-                    input.click();
-                  }}
-                >
-                  {uploadedFiles[doc.type] ? (
-                    <div className="flex items-center justify-center gap-2">
-                      <FileText className="w-5 h-5 text-primary" />
-                      <span className="text-sm">{uploadedFiles[doc.type].name}</span>
-                    </div>
-                  ) : (
-                    <div className="space-y-2">
-                      <Upload className="w-6 h-6 mx-auto text-muted-foreground" />
-                      <div className="text-sm">
-                        <span className="text-muted-foreground">Drag & drop or </span>
-                        <span className="text-primary font-medium">click to upload</span>
-                      </div>
-                    </div>
-                  )}
-                </div>
+                <DocumentUploadZone
+                  onFileSelect={(file) => handleFileUpload(doc.type, file)}
+                  file={uploadedFiles[doc.type]}
+                  accept={doc.formats}
+                  maxSize={doc.maxSize}
+                />
               </div>
             ))}
           </div>
@@ -213,6 +173,10 @@ const DocumentUpload = ({ visaType }: DocumentUploadProps) => {
             </Button>
           </div>
         </div>
+      </div>
+
+      <div className="mt-8">
+        <DocumentResources resources={resources} />
       </div>
     </div>
   );

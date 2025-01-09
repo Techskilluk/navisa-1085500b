@@ -33,7 +33,7 @@ const AuthForm = ({ error: propError, preserveFormData }: AuthFormProps) => {
   return (
     <div className="w-full lg:w-1/2 flex items-center justify-center p-8 bg-white">
       <div className="w-full max-w-md space-y-8">
-        <AuthFormHeader preserveFormData={preserveFormData} />
+        <AuthFormHeader preserveFormData={preserveFormData} view={view} />
 
         {error && (
           <Alert variant="destructive" className="mb-4">
@@ -51,21 +51,35 @@ const AuthForm = ({ error: propError, preserveFormData }: AuthFormProps) => {
         />
 
         <div className="mt-6 text-center space-y-2">
-          <Link 
-            to="/reset-password"
-            className="text-primary hover:text-[#9b87f5] underline transition-colors duration-300 cursor-pointer text-sm block"
-          >
-            Forgot your password?
-          </Link>
-          <p className="text-sm text-gray-600">
-            Don't have an account?{" "}
-            <Link 
-              to="/signin?view=sign_up" 
-              className="font-medium text-primary hover:text-[#9b87f5] underline transition-colors duration-300 cursor-pointer"
-            >
-              Sign up
-            </Link>
-          </p>
+          {view === 'sign_in' ? (
+            <>
+              <Link 
+                to="/reset-password"
+                className="text-primary hover:text-[#9b87f5] underline transition-colors duration-300 cursor-pointer text-sm block"
+              >
+                Forgot your password?
+              </Link>
+              <p className="text-sm text-gray-600">
+                Don't have an account?{" "}
+                <Link 
+                  to="/signin?view=sign_up" 
+                  className="font-medium text-primary hover:text-[#9b87f5] underline transition-colors duration-300 cursor-pointer"
+                >
+                  Sign up
+                </Link>
+              </p>
+            </>
+          ) : (
+            <p className="text-sm text-gray-600">
+              Already have an account?{" "}
+              <Link 
+                to="/signin" 
+                className="font-medium text-primary hover:text-[#9b87f5] underline transition-colors duration-300 cursor-pointer"
+              >
+                Sign in
+              </Link>
+            </p>
+          )}
         </div>
       </div>
     </div>

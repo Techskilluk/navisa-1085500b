@@ -26,18 +26,18 @@ const ServiceCards = () => {
       icon: <Mail className="w-6 h-6 text-white" />,
       title: "Let's Get Started",
       description: (
-        <div className="space-y-3">
-          <div className="flex items-center gap-2">
-            <Mail className="w-4 h-4 text-white/60" />
-            <span>info@navisa.co</span>
+        <div className="space-y-4">
+          <div className="flex items-center gap-3 p-2 rounded-lg hover:bg-white/5 transition-colors">
+            <Mail className="w-5 h-5 text-accent" />
+            <span className="text-white/90">info@navisa.co</span>
           </div>
-          <div className="flex items-center gap-2">
-            <Phone className="w-4 h-4 text-white/60" />
-            <span>+447816 247864 | +234 901 546 6402</span>
+          <div className="flex items-center gap-3 p-2 rounded-lg hover:bg-white/5 transition-colors">
+            <Phone className="w-5 h-5 text-accent" />
+            <span className="text-white/90">+447816247864<br/>+234 901 546 6402</span>
           </div>
-          <div className="flex items-center gap-2">
-            <Clock className="w-4 h-4 text-white/60" />
-            <span>Monday–Friday, 9 AM–5 PM (GMT)</span>
+          <div className="flex items-center gap-3 p-2 rounded-lg hover:bg-white/5 transition-colors">
+            <Clock className="w-5 h-5 text-accent" />
+            <span className="text-white/90">Monday–Friday,<br/>9 AM–5 PM (GMT)</span>
           </div>
         </div>
       ),

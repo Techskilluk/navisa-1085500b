@@ -14,16 +14,19 @@ const Download = () => {
             Empower your global journey with Navisa.co. Let's begin.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button className="px-8 py-6 text-lg bg-white text-black hover:bg-white/90 flex items-center gap-2">
-              <Mail className="w-5 h-5 text-black" />
+            <Button className="px-8 py-6 text-lg bg-white text-black hover:bg-white/90 flex items-center gap-3 transition-all duration-300">
+              <Mail className="w-5 h-5 text-accent" />
               contact@navisa.com
             </Button>
-            <Button className="px-8 py-6 text-lg glass-effect hover:bg-white/10 flex items-center gap-2">
-              <Phone className="w-5 h-5 text-white" />
-              +1 (800) 123-4567
+            <Button className="px-8 py-6 text-lg glass-effect hover:bg-white/10 flex flex-col sm:flex-row items-center gap-3 transition-all duration-300">
+              <Phone className="w-5 h-5 text-accent" />
+              <div className="flex flex-col text-sm sm:text-lg">
+                <span>+447816247864</span>
+                <span>+234 901 546 6402</span>
+              </div>
             </Button>
-            <Button className="px-8 py-6 text-lg glass-effect hover:bg-white/10 flex items-center gap-2">
-              <Globe className="w-5 h-5 text-white" />
+            <Button className="px-8 py-6 text-lg glass-effect hover:bg-white/10 flex items-center gap-3 transition-all duration-300">
+              <Globe className="w-5 h-5 text-accent" />
               Visit Website
             </Button>
           </div>

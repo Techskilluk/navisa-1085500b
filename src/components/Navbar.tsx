@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { LogIn, LogOut, Home } from "lucide-react";
+import { LogIn, LogOut } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { Link } from "react-router-dom";
 
@@ -14,13 +14,9 @@ const Navbar = () => {
             <img src="/navisa-logo.svg" alt="Navisa" className="h-8 w-auto" />
           </Link>
           <span className="text-2xl font-bold text-white">Navisa</span>
-          <Link to="/">
-            <Button variant="ghost" size="icon" className="text-white/80 hover:text-white hover:bg-accent/20">
-              <Home className="h-5 w-5" />
-            </Button>
-          </Link>
         </div>
         <div className="hidden md:flex items-center space-x-8">
+          <Link to="/" className="text-white/80 hover:text-white transition-colors">Home</Link>
           <Link to="/pathways" className="text-white/80 hover:text-white transition-colors">Pathways</Link>
           <Link to="/how-it-works" className="text-white/80 hover:text-white transition-colors">How it works</Link>
           <Link to="/eligibility" className="text-white/80 hover:text-white transition-colors">Check your eligibility</Link>

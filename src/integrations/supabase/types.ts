@@ -13,6 +13,7 @@ export type Database = {
         Row: {
           created_at: string
           id: string
+          is_guest: boolean | null
           status: string
           updated_at: string
           user_id: string | null
@@ -21,6 +22,7 @@ export type Database = {
         Insert: {
           created_at?: string
           id?: string
+          is_guest?: boolean | null
           status: string
           updated_at?: string
           user_id?: string | null
@@ -29,6 +31,7 @@ export type Database = {
         Update: {
           created_at?: string
           id?: string
+          is_guest?: boolean | null
           status?: string
           updated_at?: string
           user_id?: string | null

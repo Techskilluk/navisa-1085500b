@@ -97,6 +97,25 @@ const EligibilityForm = ({ currentStep, onNext, onPrevious }: EligibilityFormPro
     }
   };
 
+  const formatDateForJson = (date: Date | undefined) => {
+    if (!date) return null;
+    return date.toISOString();
+  };
+
+  const prepareVerificationData = (data: EligibilityData) => {
+    // Create a deep copy of the data
+    const formattedData = JSON.parse(JSON.stringify(data));
+    
+    // Format dates for JSON compatibility
+    if (formattedData.immigrationInfo) {
+      formattedData.immigrationInfo.issueDate = formatDateForJson(data.immigrationInfo.issueDate);
+      formattedData.immigrationInfo.expirationDate = formatDateForJson(data.immigrationInfo.expirationDate);
+      formattedData.immigrationInfo.proposedEntryDate = formatDateForJson(data.immigrationInfo.proposedEntryDate);
+    }
+    
+    return formattedData;
+  };
+
   const handleSubmit = async (data: EligibilityData) => {
     setFormData(prev => ({ ...prev, ...data }));
     
@@ -104,7 +123,7 @@ const EligibilityForm = ({ currentStep, onNext, onPrevious }: EligibilityFormPro
       setIsSubmitting(true);
       try {
         const verificationData = {
-          verification_data: data,
+          verification_data: prepareVerificationData(data),
           status: 'pending',
           is_guest: !user,
           ...(user && { user_id: user.id })

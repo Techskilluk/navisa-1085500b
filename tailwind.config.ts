@@ -33,7 +33,7 @@ export default {
           foreground: "#141413",
         },
         accent: {
-          DEFAULT: "#8989DE",
+          DEFAULT: "#1EAEDB",  // Updated to logo blue color
           foreground: "#FFFFFF",
         },
         muted: {
@@ -41,7 +41,7 @@ export default {
           foreground: "#FAFAF8",
         },
         card: {
-          DEFAULT: "#1A1B1E",  // Slightly lighter background for cards
+          DEFAULT: "#1A1B1E",
           foreground: "#FFFFFF",
         },
       },

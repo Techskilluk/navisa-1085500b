@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { ArrowRight, Building } from "lucide-react";
+import { useNavigate, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 const Hero = () => {
@@ -35,7 +35,7 @@ const Hero = () => {
           <p className="text-base lg:text-lg text-white/80 max-w-xl mx-auto lg:mx-0">
             Navigate global opportunities with confidence. NAVISA connects ambitious professionals with international employers, simplifies migration pathways, and turns your dream of a global career into reality.
           </p>
-          <div className="flex justify-center lg:justify-start">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
             <Button 
               className="px-6 lg:px-8 py-4 lg:py-6 text-base lg:text-lg bg-white text-black hover:bg-white/90 flex items-center gap-2"
               onClick={handleEligibilityCheck}
@@ -43,6 +43,15 @@ const Hero = () => {
               Begin Your Global Journey
               <ArrowRight className="w-5 h-5 text-black" />
             </Button>
+            <Link to="/enterprise">
+              <Button 
+                variant="outline"
+                className="px-6 lg:px-8 py-4 lg:py-6 text-base lg:text-lg border-white text-white hover:bg-white/10 flex items-center gap-2"
+              >
+                For Businesses
+                <Building className="w-5 h-5" />
+              </Button>
+            </Link>
           </div>
           <div className="grid grid-cols-3 gap-4 lg:gap-8 pt-8">
             <div>

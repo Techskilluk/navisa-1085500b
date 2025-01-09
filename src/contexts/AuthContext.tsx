@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { Session, User, AuthError } from "@supabase/supabase-js";
+import { Session, User } from "@supabase/supabase-js";
 import { supabase } from "@/integrations/supabase/client";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@/components/ui/use-toast";
@@ -7,8 +7,6 @@ import { useToast } from "@/components/ui/use-toast";
 interface AuthContextType {
   session: Session | null;
   user: User | null;
-  signIn: (credentials: { email: string; password: string }) => Promise<{ error: AuthError | null }>;
-  signUp: (credentials: { email: string; password: string }) => Promise<{ error: AuthError | null }>;
   signOut: () => Promise<void>;
 }
 
@@ -21,6 +19,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const { toast } = useToast();
 
   useEffect(() => {
+    // Get initial session
     supabase.auth.getSession().then(({ data: { session } }) => {
       console.log("Initial session check:", session);
       setSession(session);
@@ -30,12 +29,29 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       }
     });
 
+    // Listen for auth changes
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange(async (event, session) => {
       console.log("Auth state changed:", event, session);
       setSession(session);
       setUser(session?.user ?? null);
+
+      // Handle email verification from URL parameters
+      const hashParams = new URLSearchParams(window.location.hash.substring(1));
+      const type = hashParams.get("type");
+      const error = hashParams.get("error_description");
+
+      if (error) {
+        console.error("Verification error:", error);
+        toast({
+          variant: "destructive",
+          title: "Verification Failed",
+          description: "There was an error verifying your email. Please try again.",
+        });
+        navigate("/signin");
+        return;
+      }
 
       switch (event) {
         case "SIGNED_IN":
@@ -51,16 +67,26 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
             title: "Signed out",
             description: "You have been signed out successfully.",
           });
-          navigate("/login");
+          navigate("/signin");
           break;
 
         case "USER_UPDATED":
-          if (session?.user.email_confirmed_at) {
+          // Handle email verification success
+          if (session?.user.email_confirmed_at && type === "email_confirmation") {
+            console.log("Email verified successfully");
             toast({
               title: "Email verified!",
               description: "Your email has been successfully verified.",
             });
+            navigate("/verify-success");
           }
+          break;
+
+        case "PASSWORD_RECOVERY":
+          toast({
+            title: "Verification Required",
+            description: "Please check your email to verify your account.",
+          });
           break;
       }
     });
@@ -68,30 +94,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     return () => subscription.unsubscribe();
   }, [navigate, toast]);
 
-  const signIn = async ({ email, password }: { email: string; password: string }) => {
-    console.log("Attempting to sign in:", email);
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
-    return { error };
-  };
-
-  const signUp = async ({ email, password }: { email: string; password: string }) => {
-    console.log("Attempting to sign up:", email);
-    const { error } = await supabase.auth.signUp({
-      email,
-      password,
-    });
-    return { error };
-  };
-
   const signOut = async () => {
     await supabase.auth.signOut();
   };
 
   return (
-    <AuthContext.Provider value={{ session, user, signIn, signUp, signOut }}>
+    <AuthContext.Provider value={{ session, user, signOut }}>
       {children}
     </AuthContext.Provider>
   );

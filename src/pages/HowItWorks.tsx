@@ -17,6 +17,7 @@ const HowItWorks = () => {
       title: "Assess Your Eligibility",
       description: "Use our AI-powered assessment tool to evaluate your qualifications and identify the best migration pathways for your profile.",
       icon: CheckSquare,
+      image: "https://images.unsplash.com/photo-1649972904349-6e44c42644a7",
       cta: "Try Eligibility Check",
       action: () => navigate("/eligibility")
     },
@@ -25,6 +26,7 @@ const HowItWorks = () => {
       title: "Get Tailored Support",
       description: "Receive personalized guidance and document preparation assistance from our expert team.",
       icon: Users,
+      image: "https://images.unsplash.com/photo-1605810230434-7631ac76ec81",
       cta: "Book Consultation",
       action: () => console.log("Book consultation clicked")
     },
@@ -33,6 +35,7 @@ const HowItWorks = () => {
       title: "Connect with Employers",
       description: "Access our network of global employers and find opportunities that match your skills and aspirations.",
       icon: Briefcase,
+      image: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d",
       cta: "View Opportunities",
       action: () => console.log("View opportunities clicked")
     },
@@ -41,6 +44,7 @@ const HowItWorks = () => {
       title: "Stay on Track",
       description: "Monitor your progress and receive timely updates through our intuitive tracking system.",
       icon: Bell,
+      image: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b",
       cta: "View Timeline",
       action: () => console.log("View timeline clicked")
     },
@@ -49,6 +53,7 @@ const HowItWorks = () => {
       title: "Thrive Globally",
       description: "Successfully transition to your new role and begin your international career journey.",
       icon: Globe,
+      image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6",
       cta: "Success Stories",
       action: () => console.log("Success stories clicked")
     }
@@ -95,8 +100,13 @@ const HowItWorks = () => {
                   </Button>
                 </div>
                 <div className="flex-1">
-                  <div className="aspect-video rounded-xl glass-effect p-6 flex items-center justify-center">
-                    <step.icon className="w-24 h-24 text-white/20" />
+                  <div className="aspect-video rounded-xl overflow-hidden relative group">
+                    <img 
+                      src={step.image} 
+                      alt={step.title}
+                      className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent opacity-60" />
                   </div>
                 </div>
               </div>

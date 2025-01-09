@@ -15,6 +15,7 @@ import Summary from "./steps/Summary";
 import FormNavigation from "./FormNavigation";
 import AssessmentResults from "./AssessmentResults";
 import { supabase } from "@/integrations/supabase/client";
+import AuthPromptModal from "./AuthPromptModal";
 
 interface EligibilityFormProps {
   currentStep: number;
@@ -64,6 +65,7 @@ const EligibilityForm = ({ currentStep, onNext, onPrevious }: EligibilityFormPro
   const [formData, setFormData] = useState<Partial<EligibilityData>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [showAuthPrompt, setShowAuthPrompt] = useState(false);
   const form = useForm<EligibilityData>();
   const { toast } = useToast();
   const { user } = useAuth();
@@ -101,30 +103,22 @@ const EligibilityForm = ({ currentStep, onNext, onPrevious }: EligibilityFormPro
     if (currentStep === 8) {
       setIsSubmitting(true);
       try {
-        if (!user) {
-          throw new Error("You must be logged in to submit an eligibility assessment");
-        }
-
-        // Convert Date objects to ISO strings for Supabase
-        const processedData = {
-          ...data,
-          immigrationInfo: {
-            ...data.immigrationInfo,
-            issueDate: data.immigrationInfo.issueDate?.toISOString(),
-            expirationDate: data.immigrationInfo.expirationDate?.toISOString(),
-            proposedEntryDate: data.immigrationInfo.proposedEntryDate?.toISOString(),
-          }
+        const verificationData = {
+          verification_data: data,
+          status: 'pending',
+          is_guest: !user,
+          ...(user && { user_id: user.id })
         };
 
         const { error } = await supabase
           .from('eligibility_verifications')
-          .insert({
-            verification_data: processedData,
-            status: 'pending',
-            user_id: user.id
-          });
+          .insert(verificationData);
 
         if (error) throw error;
+
+        if (!user) {
+          setShowAuthPrompt(true);
+        }
 
         toast({
           title: "Assessment Submitted",
@@ -147,21 +141,33 @@ const EligibilityForm = ({ currentStep, onNext, onPrevious }: EligibilityFormPro
     }
   };
 
+  const handleContinueAsGuest = () => {
+    setShowAuthPrompt(false);
+  };
+
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
-        {renderStep()}
-        {!isSubmitted && (
-          <FormNavigation 
-            currentStep={currentStep}
-            totalSteps={8}
-            onNext={onNext}
-            onPrevious={onPrevious}
-            isSubmitting={isSubmitting}
-          />
-        )}
-      </form>
-    </Form>
+    <>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
+          {renderStep()}
+          {!isSubmitted && (
+            <FormNavigation 
+              currentStep={currentStep}
+              totalSteps={8}
+              onNext={onNext}
+              onPrevious={onPrevious}
+              isSubmitting={isSubmitting}
+            />
+          )}
+        </form>
+      </Form>
+
+      <AuthPromptModal
+        isOpen={showAuthPrompt}
+        onClose={() => setShowAuthPrompt(false)}
+        onContinueAsGuest={handleContinueAsGuest}
+      />
+    </>
   );
 };
 

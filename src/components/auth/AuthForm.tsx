@@ -7,15 +7,14 @@ import { AuthError } from "@supabase/supabase-js";
 
 interface AuthFormProps {
   error: string;
+  preserveFormData?: boolean;
 }
 
-const AuthForm = ({ error: propError }: AuthFormProps) => {
+const AuthForm = ({ error: propError, preserveFormData }: AuthFormProps) => {
   console.log("Auth form rendered with error:", propError);
   
-  // Get the current URL's origin for redirect
   const redirectTo = `${window.location.origin}/signin`;
 
-  // Helper function to get a user-friendly error message
   const getErrorMessage = (error: AuthError) => {
     console.log("Processing error:", error);
     const errorBody = error.message;
@@ -46,8 +45,14 @@ const AuthForm = ({ error: propError }: AuthFormProps) => {
       <div className="w-full max-w-md space-y-8">
         <div className="text-center space-y-4">
           <img src="/navisa-logo.svg" alt="Navisa" className="h-12 mx-auto" />
-          <h2 className="text-3xl font-bold text-primary">Welcome Back</h2>
-          <p className="text-muted">Sign in to continue your journey</p>
+          <h2 className="text-3xl font-bold text-primary">
+            {preserveFormData ? "Save Your Progress" : "Welcome Back"}
+          </h2>
+          <p className="text-muted">
+            {preserveFormData 
+              ? "Create an account or sign in to save your eligibility assessment results"
+              : "Sign in to continue your journey"}
+          </p>
         </div>
 
         {propError && (

@@ -81,7 +81,7 @@ const ServiceCards = () => {
               </ul>
               <Button 
                 variant="outline" 
-                className="w-full hover:bg-accent hover:text-white transition-colors"
+                className="w-full hover:bg-white hover:text-primary transition-colors"
               >
                 {service.cta}
               </Button>

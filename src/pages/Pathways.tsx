@@ -1,84 +1,98 @@
 import PageHeader from "@/components/PageHeader";
-import { Button } from "@/components/ui/button";
-import { ArrowRight, Globe, Flag, Landmark } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import VisaPathwayCard from "@/components/visa/VisaPathwayCard";
+import { Briefcase, Rocket, Building2, GraduationCap, DollarSign } from "lucide-react";
 
 const Pathways = () => {
-  const navigate = useNavigate();
-
   return (
     <div className="min-h-screen bg-background">
       <PageHeader 
-        title="Get to know the visa pathways"
-        subtitle="Discover the best migration pathways for your global career goals"
+        title="Global Visa Pathways"
+        subtitle="Explore comprehensive immigration routes tailored to your professional profile"
       />
       
-      <section className="py-20 px-4">
+      <section className="py-12 px-4">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {/* Global Talent Visa */}
-          <div className="bg-accent/5 rounded-xl p-8 space-y-4 hover:bg-accent/10 transition-colors">
-            <div className="flex items-center gap-3 mb-2">
-              <Globe className="h-6 w-6 text-primary" />
-              <h3 className="text-2xl font-bold text-white">Global Talent Visa (UK)</h3>
-            </div>
-            <p className="text-white/60">For highly skilled individuals in science, digital technology, engineering, arts, and humanities who want to live and work in the UK.</p>
-            <Button variant="outline" className="w-full" onClick={() => navigate("/eligibility")}>
-              Find out how to apply
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </Button>
-          </div>
+          {/* Talent/Skilled Worker Visa */}
+          <VisaPathwayCard
+            title="Global Talent Visa"
+            description="For exceptional talent in science, engineering, humanities, and digital technology"
+            icon={GraduationCap}
+            countryCode="GB"
+            requirements={[
+              { label: "Experience", value: "3+ years in field" },
+              { label: "Achievements", value: "Significant contributions" },
+              { label: "Endorsement", value: "Required from designated body" }
+            ]}
+            processingTime="3-8 weeks"
+            validityPeriod="Up to 5 years"
+            officialDocsUrl="https://www.gov.uk/global-talent"
+          />
 
-          {/* Express Entry */}
-          <div className="bg-accent/5 rounded-xl p-8 space-y-4 hover:bg-accent/10 transition-colors">
-            <div className="flex items-center gap-3 mb-2">
-              <Flag className="h-6 w-6 text-primary" />
-              <h3 className="text-2xl font-bold text-white">Express Entry (Canada)</h3>
-            </div>
-            <p className="text-white/60">The fastest pathway to Canadian permanent residency for skilled workers who want to immigrate to Canada.</p>
-            <Button variant="outline" className="w-full" onClick={() => navigate("/eligibility")}>
-              Find out how to apply
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </Button>
-          </div>
+          {/* Startup Visa */}
+          <VisaPathwayCard
+            title="Start-up Visa"
+            description="For entrepreneurs launching an innovative business"
+            icon={Rocket}
+            countryCode="GB"
+            requirements={[
+              { label: "Business Plan", value: "Required" },
+              { label: "Innovation", value: "Must be unique/viable" },
+              { label: "Endorsement", value: "From approved body" }
+            ]}
+            processingTime="3-4 weeks"
+            validityPeriod="2 years"
+            officialDocsUrl="https://www.gov.uk/start-up-visa"
+          />
 
-          {/* EB-1/EB-2 */}
-          <div className="bg-accent/5 rounded-xl p-8 space-y-4 hover:bg-accent/10 transition-colors">
-            <div className="flex items-center gap-3 mb-2">
-              <Landmark className="h-6 w-6 text-primary" />
-              <h3 className="text-2xl font-bold text-white">EB-1/EB-2 (USA)</h3>
-            </div>
-            <p className="text-white/60">For professionals with extraordinary abilities or exceptional achievements in fields like science, business, or arts who want to stay in the U.S.</p>
-            <Button variant="outline" className="w-full" onClick={() => navigate("/eligibility")}>
-              Find out how to apply
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </Button>
-          </div>
+          {/* Scale-up Visa */}
+          <VisaPathwayCard
+            title="Scale-up Visa"
+            description="For talented individuals joining high-growth UK companies"
+            icon={Building2}
+            countryCode="GB"
+            requirements={[
+              { label: "Job Offer", value: "From approved scale-up" },
+              { label: "Salary", value: "£33,000+ per year" },
+              { label: "Skills", value: "Graduate level" }
+            ]}
+            processingTime="2-3 weeks"
+            validityPeriod="2 years"
+            minimumThreshold="£33,000 annual salary"
+            officialDocsUrl="https://www.gov.uk/scale-up-visa"
+          />
 
-          {/* EU Blue Card */}
-          <div className="bg-accent/5 rounded-xl p-8 space-y-4 hover:bg-accent/10 transition-colors">
-            <div className="flex items-center gap-3 mb-2">
-              <Flag className="h-6 w-6 text-primary" />
-              <h3 className="text-2xl font-bold text-white">EU Blue Card</h3>
-            </div>
-            <p className="text-white/60">A work permit for highly qualified non-EU citizens, offering a path to permanent residency in participating EU countries.</p>
-            <Button variant="outline" className="w-full" onClick={() => navigate("/eligibility")}>
-              Find out how to apply
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </Button>
-          </div>
+          {/* Employment-based Immigration */}
+          <VisaPathwayCard
+            title="EB-1 Visa (USA)"
+            description="For individuals with extraordinary ability in sciences, arts, education, business, or athletics"
+            icon={Briefcase}
+            countryCode="US"
+            requirements={[
+              { label: "Achievement", value: "International recognition" },
+              { label: "Evidence", value: "Awards/publications" },
+              { label: "Impact", value: "Field leadership" }
+            ]}
+            processingTime="6-8 months"
+            validityPeriod="Permanent"
+            officialDocsUrl="https://www.uscis.gov/working-in-the-united-states/permanent-workers/employment-based-immigration-first-preference-eb-1"
+          />
 
-          {/* Golden Visa */}
-          <div className="bg-accent/5 rounded-xl p-8 space-y-4 hover:bg-accent/10 transition-colors">
-            <div className="flex items-center gap-3 mb-2">
-              <Globe className="h-6 w-6 text-primary" />
-              <h3 className="text-2xl font-bold text-white">Golden Visa (UAE)</h3>
-            </div>
-            <p className="text-white/60">A long-term residency program designed to attract investors, entrepreneurs, skilled professionals, and exceptional talents to the UAE.</p>
-            <Button variant="outline" className="w-full" onClick={() => navigate("/eligibility")}>
-              Find out how to apply
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </Button>
-          </div>
+          {/* Investment Visa */}
+          <VisaPathwayCard
+            title="Golden Visa"
+            description="Long-term residency through significant investment"
+            icon={DollarSign}
+            countryCode="AE"
+            requirements={[
+              { label: "Investment", value: "AED 2M+ in real estate" },
+              { label: "Business", value: "Company ownership" },
+              { label: "Maintenance", value: "Investment period" }
+            ]}
+            processingTime="2-3 weeks"
+            validityPeriod="10 years"
+            minimumThreshold="AED 2,000,000"
+            officialDocsUrl="https://u.ae/en/information-and-services/visa-and-emirates-id/residence-visa/getting-a-golden-visa"
+          />
         </div>
       </section>
 
@@ -92,21 +106,48 @@ const Pathways = () => {
             Take our eligibility assessment to find the best options for your profile
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button
-              onClick={() => navigate("/eligibility")}
-              className="bg-white hover:bg-white/90 text-black px-8 py-6 text-lg"
+            <a
+              href="/eligibility"
+              className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-lg font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-white hover:bg-white/90 text-black h-12 px-8"
             >
               Start Assessment
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </Button>
-            <Button
-              variant="outline"
-              className="border-white text-white hover:bg-white/10 px-8 py-6 text-lg"
-              onClick={() => navigate("/how-it-works")}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="ml-2 h-5 w-5"
+              >
+                <path d="M5 12h14" />
+                <path d="m12 5 7 7-7 7" />
+              </svg>
+            </a>
+            <a
+              href="/how-it-works"
+              className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-lg font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-white text-white hover:bg-white/10 h-12 px-8"
             >
               Learn More
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </Button>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="ml-2 h-5 w-5"
+              >
+                <path d="M5 12h14" />
+                <path d="m12 5 7 7-7 7" />
+              </svg>
+            </a>
           </div>
         </div>
       </section>

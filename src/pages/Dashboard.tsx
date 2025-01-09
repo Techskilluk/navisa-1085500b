@@ -2,6 +2,8 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import DashboardLayout from "@/components/dashboard/DashboardLayout";
+import ApplicationStatus from "@/components/dashboard/ApplicationStatus";
+import TimelineSection from "@/components/dashboard/TimelineSection";
 import {
   Card,
   CardContent,
@@ -33,9 +35,9 @@ const Dashboard = () => {
   return (
     <DashboardLayout>
       <div className="space-y-8">
-        {/* Dashboard Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <Card className="bg-card">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {/* Success Probability Card */}
+          <Card className="bg-card lg:col-span-2">
             <CardHeader>
               <CardTitle>Success Probability</CardTitle>
               <CardDescription>
@@ -75,6 +77,16 @@ const Dashboard = () => {
             </CardContent>
           </Card>
 
+          {/* Application Status Card */}
+          <div className="lg:col-span-1">
+            <ApplicationStatus />
+          </div>
+        </div>
+
+        {/* Timeline and Active Applications */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <TimelineSection />
+          
           <Card className="bg-card">
             <CardHeader>
               <CardTitle>Active Applications</CardTitle>

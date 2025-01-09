@@ -1,6 +1,8 @@
 import { Check, Circle, Clock } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
+import { useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 interface Stage {
   label: string;
@@ -10,29 +12,36 @@ interface Stage {
 }
 
 const ApplicationStatus = () => {
-  const stages: Stage[] = [
-    {
-      label: "Documents Uploaded",
-      status: "completed",
-      timestamp: "Nov 5, 10:20 AM",
-      tooltip: "All required documents have been successfully uploaded"
-    },
-    {
-      label: "Expert Review",
-      status: "active",
-      tooltip: "Documents currently under review by our team"
-    },
-    {
-      label: "Application Submitted",
-      status: "pending",
-      tooltip: "Pending review completion"
-    },
-    {
-      label: "Final Result",
-      status: "pending",
-      tooltip: "Awaiting visa decision"
-    }
-  ];
+  const location = useLocation();
+  const [stages, setStages] = useState<Stage[]>([]);
+  
+  useEffect(() => {
+    const submission = location.state?.documentSubmission;
+    
+    setStages([
+      {
+        label: "Documents Uploaded",
+        status: submission ? "completed" : "pending",
+        timestamp: submission?.timestamp,
+        tooltip: "All required documents have been successfully uploaded"
+      },
+      {
+        label: "Expert Review",
+        status: submission ? "active" : "pending",
+        tooltip: "Documents currently under review by our team"
+      },
+      {
+        label: "Application Submitted",
+        status: "pending",
+        tooltip: "Pending review completion"
+      },
+      {
+        label: "Final Result",
+        status: "pending",
+        tooltip: "Awaiting visa decision"
+      }
+    ]);
+  }, [location.state]);
 
   return (
     <Card className="bg-card/50 backdrop-blur-sm border-accent/20">

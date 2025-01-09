@@ -1,8 +1,11 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
+import { useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 const TimelineSection = () => {
-  const timelineData = [
+  const location = useLocation();
+  const [timelineData, setTimelineData] = useState([
     {
       stage: "Document Upload",
       duration: "Completed",
@@ -21,7 +24,16 @@ const TimelineSection = () => {
       value: 50,
       color: "#FFC107"
     }
-  ];
+  ]);
+
+  useEffect(() => {
+    if (location.state?.documentSubmission) {
+      setTimelineData(prev => [
+        { ...prev[0], stage: "Document Upload", duration: "Completed", value: 100 },
+        ...prev.slice(1)
+      ]);
+    }
+  }, [location.state]);
 
   return (
     <Card className="bg-card/50 backdrop-blur-sm border-accent/20">

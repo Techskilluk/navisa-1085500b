@@ -2,7 +2,7 @@ import { Auth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
 import { supabase } from "@/integrations/supabase/client";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { AuthError } from "@supabase/supabase-js";
 
 interface AuthFormProps {
@@ -12,12 +12,17 @@ interface AuthFormProps {
 
 const AuthForm = ({ error: propError, preserveFormData }: AuthFormProps) => {
   console.log("Auth form rendered with error:", propError);
+  const [authError, setAuthError] = useState<string>("");
   
   const redirectTo = `${window.location.origin}/signin`;
 
   const getErrorMessage = (error: AuthError) => {
     console.log("Processing error:", error);
     const errorBody = error.message;
+    
+    if (errorBody.includes("Email not confirmed")) {
+      return "Please check your email and click the verification link to confirm your account before signing in.";
+    }
     
     if (errorBody.includes("Invalid login credentials")) {
       return "Invalid email or password. Please check your credentials and try again.";
@@ -33,6 +38,7 @@ const AuthForm = ({ error: propError, preserveFormData }: AuthFormProps) => {
         const { error } = await supabase.auth.getSession();
         if (error) {
           console.error("Auth error:", error);
+          setAuthError(getErrorMessage(error));
         }
       }
     });
@@ -55,9 +61,9 @@ const AuthForm = ({ error: propError, preserveFormData }: AuthFormProps) => {
           </p>
         </div>
 
-        {propError && (
+        {(propError || authError) && (
           <Alert variant="destructive" className="mb-4">
-            <AlertDescription>{propError}</AlertDescription>
+            <AlertDescription>{propError || authError}</AlertDescription>
           </Alert>
         )}
 

@@ -8,61 +8,23 @@
     --foreground: 20 14.3% 4.1%;
     --radius: 1.2rem;
   }
+}
 
-  html {
-    font-size: 16px;
-    @screen md {
-      font-size: 16px;
-    }
-    @screen lg {
-      font-size: 16px;
-    }
-  }
-
+@layer base {
   * {
     @apply border-border;
   }
-
   body {
-    @apply bg-background text-foreground antialiased min-h-screen;
-    -webkit-tap-highlight-color: transparent;
-  }
-
-  /* Improved touch targets */
-  button, a {
-    @apply min-h-[44px] min-w-[44px] flex items-center justify-center;
+    @apply bg-background text-foreground antialiased;
   }
 }
 
-/* Mobile-first utility classes */
-@layer utilities {
-  .glass-effect {
-    @apply bg-white/5 backdrop-blur-lg border border-white/10;
-  }
+.glass-effect {
+  @apply bg-white/5 backdrop-blur-lg border border-white/10;
+}
 
-  .hover-lift {
-    @apply transition-transform duration-300 hover:-translate-y-1;
-  }
-
-  .mobile-container {
-    @apply px-4 sm:px-6 lg:px-8 mx-auto max-w-7xl;
-  }
-
-  .responsive-grid {
-    @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6;
-  }
-
-  .responsive-text {
-    @apply text-base sm:text-lg lg:text-xl;
-  }
-
-  .responsive-heading {
-    @apply text-2xl sm:text-3xl lg:text-4xl font-bold;
-  }
-
-  .mobile-menu-transition {
-    @apply transition-all duration-300 ease-in-out;
-  }
+.hover-lift {
+  @apply transition-transform duration-300 hover:-translate-y-1;
 }
 
 /* Auth UI Customization */
@@ -71,7 +33,7 @@
 }
 
 .supabase-auth-ui_ui-button {
-  @apply shadow-none hover:shadow-lg transition-all duration-200 min-h-[44px];
+  @apply shadow-none hover:shadow-lg transition-all duration-200;
 }
 
 .supabase-auth-ui_ui-divider {
@@ -91,21 +53,5 @@
 }
 
 .supabase-auth-ui_ui-input {
-  @apply transition-all duration-200 focus:ring-2 focus:ring-white/20 min-h-[44px];
-}
-
-/* Responsive images */
-img {
-  @apply max-w-full h-auto;
-}
-
-/* Improved scrolling */
-* {
-  -webkit-overflow-scrolling: touch;
-  scroll-behavior: smooth;
-}
-
-/* Focus styles for accessibility */
-:focus-visible {
-  @apply outline-2 outline-offset-2 outline-white/50;
+  @apply transition-all duration-200 focus:ring-2 focus:ring-white/20;
 }

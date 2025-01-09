@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useToast } from "@/components/ui/use-toast";
+import PageHeader from "@/components/PageHeader";
 
 const EligibilityAssessment = () => {
   const [step, setStep] = useState(1);
@@ -39,27 +40,35 @@ const EligibilityAssessment = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background p-6">
-      <div className="max-w-2xl mx-auto space-y-8">
-        <div className="space-y-2">
-          <Button 
-            variant="ghost" 
-            onClick={() => navigate(-1)}
-            className="mb-4"
-          >
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back
-          </Button>
-          <FormStepIndicator currentStep={step} totalSteps={totalSteps} />
+    <div className="min-h-screen bg-background">
+      <PageHeader 
+        title="Check Your Eligibility"
+        subtitle="Answer a few questions to find the best migration pathways for you"
+        showCta={false}
+      />
+      
+      <div className="p-6">
+        <div className="max-w-2xl mx-auto space-y-8">
+          <div className="space-y-2">
+            <Button 
+              variant="ghost" 
+              onClick={() => navigate(-1)}
+              className="mb-4"
+            >
+              <ArrowLeft className="mr-2 h-4 w-4" />
+              Back
+            </Button>
+            <FormStepIndicator currentStep={step} totalSteps={totalSteps} />
+          </div>
+          
+          <Card className="p-6">
+            <EligibilityForm 
+              currentStep={step} 
+              onNext={handleNext}
+              onPrevious={handlePrevious}
+            />
+          </Card>
         </div>
-        
-        <Card className="p-6">
-          <EligibilityForm 
-            currentStep={step} 
-            onNext={handleNext}
-            onPrevious={handlePrevious}
-          />
-        </Card>
       </div>
     </div>
   );

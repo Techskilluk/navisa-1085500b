@@ -1,23 +1,27 @@
 import PageHeader from "@/components/PageHeader";
 import VisaPathwayCard from "@/components/visa/VisaPathwayCard";
-import { Briefcase, Rocket, Building2, GraduationCap, DollarSign } from "lucide-react";
+import { ArrowRight, Briefcase, Building2, Globe, GraduationCap, Landmark, UserPlus, Users, Award, HandShake } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const Pathways = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="min-h-screen bg-background">
       <PageHeader 
-        title="Global Visa Pathways"
-        subtitle="Explore comprehensive immigration routes tailored to your professional profile"
+        title="Global Migration Pathways"
+        subtitle="Explore comprehensive immigration routes, sponsorship opportunities, and talent programs"
       />
       
+      {/* Visa Pathways Section */}
       <section className="py-12 px-4">
+        <h2 className="text-2xl font-bold text-white mb-8 max-w-7xl mx-auto">Visa Pathways</h2>
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {/* Talent/Skilled Worker Visa */}
           <VisaPathwayCard
             title="Global Talent Visa"
             description="For exceptional talent in science, engineering, humanities, and digital technology"
             icon={GraduationCap}
-            countryCode="GB"
+            countryCode="gb"
             requirements={[
               { label: "Experience", value: "3+ years in field" },
               { label: "Achievements", value: "Significant contributions" },
@@ -28,7 +32,6 @@ const Pathways = () => {
             officialDocsUrl="https://www.gov.uk/global-talent"
           />
 
-          {/* Startup Visa */}
           <VisaPathwayCard
             title="Start-up Visa"
             description="For entrepreneurs launching an innovative business"
@@ -96,58 +99,136 @@ const Pathways = () => {
         </div>
       </section>
 
+      {/* Sponsorship Jobs Section */}
+      <section className="py-12 px-4 bg-accent/5">
+        <h2 className="text-2xl font-bold text-white mb-8 max-w-7xl mx-auto">Sponsorship Opportunities</h2>
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <VisaPathwayCard
+            title="Tech Talent Sponsorship"
+            description="Fast-track sponsorship for software engineers, data scientists, and tech professionals"
+            icon={Briefcase}
+            countryCode="gb"
+            requirements={[
+              { label: "Experience", value: "2+ years in tech" },
+              { label: "Skills", value: "In-demand tech stack" },
+              { label: "Language", value: "English proficiency" }
+            ]}
+            processingTime="4-6 weeks"
+            validityPeriod="3-5 years"
+            minimumThreshold="£35,000+ annual salary"
+            officialDocsUrl="https://www.gov.uk/skilled-worker-visa"
+          />
+
+          <VisaPathwayCard
+            title="Healthcare Professionals"
+            description="Dedicated sponsorship route for doctors, nurses, and healthcare specialists"
+            icon={UserPlus}
+            countryCode="gb"
+            requirements={[
+              { label: "Qualification", value: "Medical degree/certification" },
+              { label: "Registration", value: "GMC/NMC registration" },
+              { label: "Experience", value: "Clinical experience" }
+            ]}
+            processingTime="4-8 weeks"
+            validityPeriod="3 years"
+            minimumThreshold="NHS pay scale"
+            officialDocsUrl="https://www.gov.uk/health-care-worker-visa"
+          />
+
+          <VisaPathwayCard
+            title="Academic Sponsorship"
+            description="For researchers, professors, and academic professionals"
+            icon={Award}
+            countryCode="gb"
+            requirements={[
+              { label: "Qualification", value: "PhD or equivalent" },
+              { label: "Research", value: "Publication record" },
+              { label: "Position", value: "Academic role offer" }
+            ]}
+            processingTime="6-8 weeks"
+            validityPeriod="Up to 5 years"
+            officialDocsUrl="https://www.gov.uk/government/publications/uk-points-based-immigration-system-sponsor-guidance"
+          />
+        </div>
+      </section>
+
+      {/* Talent Programs Section */}
+      <section className="py-12 px-4">
+        <h2 className="text-2xl font-bold text-white mb-8 max-w-7xl mx-auto">Global Talent Programs</h2>
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <VisaPathwayCard
+            title="High Potential Individual"
+            description="For recent graduates from top global universities"
+            icon={Users}
+            countryCode="gb"
+            requirements={[
+              { label: "Education", value: "Top university graduate" },
+              { label: "Graduation", value: "Last 5 years" },
+              { label: "Degree Level", value: "Bachelor's or higher" }
+            ]}
+            processingTime="2-3 weeks"
+            validityPeriod="2 years"
+            officialDocsUrl="https://www.gov.uk/high-potential-individual-visa"
+          />
+
+          <VisaPathwayCard
+            title="Scale-up Talent Program"
+            description="Fast-growing companies hiring international talent"
+            icon={Building2}
+            countryCode="gb"
+            requirements={[
+              { label: "Company", value: "Scale-up sponsor" },
+              { label: "Salary", value: "£33,000+" },
+              { label: "Skills", value: "Graduate level" }
+            ]}
+            processingTime="2-4 weeks"
+            validityPeriod="2 years"
+            minimumThreshold="£33,000 annual salary"
+            officialDocsUrl="https://www.gov.uk/scale-up-visa"
+          />
+
+          <VisaPathwayCard
+            title="Global Business Mobility"
+            description="For senior executives and specialists in multinational companies"
+            icon={Globe}
+            countryCode="gb"
+            requirements={[
+              { label: "Position", value: "Senior/Specialist role" },
+              { label: "Experience", value: "12 months with company" },
+              { label: "Salary", value: "Meet threshold" }
+            ]}
+            processingTime="3-5 weeks"
+            validityPeriod="5 years"
+            minimumThreshold="£42,400 annual salary"
+            officialDocsUrl="https://www.gov.uk/global-business-mobility-visa"
+          />
+        </div>
+      </section>
+
       <section className="py-20 px-4 relative overflow-hidden">
         <div className="absolute inset-0 bg-accent/5 backdrop-blur-3xl"></div>
         <div className="max-w-3xl mx-auto text-center relative z-10">
           <h2 className="text-4xl font-bold text-white mb-6">
-            Not Sure Which Pathway Is Right for You?
+            Ready to Start Your Global Journey?
           </h2>
           <p className="text-xl text-white/80 mb-12">
             Take our eligibility assessment to find the best options for your profile
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a
-              href="/eligibility"
+            <button
+              onClick={() => navigate("/eligibility")}
               className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-lg font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-white hover:bg-white/90 text-black h-12 px-8"
             >
               Start Assessment
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="ml-2 h-5 w-5"
-              >
-                <path d="M5 12h14" />
-                <path d="m12 5 7 7-7 7" />
-              </svg>
-            </a>
-            <a
-              href="/how-it-works"
+              <ArrowRight className="ml-2 h-5 w-5" />
+            </button>
+            <button
+              onClick={() => navigate("/how-it-works")}
               className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-lg font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-white text-white hover:bg-white/10 h-12 px-8"
             >
               Learn More
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="ml-2 h-5 w-5"
-              >
-                <path d="M5 12h14" />
-                <path d="m12 5 7 7-7 7" />
-              </svg>
-            </a>
+              <ArrowRight className="ml-2 h-5 w-5" />
+            </button>
           </div>
         </div>
       </section>

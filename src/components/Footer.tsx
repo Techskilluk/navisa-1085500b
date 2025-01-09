@@ -17,13 +17,13 @@ const Footer = () => {
             </p>
             <div className="flex space-x-4">
               <Button variant="ghost" size="icon" className="hover:bg-white/10">
-                <Twitter className="w-5 h-5" />
+                <Twitter className="w-5 h-5 text-white" />
               </Button>
               <Button variant="ghost" size="icon" className="hover:bg-white/10">
-                <Github className="w-5 h-5" />
+                <Github className="w-5 h-5 text-white" />
               </Button>
               <Button variant="ghost" size="icon" className="hover:bg-white/10">
-                <Linkedin className="w-5 h-5" />
+                <Linkedin className="w-5 h-5 text-white" />
               </Button>
             </div>
           </div>
@@ -57,6 +57,7 @@ const Footer = () => {
               <li><a href="#" className="text-white/60 hover:text-white transition-colors">Licenses</a></li>
             </ul>
           </div>
+          
         </div>
         
         <div className="mt-12 pt-8 border-t border-white/10">

@@ -55,7 +55,7 @@ const Features = () => {
                 <h3 className="text-xl font-semibold mb-3 text-white">{audience.title}</h3>
                 <p className="text-white/60 mb-6">{audience.description}</p>
               </div>
-              <Button variant="outline" className="w-full hover:bg-white hover:text-black transition-colors">
+              <Button variant="outline" className="w-full bg-white text-black hover:bg-white/90 transition-colors">
                 {audience.cta}
               </Button>
             </Card>

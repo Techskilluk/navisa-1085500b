@@ -24,7 +24,7 @@ const Hero = () => {
             onClick={handleEligibilityCheck}
           >
             Check Your Eligibility To Get Started
-            <ArrowRight className="w-5 h-5" />
+            <ArrowRight className="w-5 h-5 text-black" />
           </Button>
           <div className="grid grid-cols-3 gap-8 pt-8">
             <div>

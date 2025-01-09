@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Mail, Phone, Clock } from "lucide-react";
+import { Mail, Phone, Globe } from "lucide-react";
 
 const Download = () => {
   return (
@@ -16,23 +16,15 @@ const Download = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button className="px-8 py-6 text-lg bg-white text-black hover:bg-white/90 flex items-center gap-2">
               <Mail className="w-5 h-5 text-black" />
-              contact@navisa.com
+              info@navisa.co
             </Button>
-            <div className="flex flex-col gap-4">
-              <Button className="px-8 py-6 text-lg glass-effect hover:bg-white/10 flex items-center gap-2">
-                <Phone className="w-5 h-5 text-white" />
-                <div className="flex flex-col">
-                  <span>+447816 247864</span>
-                  <span>+234 901 546 6402</span>
-                </div>
-              </Button>
-              <Button className="px-8 py-6 text-lg glass-effect hover:bg-white/10 flex items-center gap-2">
-                <Clock className="w-5 h-5 text-white" />
-                Monday–Friday, 9 AM–5 PM (GMT)
-              </Button>
-            </div>
-            <Button className="px-8 py-6 text-lg bg-primary hover:bg-primary/90 flex items-center gap-2">
-              Contact Us
+            <Button className="px-8 py-6 text-lg glass-effect hover:bg-white/10 flex items-center gap-2">
+              <Phone className="w-5 h-5 text-white" />
+              +1 (800) 123-4567
+            </Button>
+            <Button className="px-8 py-6 text-lg glass-effect hover:bg-white/10 flex items-center gap-2">
+              <Globe className="w-5 h-5 text-white" />
+              Visit Website
             </Button>
           </div>
         </div>

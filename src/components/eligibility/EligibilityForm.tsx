@@ -1,9 +1,6 @@
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
-import { useToast } from "@/components/ui/use-toast";
-import { useAuth } from "@/contexts/AuthContext";
 import PersonalInfo from "./steps/PersonalInfo";
 import Education from "./steps/Education";
 import Experience from "./steps/Experience";
@@ -14,8 +11,7 @@ import ImmigrationInfo from "./steps/ImmigrationInfo";
 import Summary from "./steps/Summary";
 import FormNavigation from "./FormNavigation";
 import AssessmentResults from "./AssessmentResults";
-import { supabase } from "@/integrations/supabase/client";
-import AuthPromptModal from "./AuthPromptModal";
+import FormSubmissionHandler from "./form-handlers/FormSubmissionHandler";
 
 interface EligibilityFormProps {
   currentStep: number;
@@ -64,12 +60,8 @@ export type EligibilityData = {
 
 const EligibilityForm = ({ currentStep, onNext, onPrevious }: EligibilityFormProps) => {
   const [formData, setFormData] = useState<Partial<EligibilityData>>({});
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [showAuthPrompt, setShowAuthPrompt] = useState(false);
   const form = useForm<EligibilityData>();
-  const { toast } = useToast();
-  const { user } = useAuth();
 
   const renderStep = () => {
     if (isSubmitted) {
@@ -92,102 +84,41 @@ const EligibilityForm = ({ currentStep, onNext, onPrevious }: EligibilityFormPro
       case 7:
         return <PreferredCountries form={form} />;
       case 8:
-        return <Summary data={formData} />;
+        return (
+          <>
+            <Summary data={formData} />
+            <FormSubmissionHandler 
+              formData={formData} 
+              onSuccess={() => setIsSubmitted(true)} 
+            />
+          </>
+        );
       default:
         return null;
     }
   };
 
-  const formatDateForJson = (date: Date | undefined) => {
-    if (!date) return null;
-    return date.toISOString();
-  };
-
-  const prepareVerificationData = (data: EligibilityData) => {
-    // Create a deep copy of the data
-    const formattedData = JSON.parse(JSON.stringify(data));
-    
-    // Format dates for JSON compatibility
-    if (formattedData.immigrationInfo) {
-      formattedData.immigrationInfo.issueDate = formatDateForJson(data.immigrationInfo.issueDate);
-      formattedData.immigrationInfo.expirationDate = formatDateForJson(data.immigrationInfo.expirationDate);
-      formattedData.immigrationInfo.proposedEntryDate = formatDateForJson(data.immigrationInfo.proposedEntryDate);
-    }
-    
-    return formattedData;
-  };
-
-  const handleSubmit = async (data: EligibilityData) => {
+  const handleSubmit = (data: EligibilityData) => {
     setFormData(prev => ({ ...prev, ...data }));
-    
-    if (currentStep === 8) {
-      setIsSubmitting(true);
-      try {
-        const verificationData = {
-          verification_data: prepareVerificationData(data),
-          status: 'pending',
-          is_guest: !user,
-          ...(user && { user_id: user.id })
-        };
-
-        const { error } = await supabase
-          .from('eligibility_verifications')
-          .insert(verificationData);
-
-        if (error) throw error;
-
-        if (!user) {
-          setShowAuthPrompt(true);
-        }
-
-        toast({
-          title: "Assessment Submitted",
-          description: "We'll analyze your eligibility and get back to you soon.",
-        });
-
-        setIsSubmitted(true);
-      } catch (error) {
-        console.error('Error submitting eligibility assessment:', error);
-        toast({
-          title: "Submission Error",
-          description: "There was an error submitting your assessment. Please try again.",
-          variant: "destructive",
-        });
-      } finally {
-        setIsSubmitting(false);
-      }
-    } else {
+    if (currentStep < 8) {
       onNext();
     }
   };
 
-  const handleContinueAsGuest = () => {
-    setShowAuthPrompt(false);
-  };
-
   return (
-    <>
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
-          {renderStep()}
-          {!isSubmitted && (
-            <FormNavigation 
-              currentStep={currentStep}
-              totalSteps={8}
-              onNext={onNext}
-              onPrevious={onPrevious}
-              isSubmitting={isSubmitting}
-            />
-          )}
-        </form>
-      </Form>
-
-      <AuthPromptModal
-        isOpen={showAuthPrompt}
-        onClose={() => setShowAuthPrompt(false)}
-        onContinueAsGuest={handleContinueAsGuest}
-      />
-    </>
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
+        {renderStep()}
+        {!isSubmitted && currentStep < 8 && (
+          <FormNavigation 
+            currentStep={currentStep}
+            totalSteps={8}
+            onNext={onNext}
+            onPrevious={onPrevious}
+          />
+        )}
+      </form>
+    </Form>
   );
 };
 

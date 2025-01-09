@@ -1,6 +1,7 @@
 import { useCallback } from "react";
 import { FileText, Upload } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
+import { cn } from "@/lib/utils";
 
 interface DocumentUploadZoneProps {
   onFileSelect: (file: File) => void;

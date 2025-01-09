@@ -66,8 +66,8 @@ const FileUpload = ({ document, visaType, userId, onUploadComplete }: FileUpload
       <DocumentUploadZone
         onFileSelect={handleFileSelect}
         file={file || undefined}
-        accept={document.formats}
-        maxSize={document.maxSize}
+        accept={['.pdf', '.jpg', '.jpeg', '.png']}
+        maxSize={5}
       />
       {uploadProgress > 0 && uploadProgress < 100 && (
         <div className="w-full bg-secondary rounded-full h-1.5 mt-2">

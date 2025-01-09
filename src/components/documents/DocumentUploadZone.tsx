@@ -24,7 +24,9 @@ const DocumentUploadZone = ({ onFileSelect, file, accept, maxSize }: DocumentUpl
     }
 
     const fileExt = file.name.split('.').pop()?.toLowerCase();
-    if (!accept.includes(`.${fileExt}`)) {
+    const acceptedFormats = accept.map(format => format.replace('.', '').toLowerCase());
+    
+    if (!fileExt || !acceptedFormats.includes(fileExt)) {
       toast({
         title: "Invalid file format",
         description: `Allowed formats: ${accept.join(', ')}`,
@@ -78,6 +80,9 @@ const DocumentUploadZone = ({ onFileSelect, file, accept, maxSize }: DocumentUpl
           <div className="text-sm">
             <span className="text-muted-foreground">Drag & drop or </span>
             <span className="text-primary font-medium">click to upload</span>
+          </div>
+          <div className="text-xs text-muted-foreground">
+            Supported formats: PDF, JPG, PNG
           </div>
         </div>
       )}

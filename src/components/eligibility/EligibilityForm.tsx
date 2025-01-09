@@ -56,6 +56,7 @@ export type EligibilityData = {
     issueDate?: Date;
     expirationDate?: Date;
     relocationPurpose: string;
+    otherPurposeSpecification?: string;
     stayDuration: number;
     proposedEntryDate: Date;
   };

@@ -73,22 +73,31 @@ const DocumentSubmissionHandler = ({
 
       setSuccessCount(successCount);
 
-      toast({
-        title: "Documents Submitted Successfully",
-        description: `${successCount} documents have been uploaded and are pending review.`,
-        duration: 5000,
-      });
+      if (successCount > 0) {
+        toast({
+          title: "Documents Submitted Successfully",
+          description: `${successCount} documents have been uploaded and are pending review.`,
+          duration: 5000,
+        });
 
-      navigate('/dashboard', { 
-        replace: true,
-        state: { 
-          documentSubmission: {
-            timestamp,
-            visaType,
-            documentCount: successCount
+        // Immediate navigation after successful submission
+        navigate('/dashboard', { 
+          replace: true,
+          state: { 
+            documentSubmission: {
+              timestamp: new Date().toLocaleString(),
+              visaType,
+              documentCount: successCount
+            }
           }
-        }
-      });
+        });
+      } else {
+        toast({
+          title: "Submission Failed",
+          description: "No documents were successfully uploaded. Please try again.",
+          variant: "destructive",
+        });
+      }
 
     } catch (error) {
       console.error('Error in document submission:', error);

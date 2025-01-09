@@ -1,6 +1,6 @@
 import PageHeader from "@/components/PageHeader";
 import VisaPathwayCard from "@/components/visa/VisaPathwayCard";
-import { ArrowRight, Briefcase, Building2, Globe, GraduationCap, Landmark, UserPlus, Users, Award, HandShake } from "lucide-react";
+import { ArrowRight, Briefcase, Building2, Globe, GraduationCap, Landmark, UserPlus, Users, Award, Handshake, Rocket, DollarSign } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const Pathways = () => {
@@ -13,7 +13,6 @@ const Pathways = () => {
         subtitle="Explore comprehensive immigration routes, sponsorship opportunities, and talent programs"
       />
       
-      {/* Visa Pathways Section */}
       <section className="py-12 px-4">
         <h2 className="text-2xl font-bold text-white mb-8 max-w-7xl mx-auto">Visa Pathways</h2>
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

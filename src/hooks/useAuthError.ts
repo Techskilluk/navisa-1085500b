@@ -10,49 +10,51 @@ export const useAuthError = (propError: string) => {
     
     // Handle AuthApiError specifically
     if (error instanceof AuthApiError) {
-      console.log("Auth API Error code:", error.status, error.message);
-      switch (error.status) {
-        case 400:
-          if (error.message.includes("Invalid login credentials")) {
-            return "The email or password you entered is incorrect. Please try again.";
-          }
-          break;
-        case 422:
-          return "Please check your input and try again.";
-        case 429:
-          return "Too many attempts. Please try again later.";
+      console.log("Auth API Error:", {
+        status: error.status,
+        message: error.message,
+        name: error.name,
+        code: (error as any).code
+      });
+      
+      // Handle specific API error cases
+      if (error.status === 400) {
+        return "The email or password you entered is incorrect. Please try again.";
+      }
+      if (error.status === 422) {
+        return "Please check your input and try again.";
+      }
+      if (error.status === 429) {
+        return "Too many attempts. Please try again later.";
       }
     }
 
     // Parse error message if it's JSON
     try {
-      if (typeof error.message === 'string' && error.message.includes('{')) {
-        const parsedError = JSON.parse(error.message);
-        if (parsedError.code === "invalid_credentials") {
+      const errorMessage = error.message;
+      if (typeof errorMessage === 'string') {
+        if (errorMessage.includes('"code":"invalid_credentials"')) {
           return "The email or password you entered is incorrect. Please try again.";
         }
-        return parsedError.message || error.message;
+        if (errorMessage.includes("Email not confirmed")) {
+          return "Please check your email and click the verification link to confirm your account before signing in.";
+        }
       }
     } catch (e) {
       console.log("Error parsing error message:", e);
     }
     
-    // Check for specific error conditions
-    if (error.message.includes("Email not confirmed")) {
-      return "Please check your email and click the verification link to confirm your account before signing in.";
-    }
-    
-    // Return original message if no specific handling
-    return error.message || "An error occurred during authentication. Please try again.";
+    // Return a generic error message if no specific case matches
+    return "An error occurred during authentication. Please try again.";
   };
 
   useEffect(() => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
-      console.log("Auth state changed:", event);
+      console.log("Auth state changed in useAuthError:", event);
       if (event === 'USER_UPDATED' || event === 'SIGNED_IN') {
         const { error } = await supabase.auth.getSession();
         if (error) {
-          console.error("Auth error:", error);
+          console.error("Auth error in state change:", error);
           setAuthError(getErrorMessage(error));
         }
       }

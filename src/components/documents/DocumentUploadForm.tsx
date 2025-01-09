@@ -3,9 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { Upload } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
-import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
-import DocumentUploadZone from "./DocumentUploadZone";
+import FileUpload from "./FileUpload";
 import type { DocumentRequirement } from "@/types/documents";
 
 interface DocumentUploadFormProps {
@@ -17,15 +16,12 @@ interface DocumentUploadFormProps {
 const DocumentUploadForm = ({ visaType, documents, onFileUpload }: DocumentUploadFormProps) => {
   const [uploadedFiles, setUploadedFiles] = useState<Record<string, File>>({});
   const [uploading, setUploading] = useState(false);
-  const [uploadProgress, setUploadProgress] = useState<Record<string, number>>({});
   const { toast } = useToast();
   const navigate = useNavigate();
   const { user } = useAuth();
 
-  const handleFileUpload = async (type: string, file: File) => {
-    console.log(`Starting upload for ${type}:`, file.name);
+  const handleUploadComplete = (type: string, file: File) => {
     setUploadedFiles(prev => ({ ...prev, [type]: file }));
-    setUploadProgress(prev => ({ ...prev, [type]: 0 }));
     onFileUpload(type, file);
   };
 
@@ -48,49 +44,13 @@ const DocumentUploadForm = ({ visaType, documents, onFileUpload }: DocumentUploa
     let successCount = 0;
 
     try {
-      // Upload files in parallel for better performance
-      const uploadPromises = Object.entries(uploadedFiles).map(async ([type, file]) => {
-        const filePath = `${user.id}/${visaType}/${type}-${Date.now()}.${file.name.split('.').pop()}`;
-        
-        console.log(`Uploading ${type} to ${filePath}`);
-
-        // Create a channel to track upload progress
-        const channel = supabase.channel('upload-progress');
-        channel.subscribe((status) => {
-          if (status === 'SUBSCRIBED') {
-            console.log('Subscribed to upload progress');
+      await Promise.all(
+        documents.map(async (doc) => {
+          if (uploadedFiles[doc.type]) {
+            successCount++;
           }
-        });
-        
-        const { error: uploadError } = await supabase.storage
-          .from('documents')
-          .upload(filePath, file, {
-            upsert: false
-          });
-
-        if (uploadError) {
-          console.error(`Error uploading ${type}:`, uploadError);
-          throw uploadError;
-        }
-
-        const { error: dbError } = await supabase.from('documents').insert({
-          user_id: user.id,
-          document_type: type,
-          file_path: filePath,
-          status: 'pending'
-        });
-
-        if (dbError) {
-          console.error(`Error saving ${type} metadata:`, dbError);
-          throw dbError;
-        }
-
-        successCount++;
-        setUploadProgress(prev => ({ ...prev, [type]: 100 }));
-        console.log(`Successfully uploaded ${type}`);
-      });
-
-      await Promise.all(uploadPromises);
+        })
+      );
 
       toast({
         title: "Documents uploaded successfully",
@@ -113,7 +73,6 @@ const DocumentUploadForm = ({ visaType, documents, onFileUpload }: DocumentUploa
       });
     } finally {
       setUploading(false);
-      setUploadProgress({});
     }
   };
 
@@ -121,26 +80,13 @@ const DocumentUploadForm = ({ visaType, documents, onFileUpload }: DocumentUploa
     <div className="space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {documents.map((doc) => (
-          <div key={doc.type} className="space-y-2">
-            <label className="text-sm font-medium">
-              {doc.label}
-              {doc.required && <span className="text-destructive ml-1">*</span>}
-            </label>
-            <DocumentUploadZone
-              onFileSelect={(file) => handleFileUpload(doc.type, file)}
-              file={uploadedFiles[doc.type]}
-              accept={doc.formats}
-              maxSize={doc.maxSize}
-            />
-            {uploadProgress[doc.type] > 0 && uploadProgress[doc.type] < 100 && (
-              <div className="w-full bg-secondary rounded-full h-1.5 mt-2">
-                <div
-                  className="bg-primary h-1.5 rounded-full transition-all duration-300"
-                  style={{ width: `${uploadProgress[doc.type]}%` }}
-                />
-              </div>
-            )}
-          </div>
+          <FileUpload
+            key={doc.type}
+            document={doc}
+            visaType={visaType}
+            userId={user?.id || ''}
+            onUploadComplete={handleUploadComplete}
+          />
         ))}
       </div>
 

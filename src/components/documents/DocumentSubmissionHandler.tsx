@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import { supabase } from "@/integrations/supabase/client";
-import { Button } from "@/components/ui/button";
-import { Upload } from "lucide-react";
+import { uploadDocumentToStorage, createDocumentRecord } from "@/lib/document-upload";
 
 interface DocumentSubmissionHandlerProps {
   visaType: string;
@@ -18,15 +18,15 @@ const DocumentSubmissionHandler = ({
   isUploading,
   setIsUploading,
 }: DocumentSubmissionHandlerProps) => {
+  const [successCount, setSuccessCount] = useState(0);
   const { toast } = useToast();
   const navigate = useNavigate();
-  const [successCount, setSuccessCount] = useState(0);
 
-  const handleSubmit = async () => {
+  const handleSubmission = async () => {
     if (Object.keys(uploadedFiles).length === 0) {
       toast({
-        title: "No documents selected",
-        description: "Please upload at least one document before submitting.",
+        title: "No Documents Selected",
+        description: "Please select at least one document to upload.",
         variant: "destructive",
       });
       return;
@@ -45,34 +45,19 @@ const DocumentSubmissionHandler = ({
       console.log("Starting document upload process...");
 
       for (const [docType, file] of Object.entries(uploadedFiles)) {
-        const filePath = `${user.id}/${visaType}/${docType}-${Date.now()}`;
-        
-        console.log(`Uploading ${docType} to ${filePath}`);
-
-        const { error: uploadError } = await supabase.storage
-          .from("documents")
-          .upload(filePath, file);
-
-        if (uploadError) {
-          console.error(`Error uploading ${docType}:`, uploadError);
-          continue;
-        }
-
-        const { error: insertError } = await supabase
-          .from("documents")
-          .insert({
-            user_id: user.id,
-            document_type: docType,
-            file_path: filePath,
+        try {
+          const filePath = await uploadDocumentToStorage(user.id, visaType, docType, file);
+          await createDocumentRecord(user.id, docType, filePath);
+          successCount++;
+          console.log(`Successfully uploaded ${docType}`);
+        } catch (error) {
+          console.error(`Failed to process ${docType}:`, error);
+          toast({
+            title: `Failed to Upload ${docType}`,
+            description: "Please try again or contact support if the issue persists.",
+            variant: "destructive",
           });
-
-        if (insertError) {
-          console.error(`Error inserting ${docType} record:`, insertError);
-          continue;
         }
-
-        successCount++;
-        console.log(`Successfully uploaded ${docType}`);
       }
 
       setSuccessCount(successCount);
@@ -99,7 +84,7 @@ const DocumentSubmissionHandler = ({
               }
             }
           });
-        }, 100);
+        }, 500); // Increased delay to ensure toast is visible
       } else {
         toast({
           title: "Submission Failed",
@@ -107,12 +92,11 @@ const DocumentSubmissionHandler = ({
           variant: "destructive",
         });
       }
-
     } catch (error) {
-      console.error('Error in document submission:', error);
+      console.error("Document submission error:", error);
       toast({
-        title: "Submission Error",
-        description: "An error occurred while submitting your documents. Please try again.",
+        title: "Error",
+        description: "An unexpected error occurred. Please try again.",
         variant: "destructive",
       });
     } finally {
@@ -121,14 +105,15 @@ const DocumentSubmissionHandler = ({
   };
 
   return (
-    <Button
-      onClick={handleSubmit}
-      disabled={isUploading || Object.keys(uploadedFiles).length === 0}
-      className="w-full mt-6"
-    >
-      <Upload className="w-4 h-4 mr-2" />
-      {isUploading ? "Uploading..." : "Submit Documents"}
-    </Button>
+    <div className="mt-6">
+      <Button
+        onClick={handleSubmission}
+        disabled={isUploading || Object.keys(uploadedFiles).length === 0}
+        className="w-full"
+      >
+        {isUploading ? "Uploading..." : "Submit Documents for Review"}
+      </Button>
+    </div>
   );
 };
 

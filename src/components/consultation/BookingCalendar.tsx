@@ -17,7 +17,8 @@ const BookingCalendar = ({ timeZone, onBookingConfirmed }: BookingCalendarProps)
   useEffect(() => {
     (async function () {
       const cal = await getCalApi();
-      cal.namespace({
+      // Type assertion to handle the namespace method
+      (cal as any).namespace({
         "ui": {
           "styles": {
             "branding": {
@@ -64,7 +65,6 @@ const BookingCalendar = ({ timeZone, onBookingConfirmed }: BookingCalendarProps)
         className="w-full"
         disabled={!selectedDate}
         onClick={() => {
-          // This button can be used to trigger the Cal.com modal if needed
           console.log("Selected date:", selectedDate);
         }}
       >

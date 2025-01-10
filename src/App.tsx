@@ -24,31 +24,29 @@ const App = () => (
         <TooltipProvider>
           <Routes>
             {/* Consultation route outside of the main layout */}
-            <Route path="/consultation" element={
-              <div className="min-h-screen bg-background">
-                <ConsultationBooking />
-              </div>
-            } />
+            <Route path="/consultation" element={<ConsultationBooking />} />
             
             {/* All other routes with Navbar */}
             <Route
-              path="/*"
               element={
                 <>
                   <Navbar />
-                  <Routes>
-                    <Route path="/signin" element={<SignIn />} />
-                    <Route path="/dashboard" element={<Dashboard />} />
-                    <Route path="/eligibility" element={<EligibilityAssessment />} />
-                    <Route path="/how-it-works" element={<HowItWorks />} />
-                    <Route path="/pathways" element={<Pathways />} />
-                    <Route path="/enterprise" element={<Enterprise />} />
-                    <Route path="/verify-success" element={<VerificationConfirmation />} />
-                    <Route path="/" element={<Index />} />
-                    <Route path="*" element={<Navigate to="/" replace />} />
-                  </Routes>
+                  <div className="min-h-screen bg-background">
+                    <Routes>
+                      <Route path="/signin" element={<SignIn />} />
+                      <Route path="/dashboard" element={<Dashboard />} />
+                      <Route path="/eligibility" element={<EligibilityAssessment />} />
+                      <Route path="/how-it-works" element={<HowItWorks />} />
+                      <Route path="/pathways" element={<Pathways />} />
+                      <Route path="/enterprise" element={<Enterprise />} />
+                      <Route path="/verify-success" element={<VerificationConfirmation />} />
+                      <Route path="/" element={<Index />} />
+                      <Route path="*" element={<Navigate to="/" replace />} />
+                    </Routes>
+                  </div>
                 </>
               }
+              path="/*"
             />
           </Routes>
           <Toaster />

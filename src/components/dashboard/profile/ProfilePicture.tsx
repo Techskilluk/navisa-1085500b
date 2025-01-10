@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { User, Upload } from "lucide-react";
@@ -10,6 +10,31 @@ const ProfilePicture = () => {
   const { user } = useAuth();
   const { toast } = useToast();
   const [isUploading, setIsUploading] = useState(false);
+  const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      if (!user) return;
+      
+      try {
+        console.log("Fetching profile for user:", user.id);
+        const { data, error } = await supabase
+          .from('profiles')
+          .select('avatar_url')
+          .eq('id', user.id)
+          .single();
+
+        if (error) throw error;
+        
+        console.log("Profile data fetched:", data);
+        setAvatarUrl(data.avatar_url);
+      } catch (error) {
+        console.error("Error fetching profile:", error);
+      }
+    };
+
+    fetchProfile();
+  }, [user]);
 
   const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -47,6 +72,7 @@ const ProfilePicture = () => {
       if (updateError) throw updateError;
       console.log("Profile updated with new avatar URL:", publicUrl);
 
+      setAvatarUrl(publicUrl);
       toast({
         title: "Success",
         description: "Profile picture updated successfully",
@@ -66,7 +92,7 @@ const ProfilePicture = () => {
   return (
     <div className="flex items-center gap-4 mb-8">
       <Avatar className="h-16 w-16">
-        <AvatarImage src={user?.user_metadata?.avatar_url} />
+        <AvatarImage src={avatarUrl || undefined} />
         <AvatarFallback>
           <User className="h-8 w-8" />
         </AvatarFallback>

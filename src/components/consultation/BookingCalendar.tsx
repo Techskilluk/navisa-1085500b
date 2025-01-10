@@ -52,7 +52,7 @@ const BookingCalendar = ({ timeZone, onBookingConfirmed }: BookingCalendarProps)
       <div
         className="w-full h-full"
         data-cal-embed
-        data-cal-link="navisa/consultation"
+        data-cal-link="john-onifade/techskilluk-meetup"
         data-cal-config={JSON.stringify({
           layout: "month_view",
           hideEventTypeDetails: "false",

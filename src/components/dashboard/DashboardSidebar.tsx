@@ -32,7 +32,7 @@ const menuItems = [
   {
     icon: BookOpen,
     label: "Resources",
-    section: 'resources',
+    path: "/resources",
   },
   {
     icon: User,

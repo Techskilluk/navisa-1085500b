@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { BookOpen, Calendar } from "lucide-react";
 
@@ -7,11 +8,17 @@ interface DashboardActionsProps {
 }
 
 const DashboardActions = ({ onBookConsultation, onStartApplication }: DashboardActionsProps) => {
+  const navigate = useNavigate();
+
+  const handleBookConsultation = () => {
+    navigate('/consultation');
+  };
+
   return (
     <div className="w-full bg-background/50 border-b border-border/10 p-4 mt-4">
       <div className="max-w-7xl mx-auto flex flex-col sm:flex-row justify-center gap-3">
         <Button
-          onClick={onBookConsultation}
+          onClick={handleBookConsultation}
           className="bg-secondary hover:bg-secondary/90 text-secondary-foreground"
           size="lg"
         >

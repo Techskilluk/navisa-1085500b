@@ -16,8 +16,6 @@ import Resources from "./pages/Resources";
 import VerificationConfirmation from "./pages/VerificationConfirmation";
 import ConsultationBooking from "./pages/ConsultationBooking";
 import AccountSettings from "@/components/account/AccountSettings";
-import ResourceDetail from "./pages/ResourceDetail";
-import DashboardLayout from "@/components/dashboard/DashboardLayout";
 
 const queryClient = new QueryClient();
 
@@ -34,13 +32,6 @@ const App = () => (
               </div>
             } />
             
-            {/* Dashboard routes */}
-            <Route path="/dashboard" element={<DashboardLayout />}>
-              <Route index element={<Dashboard />} />
-              <Route path="resources" element={<Resources />} />
-              <Route path="account" element={<AccountSettings />} />
-            </Route>
-
             {/* All other routes with Navbar */}
             <Route
               path="/*"
@@ -49,11 +40,11 @@ const App = () => (
                   <Navbar />
                   <Routes>
                     <Route path="/signin" element={<SignIn />} />
+                    <Route path="/dashboard" element={<Dashboard />} />
                     <Route path="/eligibility" element={<EligibilityAssessment />} />
                     <Route path="/how-it-works" element={<HowItWorks />} />
                     <Route path="/pathways" element={<Pathways />} />
                     <Route path="/resources" element={<Resources />} />
-                    <Route path="/resources/:id" element={<ResourceDetail />} />
                     <Route path="/enterprise" element={<Enterprise />} />
                     <Route path="/verify-success" element={<VerificationConfirmation />} />
                     <Route path="/account" element={<AccountSettings />} />

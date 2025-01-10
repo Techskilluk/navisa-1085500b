@@ -12,18 +12,21 @@ const Hero = () => {
   };
 
   return (
-    <div className="relative min-h-[calc(100vh-80px)] flex items-center justify-center px-4 pt-20 lg:pt-0 overflow-hidden bg-gradient-to-br from-background via-background/95 to-background/90">
-      <div className="relative z-10 max-w-7xl mx-auto w-full space-y-8">
-        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight animate-fade-in text-center">
-          Transform Your Career Across Borders
-        </h1>
-        
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
-          <div className="space-y-6 lg:space-y-8 text-center lg:text-left">
-            <p className="text-lg sm:text-xl text-white/80 max-w-xl mx-auto lg:mx-0 animate-fade-in delay-100">
-              Navigate global opportunities with confidence. NAVISA connects ambitious professionals with international employers, simplifies migration pathways, and turns your dream of a global career into reality.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start animate-fade-in delay-200">
+    <div className="relative min-h-[calc(100vh-80px)] flex items-center justify-center overflow-hidden bg-gradient-to-br from-background via-background/95 to-background/90">
+      <div className="relative z-10 w-full h-full">
+        <div className="grid grid-cols-1 lg:grid-cols-2 min-h-[calc(100vh-80px)]">
+          {/* Left Column - Content */}
+          <div className="flex flex-col justify-center px-4 lg:px-12 py-20 lg:py-0 space-y-8">
+            <div className="space-y-6">
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight animate-fade-in">
+                Transform Your Career Across Borders
+              </h1>
+              <p className="text-lg sm:text-xl text-white/80 animate-fade-in delay-100">
+                Navigate global opportunities with confidence. NAVISA connects ambitious professionals with international employers, simplifies migration pathways, and turns your dream of a global career into reality.
+              </p>
+            </div>
+            
+            <div className="flex flex-col sm:flex-row gap-4 animate-fade-in delay-200">
               <Button 
                 className="w-full sm:w-auto px-6 py-6 text-lg bg-white text-black hover:bg-white/90 flex items-center gap-2"
                 onClick={handleEligibilityCheck}
@@ -41,10 +44,12 @@ const Hero = () => {
                 </Button>
               </Link>
             </div>
+            
             <StatsSection />
           </div>
 
-          <div className="lg:block">
+          {/* Right Column - Video */}
+          <div className="relative h-full">
             <VideoShowcase />
           </div>
         </div>

@@ -18,8 +18,8 @@ const VideoShowcase = () => {
   }, []);
 
   return (
-    <div className="relative w-full h-full">
-      <div className="relative z-10 rounded-3xl overflow-hidden shadow-2xl h-[400px] lg:h-[500px] animate-scale-in">
+    <div className="relative w-full h-full min-h-[400px] lg:min-h-[calc(100vh-80px)]">
+      <div className="absolute inset-0 z-10 animate-scale-in">
         {videos.map((video, index) => (
           <div
             key={index}

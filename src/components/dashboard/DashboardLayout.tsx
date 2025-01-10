@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Outlet } from "react-router-dom";
 import DashboardSidebar from "./DashboardSidebar";
 import DashboardBanner from "./DashboardBanner";
 import DashboardActions from "./DashboardActions";
@@ -7,11 +8,15 @@ import VisaSelectionModal from "./VisaSelectionModal";
 import SelectedVisaDetails from "./SelectedVisaDetails";
 import DocumentUpload from "../documents/DocumentUpload";
 
-const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
+const DashboardLayout = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isVisaModalOpen, setIsVisaModalOpen] = useState(false);
   const [selectedVisa, setSelectedVisa] = useState<any>(null);
   const [showDocumentUpload, setShowDocumentUpload] = useState(false);
+
+  const handleBookConsultation = () => {
+    window.open('https://calendly.com/techskilluk/techskilluk-consultation', '_blank');
+  };
 
   const handleStartApplication = () => {
     setIsVisaModalOpen(true);
@@ -43,14 +48,14 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
 
       <DashboardSidebar 
         isOpen={isSidebarOpen} 
-        onClose={() => setIsSidebarOpen(false)} 
+        onClose={() => setIsSidebarOpen(false)}
       />
       
       <div className="lg:ml-64 min-h-screen flex flex-col">
         <DashboardBanner />
 
         <DashboardActions
-          onBookConsultation={() => {}}
+          onBookConsultation={handleBookConsultation}
           onStartApplication={handleStartApplication}
         />
 
@@ -67,7 +72,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
 
         <main className="flex-1 p-6 lg:p-8 mt-4">
           <div className="max-w-7xl mx-auto">
-            {children}
+            <Outlet />
           </div>
         </main>
       </div>

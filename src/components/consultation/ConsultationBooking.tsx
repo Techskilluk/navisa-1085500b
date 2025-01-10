@@ -12,7 +12,7 @@ const ConsultationBooking = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const { user } = useAuth();
-  const [selectedTimeZone, setSelectedTimeZone] = useState("");
+  const [selectedTimeZone, setSelectedTimeZone] = useState("West Africa Time");
   const [isLoading, setIsLoading] = useState(false);
 
   const handleBookingConfirmed = () => {

@@ -5,7 +5,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Card, CardContent } from "@/components/ui/card";
+import { Label } from "@/components/ui/label";
 
 interface TimeZoneSelectorProps {
   selectedTimeZone: string;
@@ -13,25 +13,26 @@ interface TimeZoneSelectorProps {
 }
 
 const TIMEZONES = [
-  "West Africa Time",
-  "Eastern Time",
-  "Central Time",
-  "Pacific Time",
-  "Greenwich Mean Time",
+  "Africa/Lagos",
+  "Europe/London",
+  "America/New_York",
+  "America/Chicago",
+  "America/Los_Angeles",
+  "Asia/Dubai",
 ];
 
 const TimeZoneSelector = ({ selectedTimeZone, onTimeZoneChange }: TimeZoneSelectorProps) => {
   return (
     <div className="space-y-2">
-      <label className="text-sm font-medium">Time zone</label>
+      <Label htmlFor="timezone">Time zone</Label>
       <Select value={selectedTimeZone} onValueChange={onTimeZoneChange}>
-        <SelectTrigger className="w-full bg-white">
+        <SelectTrigger id="timezone" className="w-full bg-card">
           <SelectValue placeholder="Select time zone" />
         </SelectTrigger>
         <SelectContent>
           {TIMEZONES.map((zone) => (
             <SelectItem key={zone} value={zone}>
-              {zone}
+              {zone.replace('_', ' ')}
             </SelectItem>
           ))}
         </SelectContent>

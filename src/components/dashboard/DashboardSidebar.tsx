@@ -1,4 +1,4 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import {
   LayoutDashboard,
@@ -41,7 +41,14 @@ const menuItems = [
 
 const DashboardSidebar = ({ isOpen, onClose }: DashboardSidebarProps) => {
   const location = useLocation();
+  const navigate = useNavigate();
   const { signOut } = useAuth();
+
+  const handleNavigation = (path: string) => {
+    console.log("Navigating to:", path);
+    navigate(path);
+    onClose();
+  };
 
   return (
     <>
@@ -68,7 +75,7 @@ const DashboardSidebar = ({ isOpen, onClose }: DashboardSidebarProps) => {
                 key={item.path}
                 {...item}
                 isActive={location.pathname === item.path}
-                onClick={onClose}
+                onClick={() => handleNavigation(item.path)}
               />
             ))}
           </ul>

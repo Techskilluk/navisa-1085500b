@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { LogIn, LogOut } from "lucide-react";
+import { LogIn, LogOut, User } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { Link } from "react-router-dom";
 import { useToast } from "@/components/ui/use-toast";
@@ -43,14 +43,22 @@ const Navbar = () => {
           <Link to="/resources" className="text-white/80 hover:text-white transition-colors">Resources</Link>
           <Link to="/eligibility" className="text-white/80 hover:text-white transition-colors">Check your eligibility</Link>
           {user ? (
-            <Button 
-              onClick={handleSignOut}
-              variant="outline"
-              className="bg-white text-black hover:bg-white/90 transition-colors"
-            >
-              Sign out
-              <LogOut className="w-4 h-4 ml-2" />
-            </Button>
+            <div className="flex items-center gap-4">
+              <Link to="/account">
+                <Button variant="ghost" className="text-white/80 hover:text-white">
+                  <User className="w-4 h-4 mr-2" />
+                  Account
+                </Button>
+              </Link>
+              <Button 
+                onClick={handleSignOut}
+                variant="outline"
+                className="bg-white text-black hover:bg-white/90 transition-colors"
+              >
+                Sign out
+                <LogOut className="w-4 h-4 ml-2" />
+              </Button>
+            </div>
           ) : (
             <Link to="/signin">
               <Button className="bg-white text-black hover:bg-white/90 transition-colors">

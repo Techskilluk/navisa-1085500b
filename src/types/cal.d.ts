@@ -3,7 +3,7 @@ interface CalWindow extends Window {
     (command: string, options: any): void;
     q?: any[];
     ns?: Record<string, unknown>;
-    namespace: (config: Record<string, unknown>) => void;
+    namespace?: (config: Record<string, unknown>) => void;
   }
 }
 

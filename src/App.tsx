@@ -15,6 +15,7 @@ import Enterprise from "./pages/Enterprise";
 import Resources from "./pages/Resources";
 import VerificationConfirmation from "./pages/VerificationConfirmation";
 import ConsultationBooking from "./pages/ConsultationBooking";
+import AccountSettings from "@/components/account/AccountSettings";
 
 const queryClient = new QueryClient();
 
@@ -46,6 +47,7 @@ const App = () => (
                     <Route path="/resources" element={<Resources />} />
                     <Route path="/enterprise" element={<Enterprise />} />
                     <Route path="/verify-success" element={<VerificationConfirmation />} />
+                    <Route path="/account" element={<AccountSettings />} />
                     <Route path="/" element={<Index />} />
                     <Route path="*" element={<Navigate to="/" replace />} />
                   </Routes>

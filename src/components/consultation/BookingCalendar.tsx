@@ -23,17 +23,18 @@ const BookingCalendar = ({ timeZone, onBookingConfirmed }: BookingCalendarProps)
         console.log("Initializing Cal.com API");
         const cal = await getCalApi();
         
-        // Configure Cal.com UI
-        cal?.namespace({
-          "ui": {
-            "styles": {
-              "branding": {
-                "brandColor": "#000000"
+        if (cal?.["namespace"]) {
+          cal["namespace"]({
+            "ui": {
+              "styles": {
+                "branding": {
+                  "brandColor": "#000000"
+                }
               }
-            }
-          },
-          "theme": "light"
-        });
+            },
+            "theme": "light"
+          });
+        }
         
         console.log("Initializing Cal inline embed");
         cal?.("inline", {

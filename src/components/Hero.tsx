@@ -14,6 +14,7 @@ const Hero = () => {
   return (
     <div className="relative min-h-[calc(100vh-80px)] flex items-center justify-center px-4 pt-20 lg:pt-0 overflow-hidden bg-gradient-to-br from-background via-background/95 to-background/90">
       <div className="relative z-10 max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+        {/* Left side - Content */}
         <div className="space-y-6 lg:space-y-8 text-center lg:text-left">
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight animate-fade-in">
             Transform Your Career Across Borders
@@ -41,7 +42,11 @@ const Hero = () => {
           </div>
           <StatsSection />
         </div>
-        <VideoShowcase />
+
+        {/* Right side - Video */}
+        <div className="lg:block">
+          <VideoShowcase />
+        </div>
       </div>
     </div>
   );

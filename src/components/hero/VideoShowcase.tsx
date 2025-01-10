@@ -18,7 +18,7 @@ const VideoShowcase = () => {
   }, []);
 
   return (
-    <div className="relative hidden lg:block">
+    <div className="relative w-full h-full">
       <div className="relative z-10 rounded-3xl overflow-hidden shadow-2xl h-[600px] animate-scale-in">
         {videos.map((video, index) => (
           <div

@@ -15,10 +15,11 @@ const BookingCalendar = ({ timeZone, onBookingConfirmed }: BookingCalendarProps)
     (async function initCal() {
       try {
         const cal = await getCalApi();
-        // Add event listener for successful bookings
+        console.log("Cal.com API initialized:", cal);
+        
+        // Configure global Cal object
         if (cal) {
-          // Using the global Cal object directly
-          (window as any).Cal?.('on', {
+          cal('on', {
             action: "bookingSuccessful",
             callback: () => {
               console.log('Booking was successful');
@@ -31,11 +32,14 @@ const BookingCalendar = ({ timeZone, onBookingConfirmed }: BookingCalendarProps)
       }
     })();
 
-    // Cleanup function to remove event listener
+    // Cleanup function
     return () => {
-      (window as any).Cal?.('off', {
-        action: "bookingSuccessful"
-      });
+      const cal = (window as any).Cal;
+      if (cal) {
+        cal('off', {
+          action: "bookingSuccessful"
+        });
+      }
     };
   }, [onBookingConfirmed]);
 
@@ -47,15 +51,15 @@ const BookingCalendar = ({ timeZone, onBookingConfirmed }: BookingCalendarProps)
         </CardTitle>
       </CardHeader>
       <CardContent className="p-6">
-        <div className="w-full">
+        <div className="w-full min-h-[600px]">
           <Cal 
             calLink="techskilluk/techskilluk-consultation"
-            style={{height: "100%", width: "100%", overflow: "hidden"}}
+            style={{height: "100%", width: "100%", overflow: "hidden", minHeight: "600px"}}
             config={{
               layout: 'month_view',
-              hideEventTypeDetails: "false",
-              hideLandingPageDetails: "false",
-              timeZone: timeZone,
+              hideEventTypeDetails: false,
+              hideLandingPageDetails: false,
+              timeZone: timeZone || "UTC",
               name: user?.email,
               email: user?.email,
             }}

@@ -13,7 +13,7 @@ import HowItWorks from "./pages/HowItWorks";
 import Pathways from "./pages/Pathways";
 import Enterprise from "./pages/Enterprise";
 import VerificationConfirmation from "./pages/VerificationConfirmation";
-import ConsultationBooking from "./pages/ConsultationBooking";
+import ConsultationBooking from "@/components/consultation/ConsultationBooking";
 
 const queryClient = new QueryClient();
 
@@ -23,6 +23,10 @@ const App = () => (
       <AuthProvider>
         <TooltipProvider>
           <Routes>
+            {/* Consultation booking route - without Navbar */}
+            <Route path="/consultation" element={<ConsultationBooking />} />
+            
+            {/* All other routes - with Navbar */}
             <Route
               path="/*"
               element={
@@ -36,7 +40,6 @@ const App = () => (
                     <Route path="/pathways" element={<Pathways />} />
                     <Route path="/enterprise" element={<Enterprise />} />
                     <Route path="/verify-success" element={<VerificationConfirmation />} />
-                    <Route path="/consultation" element={<ConsultationBooking />} />
                     <Route path="/" element={<Index />} />
                     <Route path="*" element={<Navigate to="/" replace />} />
                   </Routes>

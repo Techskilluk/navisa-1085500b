@@ -12,21 +12,31 @@ const BookingCalendar = ({ timeZone, onBookingConfirmed }: BookingCalendarProps)
   const { user } = useAuth();
 
   useEffect(() => {
-    // Initialize Cal.com API
     (async function initCal() {
       try {
         const cal = await getCalApi();
         // Add event listener for successful bookings
         if (cal) {
-          cal.ns["__default"].on("bookingSuccessful", () => {
-            console.log('Booking was successful');
-            onBookingConfirmed?.();
+          // Using the global Cal object directly
+          (window as any).Cal?.('on', {
+            action: "bookingSuccessful",
+            callback: () => {
+              console.log('Booking was successful');
+              onBookingConfirmed?.();
+            },
           });
         }
       } catch (error) {
         console.error("Error initializing Cal.com:", error);
       }
     })();
+
+    // Cleanup function to remove event listener
+    return () => {
+      (window as any).Cal?.('off', {
+        action: "bookingSuccessful"
+      });
+    };
   }, [onBookingConfirmed]);
 
   return (

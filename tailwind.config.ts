@@ -45,7 +45,7 @@ export default {
           foreground: "#FFFFFF",
         },
         modal: {
-          DEFAULT: "#0A0B0E",
+          DEFAULT: "#0A0B0E", // Darker background for modals
           foreground: "#FFFFFF",
         },
       },
@@ -67,21 +67,11 @@ export default {
           "0%, 100%": { transform: "translateY(0)" },
           "50%": { transform: "translateY(-10px)" },
         },
-        "scale-in": {
-          "0%": { transform: "scale(0.95)", opacity: "0" },
-          "100%": { transform: "scale(1)", opacity: "1" },
-        },
-        "bounce-slow": {
-          "0%, 100%": { transform: "translateY(-5%)" },
-          "50%": { transform: "translateY(0)" },
-        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         float: "float 6s ease-in-out infinite",
-        "scale-in": "scale-in 0.5s ease-out",
-        "bounce-slow": "bounce-slow 2s ease-in-out infinite",
       },
     },
   },

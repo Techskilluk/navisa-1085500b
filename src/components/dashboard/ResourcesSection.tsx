@@ -16,19 +16,20 @@ const ResourcesSection = () => {
   const { toast } = useToast();
   
   const { data: templates, isLoading, error } = useQuery({
-    queryKey: ['documentTemplates'],
+    queryKey: ['dashboardTemplates'],
     queryFn: async () => {
-      console.log("Fetching document templates...");
+      console.log("Fetching document templates for dashboard...");
       const { data, error } = await supabase
         .from('document_templates')
-        .select('*');
+        .select('*')
+        .limit(3); // Limit to 3 templates for dashboard view
       
       if (error) {
         console.error("Error fetching templates:", error);
         throw error;
       }
       
-      console.log("Templates fetched:", data);
+      console.log("Dashboard templates fetched:", data);
       return data as Template[];
     }
   });
@@ -71,11 +72,11 @@ const ResourcesSection = () => {
 
   return (
     <div className="space-y-6">
-      <h2 className="text-3xl font-bold tracking-tight">Resources</h2>
+      <h2 className="text-3xl font-bold tracking-tight">Quick Resources</h2>
       
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 gap-6">
         {isLoading ? (
-          Array.from({ length: 6 }).map((_, index) => (
+          Array.from({ length: 3 }).map((_, index) => (
             <Card key={index} className="animate-pulse">
               <CardHeader className="space-y-2">
                 <div className="h-4 bg-muted rounded w-3/4" />

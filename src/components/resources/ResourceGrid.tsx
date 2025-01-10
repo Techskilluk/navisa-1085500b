@@ -1,7 +1,9 @@
 import { Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { FileText } from "lucide-react";
+import { FileText, Download } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { useToast } from "@/hooks/use-toast";
 
 interface Article {
   id: number;
@@ -24,6 +26,36 @@ interface ResourceGridProps {
 }
 
 const ResourceGrid = ({ articles, templates }: ResourceGridProps) => {
+  const { toast } = useToast();
+
+  const handleDownload = async (template: Template) => {
+    try {
+      console.log("Downloading template:", template.template_url);
+      const response = await fetch(template.template_url);
+      const blob = await response.blob();
+      const downloadUrl = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = downloadUrl;
+      link.download = `${template.document_type.toLowerCase().replace(/\s+/g, '-')}.pdf`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(downloadUrl);
+      
+      toast({
+        title: "Download Started",
+        description: "Your document template is being downloaded.",
+      });
+    } catch (error) {
+      console.error("Error downloading template:", error);
+      toast({
+        variant: "destructive",
+        title: "Download Failed",
+        description: "There was an error downloading the template. Please try again.",
+      });
+    }
+  };
+
   if (articles) {
     return (
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -73,7 +105,14 @@ const ResourceGrid = ({ articles, templates }: ResourceGridProps) => {
                   </p>
                 </div>
               </div>
-              <Badge variant="outline">Template</Badge>
+              <Button
+                variant="outline"
+                className="w-full"
+                onClick={() => handleDownload(template)}
+              >
+                <Download className="mr-2 h-4 w-4" />
+                Download Template
+              </Button>
             </CardContent>
           </Card>
         ))}

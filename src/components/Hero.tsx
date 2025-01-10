@@ -1,25 +1,9 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Building } from "lucide-react";
 import { useNavigate, Link } from "react-router-dom";
-import { useState, useEffect } from "react";
 
 const Hero = () => {
   const navigate = useNavigate();
-  const [currentSlide, setCurrentSlide] = useState(0);
-
-  const videos = [
-    "https://res.cloudinary.com/dxa3i3h49/video/upload/v1736428810/4443770-hd_1920_1080_25fps_gjaflm.mp4",
-    "https://res.cloudinary.com/dxa3i3h49/video/upload/v1736428807/4296918-uhd_3840_2160_25fps_okexuk.mp4",
-    "https://res.cloudinary.com/dxa3i3h49/video/upload/v1736428799/3044865-uhd_3840_2160_24fps_ebppj1.mp4"
-  ];
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % videos.length);
-    }, 5000);
-
-    return () => clearInterval(timer);
-  }, []);
 
   const handleEligibilityCheck = () => {
     navigate("/eligibility");
@@ -27,29 +11,9 @@ const Hero = () => {
 
   return (
     <div className="relative min-h-[calc(100vh-80px)] flex items-center justify-center px-4 pt-20 lg:pt-0 bg-background overflow-hidden">
-      {/* Background video layer */}
-      <div className="absolute inset-0 z-0 opacity-20">
-        {videos.map((video, index) => (
-          <div
-            key={index}
-            className={`absolute inset-0 transition-opacity duration-1000 ${
-              currentSlide === index ? "opacity-100" : "opacity-0"
-            }`}
-          >
-            <video
-              className="w-full h-full object-cover"
-              autoPlay
-              muted
-              loop
-              playsInline
-            >
-              <source src={video} type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
-          </div>
-        ))}
-      </div>
-
+      {/* Gradient background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-card opacity-50" />
+      
       {/* Content layer */}
       <div className="relative z-10 max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
         <div className="space-y-6 lg:space-y-8 text-center lg:text-left">
@@ -94,26 +58,16 @@ const Hero = () => {
         </div>
         
         <div className="relative hidden lg:block">
-          <div className="relative z-10 rounded-3xl overflow-hidden shadow-2xl h-[600px] animate-scale-in">
-            {videos.map((video, index) => (
-              <div
-                key={index}
-                className={`absolute inset-0 transition-opacity duration-1000 ${
-                  currentSlide === index ? "opacity-100" : "opacity-0"
-                }`}
-              >
-                <video
-                  className="w-full h-full object-cover"
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                >
-                  <source src={video} type="video/mp4" />
-                  Your browser does not support the video tag.
-                </video>
+          <div className="relative z-10 rounded-3xl overflow-hidden shadow-2xl h-[600px] glass-effect animate-scale-in">
+            <div className="absolute inset-0 bg-gradient-to-br from-primary via-card to-background opacity-30" />
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="text-center space-y-4">
+                <h3 className="text-2xl font-bold text-white">Ready to Start?</h3>
+                <p className="text-white/80 max-w-md mx-auto">
+                  Take the first step towards your international career
+                </p>
               </div>
-            ))}
+            </div>
           </div>
           <div className="absolute -bottom-4 -right-4 w-72 h-72 bg-accent/20 rounded-full blur-3xl"></div>
         </div>

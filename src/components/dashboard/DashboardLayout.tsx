@@ -14,7 +14,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   const [showDocumentUpload, setShowDocumentUpload] = useState(false);
 
   const handleBookConsultation = () => {
-    // Navigation is now handled directly in DashboardActions
+    window.open('https://calendly.com/techskilluk/techskilluk-consultation', '_blank');
   };
 
   const handleStartApplication = () => {

@@ -1,11 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { FileText } from "lucide-react";
 import ResourcesLoading from "./ResourcesLoading";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { AlertCircle } from "lucide-react";
+import ResourceGrid from "./ResourceGrid";
 
 const ResourceTemplateGrid = () => {
   const { data: templates, isLoading, error } = useQuery({
@@ -39,26 +37,7 @@ const ResourceTemplateGrid = () => {
     );
   }
 
-  return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {templates?.map((template) => (
-        <Card key={template.id} className="hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
-          <CardContent className="p-6 flex flex-col items-start gap-4">
-            <div className="flex items-center gap-3">
-              <FileText className="h-6 w-6 text-primary" />
-              <div>
-                <h3 className="font-semibold">{template.document_type}</h3>
-                <p className="text-sm text-muted-foreground">
-                  For {template.visa_type} visa
-                </p>
-              </div>
-            </div>
-            <Badge variant="outline">Template</Badge>
-          </CardContent>
-        </Card>
-      ))}
-    </div>
-  );
+  return <ResourceGrid templates={templates} />;
 };
 
 export default ResourceTemplateGrid;

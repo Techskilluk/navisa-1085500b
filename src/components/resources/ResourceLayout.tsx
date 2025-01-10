@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ResourceArticleGrid from "./ResourceArticleGrid";
 import ResourceTemplateGrid from "./ResourceTemplateGrid";
@@ -20,11 +19,11 @@ const ResourceLayout = () => {
             <TabsTrigger value="templates">Document Templates</TabsTrigger>
           </TabsList>
 
-          <TabsContent value="articles">
+          <TabsContent value="articles" className="space-y-6">
             <ResourceArticleGrid />
           </TabsContent>
 
-          <TabsContent value="templates">
+          <TabsContent value="templates" className="space-y-6">
             <ResourceTemplateGrid />
           </TabsContent>
         </Tabs>

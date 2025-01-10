@@ -3,18 +3,20 @@ import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
-import { User, LogOut } from "lucide-react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { User } from "lucide-react";
 
 const AccountSection = () => {
-  const { user, signOut } = useAuth();
+  const { user } = useAuth();
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     email: user?.email || "",
     username: "",
+    firstName: "",
+    lastName: "",
   });
 
   const handleUpdateProfile = async (e: React.FormEvent) => {
@@ -25,7 +27,11 @@ const AccountSection = () => {
       console.log("Updating profile for user:", user?.id);
       const { error } = await supabase
         .from('profiles')
-        .update({ username: formData.username })
+        .update({
+          username: formData.username,
+          first_name: formData.firstName,
+          last_name: formData.lastName,
+        })
         .eq('id', user?.id);
 
       if (error) throw error;
@@ -47,74 +53,83 @@ const AccountSection = () => {
     }
   };
 
-  const handleSignOut = async () => {
-    try {
-      console.log("Signing out...");
-      await signOut();
-      toast({
-        title: "Signed out successfully",
-        description: "You have been logged out of your account.",
-      });
-    } catch (error) {
-      console.error("Error signing out:", error);
-      toast({
-        variant: "destructive",
-        title: "Error signing out",
-        description: "There was a problem signing you out. Please try again.",
-      });
-    }
-  };
-
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <h2 className="text-3xl font-bold tracking-tight">Account Settings</h2>
-        <Button 
-          variant="outline" 
-          onClick={handleSignOut}
-          className="gap-2"
-        >
-          <LogOut className="h-4 w-4" />
-          Sign out
-        </Button>
+    <div className="max-w-3xl mx-auto">
+      <div className="mb-8">
+        <h2 className="text-3xl font-bold tracking-tight">My Account</h2>
+        <p className="text-muted-foreground mt-2">
+          Manage your account settings and profile information
+        </p>
       </div>
 
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <User className="h-5 w-5" />
-            Profile Information
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <form onSubmit={handleUpdateProfile} className="space-y-6">
+      <div className="p-6 bg-card rounded-lg border border-border/10">
+        <div className="flex items-center gap-4 mb-8">
+          <Avatar className="h-16 w-16">
+            <AvatarImage src={user?.user_metadata?.avatar_url} />
+            <AvatarFallback>
+              <User className="h-8 w-8" />
+            </AvatarFallback>
+          </Avatar>
+          <div>
+            <h3 className="text-lg font-semibold">Profile Picture</h3>
+            <p className="text-sm text-muted-foreground">
+              Update your profile picture
+            </p>
+          </div>
+          <Button variant="outline" className="ml-auto">
+            Change
+          </Button>
+        </div>
+
+        <form onSubmit={handleUpdateProfile} className="space-y-6">
+          <div className="grid gap-6 md:grid-cols-2">
             <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="firstName">First name</Label>
               <Input
-                id="email"
-                type="email"
-                value={formData.email}
-                disabled
-                className="bg-muted"
-              />
-            </div>
-            
-            <div className="space-y-2">
-              <Label htmlFor="username">Username</Label>
-              <Input
-                id="username"
-                value={formData.username}
-                onChange={(e) => setFormData(prev => ({ ...prev, username: e.target.value }))}
-                placeholder="Enter your username"
+                id="firstName"
+                value={formData.firstName}
+                onChange={(e) => setFormData(prev => ({ ...prev, firstName: e.target.value }))}
+                placeholder="Enter your first name"
               />
             </div>
 
-            <Button type="submit" disabled={isLoading}>
-              {isLoading ? "Updating..." : "Update Profile"}
-            </Button>
-          </form>
-        </CardContent>
-      </Card>
+            <div className="space-y-2">
+              <Label htmlFor="lastName">Last name</Label>
+              <Input
+                id="lastName"
+                value={formData.lastName}
+                onChange={(e) => setFormData(prev => ({ ...prev, lastName: e.target.value }))}
+                placeholder="Enter your last name"
+              />
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="email">Email</Label>
+            <Input
+              id="email"
+              type="email"
+              value={formData.email}
+              disabled
+              className="bg-muted"
+            />
+          </div>
+          
+          <div className="space-y-2">
+            <Label htmlFor="username">Username</Label>
+            <Input
+              id="username"
+              value={formData.username}
+              onChange={(e) => setFormData(prev => ({ ...prev, username: e.target.value }))}
+              placeholder="Enter your username"
+            />
+          </div>
+
+          <Button type="submit" disabled={isLoading} className="w-full md:w-auto">
+            {isLoading ? "Updating..." : "Save changes"}
+          </Button>
+        </form>
+      </div>
     </div>
   );
 };

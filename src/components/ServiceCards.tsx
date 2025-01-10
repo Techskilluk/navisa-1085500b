@@ -1,5 +1,5 @@
 import { Card } from "@/components/ui/card";
-import { Briefcase, Building2, GraduationCap, Mail, Phone, Clock } from "lucide-react";
+import { Briefcase, Building2, GraduationCap } from "lucide-react";
 import { Button } from "./ui/button";
 
 const ServiceCards = () => {
@@ -21,27 +21,6 @@ const ServiceCards = () => {
       title: "Global Opportunities",
       description: "Unlock access to international job markets in tech, business, healthcare, academia, and more.",
       cta: "Explore Opportunities"
-    },
-    {
-      icon: <Mail className="w-6 h-6 text-white" />,
-      title: "Let's Get Started",
-      description: (
-        <div className="space-y-3">
-          <div className="flex items-center gap-2">
-            <Mail className="w-4 h-4 text-white/60" />
-            <span>info@navisa.co</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <Phone className="w-4 h-4 text-white/60" />
-            <span>+447816 247864 | +234 901 546 6402</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <Clock className="w-4 h-4 text-white/60" />
-            <span>Monday–Friday, 9 AM–5 PM (GMT)</span>
-          </div>
-        </div>
-      ),
-      cta: "Contact Us"
     }
   ];
 
@@ -57,20 +36,23 @@ const ServiceCards = () => {
             Your trusted partner in achieving international success
           </p>
         </div>
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid md:grid-cols-3 gap-8">
           {services.map((service, index) => (
             <Card 
               key={index} 
-              className="p-6 hover-lift glass-effect flex flex-col justify-between group transition-all duration-300"
+              className="p-8 hover-lift glass-effect flex flex-col justify-between group transition-all duration-300 border-white/10 hover:border-white/20"
             >
               <div>
-                <div className="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center mb-6 group-hover:bg-accent/20 transition-colors">
+                <div className="w-14 h-14 rounded-2xl bg-accent/10 flex items-center justify-center mb-6 group-hover:bg-accent/20 transition-colors">
                   {service.icon}
                 </div>
-                <h3 className="text-xl font-semibold mb-3 text-white">{service.title}</h3>
-                <div className="text-white/60 mb-6">{service.description}</div>
+                <h3 className="text-2xl font-semibold mb-4 text-white">{service.title}</h3>
+                <p className="text-white/70 mb-8 text-lg leading-relaxed">{service.description}</p>
               </div>
-              <Button variant="outline" className="w-full bg-white text-black hover:bg-white/90 transition-colors">
+              <Button 
+                variant="outline" 
+                className="w-full bg-white/5 hover:bg-white/10 text-white border-white/20 hover:border-white/30 transition-colors"
+              >
                 {service.cta}
               </Button>
             </Card>

@@ -16,6 +16,7 @@ import Resources from "./pages/Resources";
 import VerificationConfirmation from "./pages/VerificationConfirmation";
 import ConsultationBooking from "./pages/ConsultationBooking";
 import AccountSettings from "@/components/account/AccountSettings";
+import ResourceDetail from "./pages/ResourceDetail";
 
 const queryClient = new QueryClient();
 
@@ -45,6 +46,7 @@ const App = () => (
                     <Route path="/how-it-works" element={<HowItWorks />} />
                     <Route path="/pathways" element={<Pathways />} />
                     <Route path="/resources" element={<Resources />} />
+                    <Route path="/resources/:id" element={<ResourceDetail />} />
                     <Route path="/enterprise" element={<Enterprise />} />
                     <Route path="/verify-success" element={<VerificationConfirmation />} />
                     <Route path="/account" element={<AccountSettings />} />

@@ -22,7 +22,7 @@ const menuItems = [
   {
     icon: LayoutDashboard,
     label: "Dashboard",
-    section: 'dashboard',
+    path: "/dashboard",
   },
   {
     icon: MessageSquare,
@@ -32,25 +32,18 @@ const menuItems = [
   {
     icon: BookOpen,
     label: "Resources",
-    section: 'resources',
+    path: "/resources",
   },
   {
     icon: User,
     label: "My Account",
-    section: 'account',
+    path: "/account",
   },
 ];
 
-const DashboardSidebar = ({ isOpen, onClose, onSectionChange, activeSection }: DashboardSidebarProps) => {
+const DashboardSidebar = ({ isOpen, onClose }: DashboardSidebarProps) => {
   const location = useLocation();
   const { signOut } = useAuth();
-
-  const handleMenuItemClick = (item: any) => {
-    if (item.section) {
-      onSectionChange(item.section);
-    }
-    onClose();
-  };
 
   return (
     <>
@@ -74,10 +67,10 @@ const DashboardSidebar = ({ isOpen, onClose, onSectionChange, activeSection }: D
           <ul className="space-y-2">
             {menuItems.map((item) => (
               <SidebarMenuItem
-                key={item.section || item.path}
+                key={item.path}
                 {...item}
-                isActive={item.section ? activeSection === item.section : location.pathname === item.path}
-                onClick={() => handleMenuItemClick(item)}
+                isActive={location.pathname === item.path}
+                onClick={onClose}
               />
             ))}
           </ul>

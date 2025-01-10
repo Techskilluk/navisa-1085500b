@@ -1,13 +1,14 @@
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import PageHeader from "@/components/PageHeader";
+import ResourceGrid from "@/components/resources/ResourceGrid";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { AlertCircle } from "lucide-react";
-import ResourceArticleGrid from "@/components/resources/ResourceArticleGrid";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const Resources = () => {
-  const { data: templates, isLoading, error } = useQuery({
+  const { data: templates, isLoading: templatesLoading, error: templatesError } = useQuery({
     queryKey: ['documentTemplates'],
     queryFn: async () => {
       console.log("Fetching document templates...");
@@ -20,7 +21,6 @@ const Resources = () => {
         throw error;
       }
       
-      console.log("Templates fetched:", data);
       return data;
     }
   });
@@ -29,24 +29,24 @@ const Resources = () => {
   const articles = [
     {
       id: 1,
-      title: "Understanding the difference between Work Visa and permanent residency",
-      description: "Learn about the key differences between temporary work visas and permanent residency status.",
+      title: "Understanding Work Visas",
+      description: "A comprehensive guide to different types of work visas and their requirements.",
       image: "/lovable-uploads/d695af27-98df-42b0-88f9-fea555532554.png",
-      category: "guides"
+      category: "Visa Guide"
     },
     {
       id: 2,
-      title: "Common Visa Application Mistakes",
-      description: "Avoid these common pitfalls when applying for your visa.",
+      title: "Immigration Process Overview",
+      description: "Step-by-step guide to navigating the immigration process successfully.",
       image: "/lovable-uploads/d695af27-98df-42b0-88f9-fea555532554.png",
-      category: "tips"
+      category: "Process Guide"
     },
     {
       id: 3,
-      title: "Latest Immigration Policy Updates",
-      description: "Stay informed about recent changes in immigration policies.",
+      title: "Document Preparation Tips",
+      description: "Essential tips for preparing your immigration documents correctly.",
       image: "/lovable-uploads/d695af27-98df-42b0-88f9-fea555532554.png",
-      category: "news"
+      category: "Tips"
     }
   ];
 
@@ -65,18 +65,18 @@ const Resources = () => {
             <TabsTrigger value="templates">Document Templates</TabsTrigger>
           </TabsList>
 
-          <TabsContent value="articles" className="space-y-8">
-            <ResourceArticleGrid articles={articles} />
+          <TabsContent value="articles">
+            <ResourceGrid articles={articles} />
           </TabsContent>
 
           <TabsContent value="templates">
-            {isLoading ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 animate-pulse">
+            {templatesLoading ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {[1, 2, 3].map((i) => (
-                  <div key={i} className="h-48 bg-card rounded-lg" />
+                  <Skeleton key={i} className="h-48" />
                 ))}
               </div>
-            ) : error ? (
+            ) : templatesError ? (
               <Alert variant="destructive">
                 <AlertCircle className="h-4 w-4" />
                 <AlertDescription>
@@ -84,16 +84,7 @@ const Resources = () => {
                 </AlertDescription>
               </Alert>
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {templates?.map((template) => (
-                  <div key={template.id} className="bg-card rounded-lg p-6 space-y-4">
-                    <h3 className="text-lg font-semibold">{template.document_type}</h3>
-                    <p className="text-sm text-muted-foreground">
-                      For {template.visa_type} visa applications
-                    </p>
-                  </div>
-                ))}
-              </div>
+              <ResourceGrid templates={templates} />
             )}
           </TabsContent>
         </Tabs>

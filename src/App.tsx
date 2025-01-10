@@ -23,7 +23,14 @@ const App = () => (
       <AuthProvider>
         <TooltipProvider>
           <Routes>
-            <Route path="/consultation" element={<ConsultationBooking />} />
+            {/* Consultation route outside of the main layout */}
+            <Route path="/consultation" element={
+              <div className="min-h-screen bg-background">
+                <ConsultationBooking />
+              </div>
+            } />
+            
+            {/* All other routes with Navbar */}
             <Route
               path="/*"
               element={

@@ -13,6 +13,10 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   const [selectedVisa, setSelectedVisa] = useState<any>(null);
   const [showDocumentUpload, setShowDocumentUpload] = useState(false);
 
+  const handleBookConsultation = () => {
+    window.open('https://calendly.com/techskilluk/techskilluk-consultation', '_blank');
+  };
+
   const handleStartApplication = () => {
     setIsVisaModalOpen(true);
   };
@@ -50,7 +54,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
         <DashboardBanner />
 
         <DashboardActions
-          onBookConsultation={() => {}}
+          onBookConsultation={handleBookConsultation}
           onStartApplication={handleStartApplication}
         />
 

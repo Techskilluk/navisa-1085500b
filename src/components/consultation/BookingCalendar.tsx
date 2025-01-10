@@ -17,9 +17,9 @@ const BookingCalendar = ({ timeZone, onBookingConfirmed }: BookingCalendarProps)
         const cal = await getCalApi();
         console.log("Cal.com API initialized:", cal);
         
-        // Configure global Cal object
-        if (cal) {
-          cal('on', {
+        // Configure Cal.com event listeners using window.Cal
+        if (window.Cal) {
+          window.Cal("on", {
             action: "bookingSuccessful",
             callback: () => {
               console.log('Booking was successful');
@@ -34,9 +34,8 @@ const BookingCalendar = ({ timeZone, onBookingConfirmed }: BookingCalendarProps)
 
     // Cleanup function
     return () => {
-      const cal = (window as any).Cal;
-      if (cal) {
-        cal('off', {
+      if (window.Cal) {
+        window.Cal("off", {
           action: "bookingSuccessful"
         });
       }
@@ -57,8 +56,8 @@ const BookingCalendar = ({ timeZone, onBookingConfirmed }: BookingCalendarProps)
             style={{height: "100%", width: "100%", overflow: "hidden", minHeight: "600px"}}
             config={{
               layout: 'month_view',
-              hideEventTypeDetails: false,
-              hideLandingPageDetails: false,
+              hideEventTypeDetails: "false",
+              hideLandingPageDetails: "false",
               timeZone: timeZone || "UTC",
               name: user?.email,
               email: user?.email,

@@ -26,30 +26,7 @@ const Hero = () => {
   };
 
   return (
-    <div className="relative min-h-[calc(100vh-80px)] flex items-center justify-center px-4 pt-20 lg:pt-0 bg-background overflow-hidden">
-      {/* Background video layer */}
-      <div className="absolute inset-0 z-0 opacity-20">
-        {videos.map((video, index) => (
-          <div
-            key={index}
-            className={`absolute inset-0 transition-opacity duration-1000 ${
-              currentSlide === index ? "opacity-100" : "opacity-0"
-            }`}
-          >
-            <video
-              className="w-full h-full object-cover"
-              autoPlay
-              muted
-              loop
-              playsInline
-            >
-              <source src={video} type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
-          </div>
-        ))}
-      </div>
-
+    <div className="relative min-h-[calc(100vh-80px)] flex items-center justify-center px-4 pt-20 lg:pt-0 overflow-hidden bg-gradient-to-br from-background via-background/95 to-background/90">
       {/* Content layer */}
       <div className="relative z-10 max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
         <div className="space-y-6 lg:space-y-8 text-center lg:text-left">

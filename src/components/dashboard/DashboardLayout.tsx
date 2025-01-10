@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Outlet } from "react-router-dom";
 import DashboardSidebar from "./DashboardSidebar";
 import DashboardBanner from "./DashboardBanner";
 import DashboardActions from "./DashboardActions";
@@ -6,10 +7,8 @@ import MobileMenuButton from "./MobileMenuButton";
 import VisaSelectionModal from "./VisaSelectionModal";
 import SelectedVisaDetails from "./SelectedVisaDetails";
 import DocumentUpload from "../documents/DocumentUpload";
-import ResourcesSection from "./ResourcesSection";
-import AccountSection from "./AccountSection";
 
-const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
+const DashboardLayout = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isVisaModalOpen, setIsVisaModalOpen] = useState(false);
   const [selectedVisa, setSelectedVisa] = useState<any>(null);
@@ -73,7 +72,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
 
         <main className="flex-1 p-6 lg:p-8 mt-4">
           <div className="max-w-7xl mx-auto">
-            {children}
+            <Outlet />
           </div>
         </main>
       </div>

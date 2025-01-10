@@ -24,18 +24,16 @@ const BookingCalendar = ({ timeZone, onBookingConfirmed }: BookingCalendarProps)
         const cal = await getCalApi();
         
         // Configure Cal.com UI
-        if (cal && typeof cal === 'object' && 'namespace' in cal) {
-          cal.namespace({
-            "ui": {
-              "styles": {
-                "branding": {
-                  "brandColor": "#000000"
-                }
+        cal?.namespace({
+          "ui": {
+            "styles": {
+              "branding": {
+                "brandColor": "#000000"
               }
-            },
-            "theme": "light"
-          });
-        }
+            }
+          },
+          "theme": "light"
+        });
         
         console.log("Initializing Cal inline embed");
         cal?.("inline", {

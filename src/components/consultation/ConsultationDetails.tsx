@@ -1,26 +1,34 @@
 import { Check } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 
 const benefits = [
-  "One-on-one session tailored just for you",
-  "Answers to all your visa-related queries from an expert",
-  "Understand the details of your chosen visa pathway",
-  "Receive actionable advice to increase your chances of success"
+  "Personalized visa pathway assessment",
+  "Document checklist review",
+  "Eligibility criteria explanation",
+  "Step-by-step application guidance"
 ];
 
 const ConsultationDetails = () => {
   return (
     <Card className="bg-card shadow-lg">
       <CardHeader className="border-b border-border/10">
-        <CardTitle className="text-xl font-bold">
-          Talk to an expert
-        </CardTitle>
+        <div className="flex items-center justify-between">
+          <CardTitle className="text-xl font-bold">
+            Expert Consultation
+          </CardTitle>
+          <Badge variant="secondary">45 minutes</Badge>
+        </div>
       </CardHeader>
       <CardContent className="p-6">
         <div className="mb-6">
           <h3 className="text-2xl font-bold mb-2">
-            ₦20,000/ session
+            ₦20,000
+            <span className="text-sm text-muted-foreground ml-2">per session</span>
           </h3>
+          <p className="text-muted-foreground text-sm">
+            Book a one-on-one session with our visa experts
+          </p>
         </div>
 
         <div className="space-y-4">

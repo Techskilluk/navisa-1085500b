@@ -21,8 +21,8 @@ const BookingCalendar = ({ timeZone, onBookingConfirmed }: BookingCalendarProps)
         console.log("Initializing Cal.com API");
         const cal = await getCalApi();
         
-        // Type assertion to handle the namespace method
-        (cal as any).namespace({
+        // Configure Cal.com UI
+        cal?.namespace({
           "ui": {
             "styles": {
               "branding": {
@@ -34,7 +34,7 @@ const BookingCalendar = ({ timeZone, onBookingConfirmed }: BookingCalendarProps)
         });
         
         console.log("Initializing Cal inline embed");
-        cal("inline", {
+        cal?.("inline", {
           elementOrSelector: "#cal-booking-placeholder",
           calLink: "navisa/consultation", // Replace with your actual Cal.com link
           config: {
@@ -45,7 +45,7 @@ const BookingCalendar = ({ timeZone, onBookingConfirmed }: BookingCalendarProps)
         });
 
         // Listen for booking success
-        cal("on", {
+        cal?.("on", {
           action: "bookingSuccessful",
           callback: () => {
             console.log("Booking successful");

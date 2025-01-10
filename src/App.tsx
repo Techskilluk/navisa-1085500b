@@ -23,6 +23,7 @@ const App = () => (
       <AuthProvider>
         <TooltipProvider>
           <Routes>
+            <Route path="/consultation" element={<ConsultationBooking />} />
             <Route
               path="/*"
               element={
@@ -36,7 +37,6 @@ const App = () => (
                     <Route path="/pathways" element={<Pathways />} />
                     <Route path="/enterprise" element={<Enterprise />} />
                     <Route path="/verify-success" element={<VerificationConfirmation />} />
-                    <Route path="/consultation" element={<ConsultationBooking />} />
                     <Route path="/" element={<Index />} />
                     <Route path="*" element={<Navigate to="/" replace />} />
                   </Routes>

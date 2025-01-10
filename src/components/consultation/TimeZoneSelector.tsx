@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import {
   Select,
   SelectContent,
@@ -6,58 +5,38 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Clock } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
 
 interface TimeZoneSelectorProps {
   selectedTimeZone: string;
   onTimeZoneChange: (value: string) => void;
 }
 
-// Common timezone list
 const TIMEZONES = [
-  "Africa/Lagos",
-  "Europe/London",
-  "America/New_York",
-  "Asia/Dubai",
-  "Asia/Tokyo",
-  "Australia/Sydney",
-  "Pacific/Auckland",
-  // Add more as needed
+  "West Africa Time",
+  "Eastern Time",
+  "Central Time",
+  "Pacific Time",
+  "Greenwich Mean Time",
 ];
 
 const TimeZoneSelector = ({ selectedTimeZone, onTimeZoneChange }: TimeZoneSelectorProps) => {
-  useEffect(() => {
-    // Set default timezone on component mount
-    if (!selectedTimeZone) {
-      const defaultTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-      onTimeZoneChange(defaultTimeZone);
-    }
-  }, [selectedTimeZone, onTimeZoneChange]);
-
   return (
-    <Card className="bg-card/50 backdrop-blur-sm border-accent/20">
-      <CardHeader className="border-b border-border/10">
-        <CardTitle className="text-lg font-semibold flex items-center gap-2">
-          <Clock className="h-5 w-5" />
-          Select Your Time Zone
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="p-4">
-        <Select value={selectedTimeZone} onValueChange={onTimeZoneChange}>
-          <SelectTrigger className="w-full">
-            <SelectValue placeholder="Select time zone" />
-          </SelectTrigger>
-          <SelectContent>
-            {TIMEZONES.map((zone) => (
-              <SelectItem key={zone} value={zone}>
-                {zone}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </CardContent>
-    </Card>
+    <div className="space-y-2">
+      <label className="text-sm font-medium">Time zone</label>
+      <Select value={selectedTimeZone} onValueChange={onTimeZoneChange}>
+        <SelectTrigger className="w-full bg-white">
+          <SelectValue placeholder="Select time zone" />
+        </SelectTrigger>
+        <SelectContent>
+          {TIMEZONES.map((zone) => (
+            <SelectItem key={zone} value={zone}>
+              {zone}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+    </div>
   );
 };
 

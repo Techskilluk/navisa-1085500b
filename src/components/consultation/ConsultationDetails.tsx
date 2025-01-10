@@ -2,7 +2,7 @@ import { Check } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 const benefits = [
-  "one-on-one session tailored just for you",
+  "One-on-one session tailored just for you",
   "Answers to all your visa-related queries from an expert",
   "Understand the details of your chosen visa pathway",
   "Receive actionable advice to increase your chances of success"

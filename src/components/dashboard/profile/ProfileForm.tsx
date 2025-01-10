@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -24,12 +24,48 @@ const ProfileForm = () => {
     lastName: "",
   });
 
+  useEffect(() => {
+    const fetchProfile = async () => {
+      if (!user) return;
+
+      try {
+        console.log("Fetching profile for user:", user.id);
+        const { data, error } = await supabase
+          .from('profiles')
+          .select('username, first_name, last_name')
+          .eq('id', user.id)
+          .single();
+
+        if (error) throw error;
+
+        console.log("Profile data fetched:", data);
+        setFormData(prev => ({
+          ...prev,
+          username: data.username || "",
+          firstName: data.first_name || "",
+          lastName: data.last_name || "",
+        }));
+      } catch (error) {
+        console.error("Error fetching profile:", error);
+        toast({
+          variant: "destructive",
+          title: "Error",
+          description: "Failed to load profile data.",
+        });
+      }
+    };
+
+    fetchProfile();
+  }, [user]);
+
   const handleUpdateProfile = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!user) return;
+
     setIsLoading(true);
+    console.log("Updating profile for user:", user.id);
 
     try {
-      console.log("Updating profile for user:", user?.id);
       const { error } = await supabase
         .from('profiles')
         .update({
@@ -37,15 +73,15 @@ const ProfileForm = () => {
           first_name: formData.firstName,
           last_name: formData.lastName,
         })
-        .eq('id', user?.id);
+        .eq('id', user.id);
 
       if (error) throw error;
 
+      console.log("Profile updated successfully");
       toast({
         title: "Profile Updated",
         description: "Your profile has been successfully updated.",
       });
-      console.log("Profile updated successfully");
     } catch (error) {
       console.error("Error updating profile:", error);
       toast({

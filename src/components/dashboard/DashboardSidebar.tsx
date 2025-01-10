@@ -14,13 +14,15 @@ import SidebarHeader from "./SidebarHeader";
 interface DashboardSidebarProps {
   isOpen: boolean;
   onClose: () => void;
+  onSectionChange: (section: 'dashboard' | 'resources' | 'account') => void;
+  activeSection: string;
 }
 
 const menuItems = [
   {
     icon: LayoutDashboard,
     label: "Dashboard",
-    path: "/dashboard",
+    section: 'dashboard',
   },
   {
     icon: MessageSquare,
@@ -30,18 +32,25 @@ const menuItems = [
   {
     icon: BookOpen,
     label: "Resources",
-    path: "/resources",
+    section: 'resources',
   },
   {
     icon: User,
     label: "My Account",
-    path: "/account",
+    section: 'account',
   },
 ];
 
-const DashboardSidebar = ({ isOpen, onClose }: DashboardSidebarProps) => {
+const DashboardSidebar = ({ isOpen, onClose, onSectionChange, activeSection }: DashboardSidebarProps) => {
   const location = useLocation();
   const { signOut } = useAuth();
+
+  const handleMenuItemClick = (item: any) => {
+    if (item.section) {
+      onSectionChange(item.section);
+    }
+    onClose();
+  };
 
   return (
     <>
@@ -65,10 +74,10 @@ const DashboardSidebar = ({ isOpen, onClose }: DashboardSidebarProps) => {
           <ul className="space-y-2">
             {menuItems.map((item) => (
               <SidebarMenuItem
-                key={item.path}
+                key={item.section || item.path}
                 {...item}
-                isActive={location.pathname === item.path}
-                onClick={onClose}
+                isActive={item.section ? activeSection === item.section : location.pathname === item.path}
+                onClick={() => handleMenuItemClick(item)}
               />
             ))}
           </ul>

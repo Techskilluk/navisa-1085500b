@@ -1,54 +1,116 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { FileText, Book, ExternalLink } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { FileText, Download } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 
-const resources = [
-  {
-    title: "Visa Application Guide",
-    description: "Step-by-step guide for your visa application process",
-    icon: Book,
-    url: "/guides/visa-application"
-  },
-  {
-    title: "Document Templates",
-    description: "Download required document templates",
-    icon: FileText,
-    url: "/templates"
-  }
-];
+interface Template {
+  id: string;
+  visa_type: string;
+  document_type: string;
+  template_url: string;
+}
 
 const ResourcesSection = () => {
+  const { toast } = useToast();
+  
+  const { data: templates, isLoading, error } = useQuery({
+    queryKey: ['documentTemplates'],
+    queryFn: async () => {
+      console.log("Fetching document templates...");
+      const { data, error } = await supabase
+        .from('document_templates')
+        .select('*');
+      
+      if (error) {
+        console.error("Error fetching templates:", error);
+        throw error;
+      }
+      
+      console.log("Templates fetched:", data);
+      return data as Template[];
+    }
+  });
+
+  const handleDownload = async (template: Template) => {
+    try {
+      console.log("Downloading template:", template.template_url);
+      const response = await fetch(template.template_url);
+      const blob = await response.blob();
+      const downloadUrl = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = downloadUrl;
+      link.download = `${template.document_type.toLowerCase().replace(/\s+/g, '-')}.pdf`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(downloadUrl);
+      
+      toast({
+        title: "Download Started",
+        description: "Your document template is being downloaded.",
+      });
+    } catch (error) {
+      console.error("Error downloading template:", error);
+      toast({
+        variant: "destructive",
+        title: "Download Failed",
+        description: "There was an error downloading the template. Please try again.",
+      });
+    }
+  };
+
+  if (error) {
+    return (
+      <div className="p-4 text-center">
+        <p className="text-destructive">Error loading resources. Please try again later.</p>
+      </div>
+    );
+  }
+
   return (
-    <Card className="bg-card">
-      <CardHeader>
-        <CardTitle className="text-lg">Resources & Guides</CardTitle>
-      </CardHeader>
-      <CardContent className="space-y-4">
-        {resources.map((resource, index) => {
-          const Icon = resource.icon;
-          return (
-            <div key={index} className="flex items-start gap-4 p-4 rounded-lg border">
-              <Icon className="w-8 h-8 text-primary shrink-0" />
-              <div className="flex-1 min-w-0">
-                <h4 className="font-medium mb-1">{resource.title}</h4>
-                <p className="text-sm text-muted-foreground mb-3">
-                  {resource.description}
-                </p>
-                <Button 
-                  variant="outline" 
-                  size="sm" 
-                  className="w-full sm:w-auto"
-                  onClick={() => window.open(resource.url, '_blank')}
-                >
-                  <ExternalLink className="w-4 h-4 mr-2" />
-                  Access Resource
-                </Button>
-              </div>
-            </div>
-          );
-        })}
-      </CardContent>
-    </Card>
+    <div className="space-y-6">
+      <h2 className="text-3xl font-bold tracking-tight">Resources</h2>
+      
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {isLoading ? (
+          Array.from({ length: 6 }).map((_, index) => (
+            <Card key={index} className="animate-pulse">
+              <CardHeader className="space-y-2">
+                <div className="h-4 bg-muted rounded w-3/4" />
+                <div className="h-3 bg-muted rounded w-1/2" />
+              </CardHeader>
+              <CardContent>
+                <div className="h-9 bg-muted rounded" />
+              </CardContent>
+            </Card>
+          ))
+        ) : templates?.map((template) => (
+          <Card key={template.id}>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <FileText className="h-5 w-5" />
+                {template.document_type}
+              </CardTitle>
+              <CardDescription>
+                For {template.visa_type} visa applications
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Button
+                variant="outline"
+                className="w-full"
+                onClick={() => handleDownload(template)}
+              >
+                <Download className="mr-2 h-4 w-4" />
+                Download Template
+              </Button>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+    </div>
   );
 };
 

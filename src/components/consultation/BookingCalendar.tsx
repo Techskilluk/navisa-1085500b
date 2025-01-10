@@ -1,65 +1,74 @@
-import { useState } from "react";
+import { useEffect } from "react";
 import { useAuth } from "@/contexts/AuthContext";
+import { getCalApi } from "@calcom/embed-react";
 import { Calendar } from "@/components/ui/calendar";
 import { Button } from "@/components/ui/button";
+import { useState } from "react";
 
 interface BookingCalendarProps {
   timeZone?: string;
   onBookingConfirmed?: () => void;
 }
 
-const timeSlots = [
-  "8:00 am", "9:00 am", "10:00 am", "11:00 am",
-  "12:00 pm", "1:00 pm", "2:00 pm", "3:00 pm",
-  "4:00 pm", "5:00 pm", "6:00 pm", "7:00 pm"
-];
-
 const BookingCalendar = ({ timeZone, onBookingConfirmed }: BookingCalendarProps) => {
   const { user } = useAuth();
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
-  const [selectedTime, setSelectedTime] = useState<string | null>(null);
 
-  const handleBookNow = () => {
-    if (selectedDate && selectedTime) {
-      console.log("Booking confirmed for:", selectedDate, selectedTime);
-      onBookingConfirmed?.();
-    }
-  };
+  useEffect(() => {
+    (async function () {
+      const cal = await getCalApi();
+      cal.namespace({
+        "ui": {
+          "styles": {
+            "branding": {
+              "brandColor": "#000000"
+            }
+          }
+        },
+        "theme": "light"
+      });
+      
+      // Initialize Cal inline embed
+      cal("inline", {
+        elementOrSelector: "#cal-booking-placeholder",
+        calLink: "your-organization/consultation",
+        config: {
+          timezone: timeZone,
+          name: user?.email,
+          email: user?.email,
+        }
+      });
+
+      // Listen for booking success
+      cal("on", {
+        action: "bookingSuccessful",
+        callback: () => {
+          if (onBookingConfirmed) {
+            onBookingConfirmed();
+          }
+        },
+      });
+    })();
+  }, [timeZone, user, onBookingConfirmed]);
 
   return (
     <div className="space-y-6">
-      <div className="space-y-2">
-        <label className="text-sm font-medium">Select date</label>
-        <Calendar
-          mode="single"
-          selected={selectedDate}
-          onSelect={setSelectedDate}
-          className="border rounded-lg bg-white"
-        />
-      </div>
-
-      <div className="space-y-2">
-        <label className="text-sm font-medium">Select time</label>
-        <div className="grid grid-cols-4 gap-2">
-          {timeSlots.map((time) => (
-            <Button
-              key={time}
-              variant={selectedTime === time ? "default" : "outline"}
-              className="w-full"
-              onClick={() => setSelectedTime(time)}
-            >
-              {time}
-            </Button>
-          ))}
-        </div>
-      </div>
-
+      <Calendar
+        mode="single"
+        selected={selectedDate}
+        onSelect={setSelectedDate}
+        className="rounded-md border"
+      />
+      <div id="cal-booking-placeholder" className="min-h-[500px]" />
       <Button 
-        className="w-full bg-[#1A1B1E] text-white hover:bg-[#1A1B1E]/90"
-        onClick={handleBookNow}
-        disabled={!selectedDate || !selectedTime}
+        className="w-full"
+        disabled={!selectedDate}
+        onClick={() => {
+          // This button can be used to trigger the Cal.com modal if needed
+          console.log("Selected date:", selectedDate);
+        }}
       >
-        Book now
+        Book Consultation
       </Button>
     </div>
   );

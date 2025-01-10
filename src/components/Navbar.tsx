@@ -40,6 +40,7 @@ const Navbar = () => {
           <Link to="/" className="text-white/80 hover:text-white transition-colors">Home</Link>
           <Link to="/pathways" className="text-white/80 hover:text-white transition-colors">Pathways</Link>
           <Link to="/how-it-works" className="text-white/80 hover:text-white transition-colors">How it works</Link>
+          <Link to="/resources" className="text-white/80 hover:text-white transition-colors">Resources</Link>
           <Link to="/eligibility" className="text-white/80 hover:text-white transition-colors">Check your eligibility</Link>
           {user ? (
             <Button 

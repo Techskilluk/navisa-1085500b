@@ -1,25 +1,20 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ArrowRight, Calendar, Star, Clock, CheckCircle } from "lucide-react";
-
-interface VisaRequirement {
-  label: string;
-  value: string;
-}
+import { ArrowRight, Calendar, Star, Clock } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 interface SelectedVisaDetailsProps {
   visa: {
-    id: string;
     title: string;
     description: string;
     rating: number;
     processingTime: string;
-    requirements: VisaRequirement[];
   };
-  onContinue: () => void;
 }
 
-const SelectedVisaDetails = ({ visa, onContinue }: SelectedVisaDetailsProps) => {
+const SelectedVisaDetails = ({ visa }: SelectedVisaDetailsProps) => {
+  const navigate = useNavigate();
+
   return (
     <Card className="bg-card/50 backdrop-blur-sm border-accent/20">
       <CardHeader>
@@ -35,21 +30,6 @@ const SelectedVisaDetails = ({ visa, onContinue }: SelectedVisaDetailsProps) => 
         <div>
           <h3 className="text-xl font-semibold mb-2">{visa.title}</h3>
           <p className="text-muted-foreground">{visa.description}</p>
-        </div>
-
-        <div className="space-y-4">
-          <h4 className="font-medium">Key Requirements</h4>
-          <div className="grid gap-3">
-            {visa.requirements.map((req, index) => (
-              <div key={index} className="flex items-start gap-2">
-                <CheckCircle className="w-4 h-4 text-primary mt-1" />
-                <div>
-                  <span className="font-medium">{req.label}:</span>
-                  <span className="text-muted-foreground ml-1">{req.value}</span>
-                </div>
-              </div>
-            ))}
-          </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -68,7 +48,7 @@ const SelectedVisaDetails = ({ visa, onContinue }: SelectedVisaDetailsProps) => 
             "You're on the right path! Let's make your visa application journey smooth and successful."
           </p>
           <Button
-            onClick={onContinue}
+            onClick={() => navigate("/eligibility")}
             className="w-full sm:w-auto"
           >
             Continue Application <ArrowRight className="w-4 h-4 ml-2" />

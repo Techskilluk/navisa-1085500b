@@ -1,47 +1,55 @@
-import { Button } from "@/components/ui/button";
-import { ArrowRight, Building } from "lucide-react";
-import { useNavigate, Link } from "react-router-dom";
-import VideoShowcase from "./hero/VideoShowcase";
-import StatsSection from "./hero/StatsSection";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import HeroContent from "./home/HeroContent";
+import VideoBackground from "./home/VideoBackground";
 
 const Hero = () => {
   const navigate = useNavigate();
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  const videos = [
+    "https://res.cloudinary.com/dxa3i3h49/video/upload/v1736428810/4443770-hd_1920_1080_25fps_gjaflm.mp4",
+    "https://res.cloudinary.com/dxa3i3h49/video/upload/v1736428807/4296918-uhd_3840_2160_25fps_okexuk.mp4",
+    "https://res.cloudinary.com/dxa3i3h49/video/upload/v1736428799/3044865-uhd_3840_2160_24fps_ebppj1.mp4"
+  ];
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % videos.length);
+    }, 5000);
+
+    return () => clearInterval(timer);
+  }, []);
 
   const handleEligibilityCheck = () => {
     navigate("/eligibility");
   };
 
   return (
-    <div className="relative min-h-[calc(100vh-80px)] flex items-center justify-center px-4 pt-20 lg:pt-0 overflow-hidden bg-gradient-to-br from-background via-background/95 to-background/90">
+    <div className="relative min-h-[calc(100vh-80px)] flex items-center justify-center px-4 pt-20 lg:pt-0 bg-background overflow-hidden">
+      {/* Background video with reduced opacity */}
+      <div className="absolute inset-0 z-0 opacity-10">
+        <VideoBackground videos={videos} currentSlide={currentSlide} />
+      </div>
+
+      {/* Split screen container */}
       <div className="relative z-10 max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-        <div className="space-y-6 lg:space-y-8 text-center lg:text-left">
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight animate-fade-in">
-            Transform Your Career Across Borders
-          </h1>
-          <p className="text-lg sm:text-xl text-white/80 max-w-xl mx-auto lg:mx-0 animate-fade-in delay-100">
-            Navigate global opportunities with confidence. NAVISA connects ambitious professionals with international employers, simplifies migration pathways, and turns your dream of a global career into reality.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start animate-fade-in delay-200">
-            <Button 
-              className="w-full sm:w-auto px-6 py-6 text-lg bg-white text-black hover:bg-white/90 flex items-center gap-2"
-              onClick={handleEligibilityCheck}
-            >
-              Begin Your Global Journey
-              <ArrowRight className="w-5 h-5 text-black" />
-            </Button>
-            <Link to="/enterprise" className="w-full sm:w-auto">
-              <Button 
-                variant="outline"
-                className="w-full sm:w-auto px-6 py-6 text-lg border-white text-white hover:bg-white/10 flex items-center gap-2"
-              >
-                For Businesses
-                <Building className="w-5 h-5" />
-              </Button>
-            </Link>
+        {/* Left side - Featured video */}
+        <div className="relative order-2 lg:order-1">
+          <div className="relative rounded-3xl overflow-hidden shadow-2xl h-[400px] lg:h-[600px] animate-scale-in">
+            <VideoBackground videos={videos} currentSlide={currentSlide} />
+            {/* Gradient overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
           </div>
-          <StatsSection />
+          {/* Decorative elements */}
+          <div className="absolute -bottom-4 -right-4 w-72 h-72 bg-accent/20 rounded-full blur-3xl" />
+          <div className="absolute -top-4 -left-4 w-72 h-72 bg-primary/20 rounded-full blur-3xl" />
         </div>
-        <VideoShowcase />
+
+        {/* Right side - Hero content */}
+        <div className="order-1 lg:order-2">
+          <HeroContent handleEligibilityCheck={handleEligibilityCheck} />
+        </div>
       </div>
     </div>
   );

@@ -1,4 +1,6 @@
-const StatsSection = () => {
+import React from 'react';
+
+const StatsDisplay = () => {
   return (
     <div className="grid grid-cols-3 gap-8 pt-8 animate-fade-in delay-300">
       <div className="text-center lg:text-left">
@@ -17,4 +19,4 @@ const StatsSection = () => {
   );
 };
 
-export default StatsSection;
+export default StatsDisplay;

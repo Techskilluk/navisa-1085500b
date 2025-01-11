@@ -1,61 +1,129 @@
+import { Toaster } from "@/components/ui/toaster";
+import { Toaster as Sonner } from "@/components/ui/sonner";
+import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import LandingLayout from "@/components/layouts/LandingLayout";
-import AppLayout from "@/components/layouts/AppLayout";
-
-// Landing pages
+import Navbar from "@/components/Navbar";
 import Index from "./pages/Index";
 import SignIn from "./pages/SignIn";
+import Dashboard from "./pages/Dashboard";
+import EligibilityAssessment from "./pages/EligibilityAssessment";
 import HowItWorks from "./pages/HowItWorks";
 import Pathways from "./pages/Pathways";
 import Enterprise from "./pages/Enterprise";
-import Resources from "./pages/Resources";
-import ResourceDetail from "./pages/ResourceDetail";
-import EligibilityAssessment from "./pages/EligibilityAssessment";
-
-// App pages
-import Dashboard from "./pages/Dashboard";
-import ConsultationBooking from "./pages/ConsultationBooking";
 import VerificationConfirmation from "./pages/VerificationConfirmation";
-import AccountSettings from "@/components/account/AccountSettings";
+import { useAuth } from "./contexts/AuthContext";
 
 const queryClient = new QueryClient();
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <BrowserRouter>
-      <AuthProvider>
-        <TooltipProvider>
-          <Routes>
-            {/* Landing pages with Navbar */}
-            <Route element={<LandingLayout />}>
-              <Route path="/" element={<Index />} />
-              <Route path="/signin" element={<SignIn />} />
-              <Route path="/how-it-works" element={<HowItWorks />} />
-              <Route path="/pathways" element={<Pathways />} />
-              <Route path="/enterprise" element={<Enterprise />} />
-              <Route path="/resources" element={<Resources />} />
-              <Route path="/resources/:id" element={<ResourceDetail />} />
-              <Route path="/eligibility" element={<EligibilityAssessment />} />
-            </Route>
+// Protected Route Component
+const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
+  const { user } = useAuth();
+  
+  if (!user) {
+    return <Navigate to="/signin" replace />;
+  }
+  
+  return <>{children}</>;
+};
 
-            {/* App pages without Navbar */}
-            <Route element={<AppLayout />}>
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/consultation" element={<ConsultationBooking />} />
-              <Route path="/verify-success" element={<VerificationConfirmation />} />
-              <Route path="/account" element={<AccountSettings />} />
-            </Route>
+// Public Route Component with Navbar
+const PublicRoute = ({ children }: { children: React.ReactNode }) => {
+  return (
+    <>
+      <Navbar />
+      {children}
+    </>
+  );
+};
 
-            {/* Catch all route */}
-            <Route path="*" element={<Navigate to="/" replace />} />
-          </Routes>
-        </TooltipProvider>
-      </AuthProvider>
-    </BrowserRouter>
-  </QueryClientProvider>
-);
+const App = () => {
+  const isAppDomain = window.location.hostname.startsWith('app.');
+  
+  return (
+    <QueryClientProvider client={queryClient}>
+      <BrowserRouter>
+        <AuthProvider>
+          <TooltipProvider>
+            <Routes>
+              {isAppDomain ? (
+                // App Routes (app.navisa.co)
+                <>
+                  <Route path="/signin" element={<SignIn />} />
+                  <Route
+                    path="/dashboard"
+                    element={
+                      <ProtectedRoute>
+                        <Dashboard />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/eligibility"
+                    element={
+                      <ProtectedRoute>
+                        <EligibilityAssessment />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route path="/" element={<Navigate to="/dashboard" replace />} />
+                  <Route path="*" element={<Navigate to="/dashboard" replace />} />
+                </>
+              ) : (
+                // Marketing Routes (www.navisa.co)
+                <>
+                  <Route
+                    path="/"
+                    element={
+                      <PublicRoute>
+                        <Index />
+                      </PublicRoute>
+                    }
+                  />
+                  <Route
+                    path="/how-it-works"
+                    element={
+                      <PublicRoute>
+                        <HowItWorks />
+                      </PublicRoute>
+                    }
+                  />
+                  <Route
+                    path="/pathways"
+                    element={
+                      <PublicRoute>
+                        <Pathways />
+                      </PublicRoute>
+                    }
+                  />
+                  <Route
+                    path="/enterprise"
+                    element={
+                      <PublicRoute>
+                        <Enterprise />
+                      </PublicRoute>
+                    }
+                  />
+                  <Route
+                    path="/verify-success"
+                    element={
+                      <PublicRoute>
+                        <VerificationConfirmation />
+                      </PublicRoute>
+                    }
+                  />
+                  <Route path="*" element={<Navigate to="/" replace />} />
+                </>
+              )}
+            </Routes>
+            <Toaster />
+            <Sonner />
+          </TooltipProvider>
+        </AuthProvider>
+      </BrowserRouter>
+    </QueryClientProvider>
+  );
+};
 
 export default App;

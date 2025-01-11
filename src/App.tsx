@@ -27,7 +27,8 @@ const App = () => (
       <AuthProvider>
         <TooltipProvider>
           <Routes>
-            {/* Consultation route outside of the main layout */}
+            {/* Public routes outside of main layout */}
+            <Route path="/signin" element={<SignIn />} />
             <Route path="/consultation" element={
               <div className="min-h-screen bg-background">
                 <ConsultationBooking />
@@ -48,7 +49,6 @@ const App = () => (
                 <>
                   <Navbar />
                   <Routes>
-                    <Route path="/signin" element={<SignIn />} />
                     <Route path="/eligibility" element={<EligibilityAssessment />} />
                     <Route path="/how-it-works" element={<HowItWorks />} />
                     <Route path="/pathways" element={<Pathways />} />

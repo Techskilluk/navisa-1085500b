@@ -13,117 +13,41 @@ import HowItWorks from "./pages/HowItWorks";
 import Pathways from "./pages/Pathways";
 import Enterprise from "./pages/Enterprise";
 import VerificationConfirmation from "./pages/VerificationConfirmation";
-import { useAuth } from "./contexts/AuthContext";
 
 const queryClient = new QueryClient();
 
-// Protected Route Component
-const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
-  const { user } = useAuth();
-  
-  if (!user) {
-    return <Navigate to="/signin" replace />;
-  }
-  
-  return <>{children}</>;
-};
-
-// Public Route Component with Navbar
-const PublicRoute = ({ children }: { children: React.ReactNode }) => {
-  return (
-    <>
-      <Navbar />
-      {children}
-    </>
-  );
-};
-
-const App = () => {
-  const isAppDomain = window.location.hostname.startsWith('app.');
-  
-  return (
-    <QueryClientProvider client={queryClient}>
-      <BrowserRouter>
-        <AuthProvider>
-          <TooltipProvider>
-            <Routes>
-              {isAppDomain ? (
-                // App Routes (app.navisa.co)
+const App = () => (
+  <QueryClientProvider client={queryClient}>
+    <BrowserRouter>
+      <AuthProvider>
+        <TooltipProvider>
+          <Routes>
+            <Route
+              path="/*"
+              element={
                 <>
-                  <Route path="/signin" element={<SignIn />} />
-                  <Route
-                    path="/dashboard"
-                    element={
-                      <ProtectedRoute>
-                        <Dashboard />
-                      </ProtectedRoute>
-                    }
-                  />
-                  <Route
-                    path="/eligibility"
-                    element={
-                      <ProtectedRoute>
-                        <EligibilityAssessment />
-                      </ProtectedRoute>
-                    }
-                  />
-                  <Route path="/" element={<Navigate to="/dashboard" replace />} />
-                  <Route path="*" element={<Navigate to="/dashboard" replace />} />
+                  <Navbar />
+                  <Routes>
+                    <Route path="/signin" element={<SignIn />} />
+                    <Route path="/dashboard" element={<Dashboard />} />
+                    <Route path="/eligibility" element={<EligibilityAssessment />} />
+                    <Route path="/how-it-works" element={<HowItWorks />} />
+                    <Route path="/pathways" element={<Pathways />} />
+                    <Route path="/enterprise" element={<Enterprise />} />
+                    <Route path="/verify-success" element={<VerificationConfirmation />} />
+                    <Route path="/" element={<Index />} />
+                    <Route path="*" element={<Navigate to="/" replace />} />
+                  </Routes>
                 </>
-              ) : (
-                // Marketing Routes (www.navisa.co)
-                <>
-                  <Route
-                    path="/"
-                    element={
-                      <PublicRoute>
-                        <Index />
-                      </PublicRoute>
-                    }
-                  />
-                  <Route
-                    path="/how-it-works"
-                    element={
-                      <PublicRoute>
-                        <HowItWorks />
-                      </PublicRoute>
-                    }
-                  />
-                  <Route
-                    path="/pathways"
-                    element={
-                      <PublicRoute>
-                        <Pathways />
-                      </PublicRoute>
-                    }
-                  />
-                  <Route
-                    path="/enterprise"
-                    element={
-                      <PublicRoute>
-                        <Enterprise />
-                      </PublicRoute>
-                    }
-                  />
-                  <Route
-                    path="/verify-success"
-                    element={
-                      <PublicRoute>
-                        <VerificationConfirmation />
-                      </PublicRoute>
-                    }
-                  />
-                  <Route path="*" element={<Navigate to="/" replace />} />
-                </>
-              )}
-            </Routes>
-            <Toaster />
-            <Sonner />
-          </TooltipProvider>
-        </AuthProvider>
-      </BrowserRouter>
-    </QueryClientProvider>
-  );
-};
+              }
+            />
+          </Routes>
+          <Toaster />
+          <Sonner />
+        </TooltipProvider>
+      </AuthProvider>
+    </BrowserRouter>
+  </QueryClientProvider>
+);
 
 export default App;

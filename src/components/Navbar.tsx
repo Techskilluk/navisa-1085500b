@@ -9,7 +9,6 @@ const Navbar = () => {
   const { user, signOut } = useAuth();
   const { toast } = useToast();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const isAppDomain = window.location.hostname.startsWith('app.');
 
   const handleSignOut = async () => {
     try {
@@ -34,20 +33,6 @@ const Navbar = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
-  const marketingNavItems = [
-    { label: "Home", path: "/" },
-    { label: "Pathways", path: "/pathways" },
-    { label: "How it works", path: "/how-it-works" },
-    { label: "Enterprise", path: "/enterprise" },
-  ];
-
-  const appNavItems = [
-    { label: "Dashboard", path: "/dashboard" },
-    { label: "Eligibility Check", path: "/eligibility" },
-  ];
-
-  const navItems = isAppDomain ? appNavItems : marketingNavItems;
-
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 px-6 py-4 bg-background/80 backdrop-blur-lg">
       <div className="max-w-7xl mx-auto flex items-center justify-between">
@@ -60,38 +45,23 @@ const Navbar = () => {
 
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center space-x-8">
-          {navItems.map((item) => (
-            <Link
-              key={item.path}
-              to={item.path}
-              className="text-white/80 hover:text-white transition-colors"
+          <Link to="/" className="text-white/80 hover:text-white transition-colors">Home</Link>
+          <Link to="/pathways" className="text-white/80 hover:text-white transition-colors">Pathways</Link>
+          <Link to="/how-it-works" className="text-white/80 hover:text-white transition-colors">How it works</Link>
+          <Link to="/eligibility" className="text-white/80 hover:text-white transition-colors">Check your eligibility</Link>
+          {user ? (
+            <Button 
+              onClick={handleSignOut}
+              variant="outline"
+              className="bg-white text-black hover:bg-white/90 transition-colors"
             >
-              {item.label}
-            </Link>
-          ))}
-          
-          {isAppDomain ? (
-            user ? (
-              <Button 
-                onClick={handleSignOut}
-                variant="outline"
-                className="bg-white text-black hover:bg-white/90 transition-colors"
-              >
-                Sign out
-                <LogOut className="w-4 h-4 ml-2" />
-              </Button>
-            ) : (
-              <Link to="/signin">
-                <Button className="bg-white text-black hover:bg-white/90 transition-colors">
-                  Sign in
-                  <LogIn className="w-4 h-4 ml-2" />
-                </Button>
-              </Link>
-            )
+              Sign out
+              <LogOut className="w-4 h-4 ml-2" />
+            </Button>
           ) : (
-            <Link to="https://app.navisa.co/signin">
+            <Link to="/signin">
               <Button className="bg-white text-black hover:bg-white/90 transition-colors">
-                Get Started
+                Sign in
                 <LogIn className="w-4 h-4 ml-2" />
               </Button>
             </Link>
@@ -115,50 +85,54 @@ const Navbar = () => {
       {isMobileMenuOpen && (
         <div className="md:hidden fixed inset-x-0 top-[72px] bg-background/95 backdrop-blur-lg border-t border-white/10">
           <div className="px-6 py-4 space-y-4">
-            {navItems.map((item) => (
-              <Link
-                key={item.path}
-                to={item.path}
-                className="block text-white/80 hover:text-white transition-colors py-2"
-                onClick={() => setIsMobileMenuOpen(false)}
+            <Link 
+              to="/" 
+              className="block text-white/80 hover:text-white transition-colors py-2"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Home
+            </Link>
+            <Link 
+              to="/pathways" 
+              className="block text-white/80 hover:text-white transition-colors py-2"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Pathways
+            </Link>
+            <Link 
+              to="/how-it-works" 
+              className="block text-white/80 hover:text-white transition-colors py-2"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              How it works
+            </Link>
+            <Link 
+              to="/eligibility" 
+              className="block text-white/80 hover:text-white transition-colors py-2"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Check your eligibility
+            </Link>
+            {user ? (
+              <Button 
+                onClick={() => {
+                  handleSignOut();
+                  setIsMobileMenuOpen(false);
+                }}
+                variant="outline"
+                className="w-full bg-white text-black hover:bg-white/90 transition-colors"
               >
-                {item.label}
-              </Link>
-            ))}
-            
-            {isAppDomain ? (
-              user ? (
-                <Button 
-                  onClick={() => {
-                    handleSignOut();
-                    setIsMobileMenuOpen(false);
-                  }}
-                  variant="outline"
-                  className="w-full bg-white text-black hover:bg-white/90 transition-colors"
-                >
-                  Sign out
-                  <LogOut className="w-4 h-4 ml-2" />
-                </Button>
-              ) : (
-                <Link 
-                  to="/signin" 
-                  className="block" 
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  <Button className="w-full bg-white text-black hover:bg-white/90 transition-colors">
-                    Sign in
-                    <LogIn className="w-4 h-4 ml-2" />
-                  </Button>
-                </Link>
-              )
+                Sign out
+                <LogOut className="w-4 h-4 ml-2" />
+              </Button>
             ) : (
               <Link 
-                to="https://app.navisa.co/signin" 
+                to="/signin" 
                 className="block" 
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 <Button className="w-full bg-white text-black hover:bg-white/90 transition-colors">
-                  Get Started
+                  Sign in
                   <LogIn className="w-4 h-4 ml-2" />
                 </Button>
               </Link>

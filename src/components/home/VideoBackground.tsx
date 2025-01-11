@@ -7,7 +7,7 @@ interface VideoBackgroundProps {
 
 const VideoBackground = ({ videos, currentSlide }: VideoBackgroundProps) => {
   return (
-    <div className="absolute inset-0 z-0 opacity-20">
+    <>
       {videos.map((video, index) => (
         <div
           key={index}
@@ -27,7 +27,7 @@ const VideoBackground = ({ videos, currentSlide }: VideoBackgroundProps) => {
           </video>
         </div>
       ))}
-    </div>
+    </>
   );
 };
 

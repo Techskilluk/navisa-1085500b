@@ -27,16 +27,28 @@ const Hero = () => {
 
   return (
     <div className="relative min-h-[calc(100vh-80px)] flex items-center justify-center px-4 pt-20 lg:pt-0 bg-background overflow-hidden">
-      <VideoBackground videos={videos} currentSlide={currentSlide} />
+      {/* Background video with reduced opacity */}
+      <div className="absolute inset-0 z-0 opacity-10">
+        <VideoBackground videos={videos} currentSlide={currentSlide} />
+      </div>
 
+      {/* Split screen container */}
       <div className="relative z-10 max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-        <HeroContent handleEligibilityCheck={handleEligibilityCheck} />
-        
-        <div className="relative hidden lg:block">
-          <div className="relative z-10 rounded-3xl overflow-hidden shadow-2xl h-[600px] animate-scale-in">
+        {/* Left side - Hero content */}
+        <div className="order-2 lg:order-1">
+          <HeroContent handleEligibilityCheck={handleEligibilityCheck} />
+        </div>
+
+        {/* Right side - Featured video */}
+        <div className="relative order-1 lg:order-2">
+          <div className="relative rounded-3xl overflow-hidden shadow-2xl h-[400px] lg:h-[600px] animate-scale-in">
             <VideoBackground videos={videos} currentSlide={currentSlide} />
+            {/* Gradient overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
           </div>
-          <div className="absolute -bottom-4 -right-4 w-72 h-72 bg-accent/20 rounded-full blur-3xl"></div>
+          {/* Decorative elements */}
+          <div className="absolute -bottom-4 -right-4 w-72 h-72 bg-accent/20 rounded-full blur-3xl" />
+          <div className="absolute -top-4 -left-4 w-72 h-72 bg-primary/20 rounded-full blur-3xl" />
         </div>
       </div>
     </div>

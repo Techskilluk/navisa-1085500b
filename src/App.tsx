@@ -12,7 +12,11 @@ import EligibilityAssessment from "./pages/EligibilityAssessment";
 import HowItWorks from "./pages/HowItWorks";
 import Pathways from "./pages/Pathways";
 import Enterprise from "./pages/Enterprise";
+import Resources from "./pages/Resources";
 import VerificationConfirmation from "./pages/VerificationConfirmation";
+import ConsultationBooking from "./pages/ConsultationBooking";
+import AccountSettings from "@/components/account/AccountSettings";
+import ResourceDetail from "./pages/ResourceDetail";
 
 const queryClient = new QueryClient();
 
@@ -22,6 +26,14 @@ const App = () => (
       <AuthProvider>
         <TooltipProvider>
           <Routes>
+            {/* Consultation route outside of the main layout */}
+            <Route path="/consultation" element={
+              <div className="min-h-screen bg-background">
+                <ConsultationBooking />
+              </div>
+            } />
+            
+            {/* All other routes with Navbar */}
             <Route
               path="/*"
               element={
@@ -33,8 +45,11 @@ const App = () => (
                     <Route path="/eligibility" element={<EligibilityAssessment />} />
                     <Route path="/how-it-works" element={<HowItWorks />} />
                     <Route path="/pathways" element={<Pathways />} />
+                    <Route path="/resources" element={<Resources />} />
+                    <Route path="/resources/:id" element={<ResourceDetail />} />
                     <Route path="/enterprise" element={<Enterprise />} />
                     <Route path="/verify-success" element={<VerificationConfirmation />} />
+                    <Route path="/account" element={<AccountSettings />} />
                     <Route path="/" element={<Index />} />
                     <Route path="*" element={<Navigate to="/" replace />} />
                   </Routes>

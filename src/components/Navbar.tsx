@@ -1,12 +1,19 @@
 import { Button } from "@/components/ui/button";
 import { LogIn } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useToast } from "@/components/ui/use-toast";
 
 const Navbar = () => {
   const { user } = useAuth();
   const { toast } = useToast();
+  const location = useLocation();
+
+  // Don't render navbar on app routes
+  const appRoutes = ['/dashboard', '/consultation', '/verify-success', '/account'];
+  if (appRoutes.some(route => location.pathname.startsWith(route))) {
+    return null;
+  }
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 px-6 py-4 bg-background/80 backdrop-blur-lg">

@@ -1,5 +1,5 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, Navigate, Outlet } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import LandingLayout from "@/components/layouts/LandingLayout";
@@ -30,7 +30,7 @@ const App = () => (
         <TooltipProvider>
           <Routes>
             {/* Landing pages with Navbar */}
-            <Route element={<LandingLayout><Outlet /></LandingLayout>}>
+            <Route element={<LandingLayout />}>
               <Route path="/" element={<Index />} />
               <Route path="/signin" element={<SignIn />} />
               <Route path="/how-it-works" element={<HowItWorks />} />
@@ -42,7 +42,7 @@ const App = () => (
             </Route>
 
             {/* App pages without Navbar */}
-            <Route element={<AppLayout><Outlet /></AppLayout>}>
+            <Route element={<AppLayout />}>
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/consultation" element={<ConsultationBooking />} />
               <Route path="/verify-success" element={<VerificationConfirmation />} />

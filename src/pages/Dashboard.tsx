@@ -1,9 +1,7 @@
 import { useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
-import ApplicationStatus from "@/components/dashboard/ApplicationStatus";
-import TimelineSection from "@/components/dashboard/TimelineSection";
-import ResourcesSection from "@/components/dashboard/ResourcesSection";
+import DashboardLayout from "@/components/dashboard/DashboardLayout";
 import {
   Card,
   CardContent,
@@ -23,8 +21,6 @@ const data = [
 const Dashboard = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
-  const location = useLocation();
-  const submission = location.state?.documentSubmission;
 
   useEffect(() => {
     if (!user) {
@@ -35,10 +31,9 @@ const Dashboard = () => {
   if (!user) return null;
 
   return (
-    <div className="space-y-8">
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Success Probability Card */}
-        <Card className="bg-card lg:col-span-2">
+    <DashboardLayout>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <Card className="bg-card">
           <CardHeader>
             <CardTitle>Success Probability</CardTitle>
             <CardDescription>
@@ -69,7 +64,7 @@ const Dashboard = () => {
                   />
                   <Bar 
                     dataKey="value" 
-                    fill={submission?.visaType ? "#002B5C" : "#FFFFFF"}
+                    fill="#FFFFFF"
                     radius={[4, 4, 0, 0]}
                   />
                 </BarChart>
@@ -78,18 +73,6 @@ const Dashboard = () => {
           </CardContent>
         </Card>
 
-        {/* Application Status Card */}
-        <div className="lg:col-span-1">
-          <ApplicationStatus />
-        </div>
-      </div>
-
-      {/* Timeline, Active Applications, and Resources */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-1">
-          <TimelineSection />
-        </div>
-        
         <Card className="bg-card">
           <CardHeader>
             <CardTitle>Active Applications</CardTitle>
@@ -98,34 +81,14 @@ const Dashboard = () => {
             </CardDescription>
           </CardHeader>
           <CardContent className="flex flex-col items-center justify-center min-h-[300px] text-center">
-            {submission ? (
-              <div className="text-left w-full space-y-4">
-                <div className="flex items-center gap-4">
-                  <div className="w-2 h-2 bg-[#28A745] rounded-full" />
-                  <div>
-                    <p className="font-medium">{submission.visaType}</p>
-                    <p className="text-sm text-muted-foreground">
-                      Submitted on {submission.timestamp}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            ) : (
-              <>
-                <FileText className="h-16 w-16 text-muted mb-4" />
-                <p className="text-muted">
-                  You currently do not have any active/pending applications
-                </p>
-              </>
-            )}
+            <FileText className="h-16 w-16 text-muted mb-4" />
+            <p className="text-muted">
+              You currently do not have any active/pending applications
+            </p>
           </CardContent>
         </Card>
-
-        <div className="lg:col-span-1">
-          <ResourcesSection />
-        </div>
       </div>
-    </div>
+    </DashboardLayout>
   );
 };
 

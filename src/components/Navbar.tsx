@@ -1,12 +1,10 @@
 import { Button } from "@/components/ui/button";
-import { LogIn } from "lucide-react";
+import { LogIn, LogOut } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { Link } from "react-router-dom";
-import { useToast } from "@/components/ui/use-toast";
 
 const Navbar = () => {
-  const { user } = useAuth();
-  const { toast } = useToast();
+  const { user, signOut } = useAuth();
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 px-6 py-4 bg-background/80 backdrop-blur-lg">
@@ -22,11 +20,19 @@ const Navbar = () => {
           <Link to="/pathways" className="text-white/80 hover:text-white transition-colors">Pathways</Link>
           <Link to="/how-it-works" className="text-white/80 hover:text-white transition-colors">How it works</Link>
           <Link to="/eligibility" className="text-white/80 hover:text-white transition-colors">Check your eligibility</Link>
-          {!user && (
+          {user ? (
+            <Button 
+              onClick={() => signOut()} 
+              className="bg-white text-black hover:bg-white/90"
+            >
+              Sign out
+              <LogOut className="w-4 h-4 ml-2 text-black" />
+            </Button>
+          ) : (
             <Link to="/signin">
-              <Button className="bg-white text-black hover:bg-white/90 transition-colors">
+              <Button className="bg-white text-black hover:bg-white/90">
                 Sign in
-                <LogIn className="w-4 h-4 ml-2" />
+                <LogIn className="w-4 h-4 ml-2 text-black" />
               </Button>
             </Link>
           )}

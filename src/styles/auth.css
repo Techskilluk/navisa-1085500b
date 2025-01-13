@@ -1,0 +1,14 @@
+.chat-bubble {
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.chat-bubble::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 20px;
+  border-width: 10px 10px 0;
+  border-style: solid;
+  border-color: hsl(var(--background)) transparent transparent;
+}

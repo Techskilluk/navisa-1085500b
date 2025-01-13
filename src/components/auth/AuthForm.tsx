@@ -54,7 +54,7 @@ const AuthForm = ({ error: propError, preserveFormData }: AuthFormProps) => {
           {view === 'sign_in' ? (
             <>
               <Link 
-                to="/reset-password"
+                to="/password-recovery"
                 className="text-accent hover:text-accent/80 underline transition-colors duration-300 cursor-pointer text-sm block"
               >
                 Forgot your password?

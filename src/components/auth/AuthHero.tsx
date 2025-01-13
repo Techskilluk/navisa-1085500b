@@ -1,16 +1,11 @@
 const AuthHero = () => {
   return (
     <div className="hidden lg:block lg:w-1/2 relative">
-      <video
+      <img 
+        src="/lovable-uploads/de492bbf-a7aa-4f4d-a5d3-b9a7e0143516.png"
+        alt="Global Mobility"
         className="absolute inset-0 w-full h-full object-cover"
-        autoPlay
-        muted
-        loop
-        playsInline
-      >
-        <source src="https://res.cloudinary.com/dxa3i3h49/video/upload/v1736428810/4443770-hd_1920_1080_25fps_gjaflm.mp4" type="video/mp4" />
-        Your browser does not support the video tag.
-      </video>
+      />
       <div className="absolute inset-0 bg-black/60" />
       <div className="absolute inset-0 flex items-center justify-center p-12">
         <div className="max-w-xl text-white space-y-6">

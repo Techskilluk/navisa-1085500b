@@ -24,16 +24,12 @@ const DocumentUploadForm = ({
   const handleFileUpload = (type: string, file: File) => {
     console.log(`Handling file upload for type: ${type}`, file);
     setUploadedFiles(prev => {
-      if (type === 'recommendation_letter') {
-        const existingFiles = prev[type] || [];
-        return {
-          ...prev,
-          [type]: [...existingFiles, file]
-        };
-      }
+      const existingFiles = prev[type] || [];
       return {
         ...prev,
-        [type]: [file]
+        [type]: type === 'recommendation_letter' 
+          ? [...existingFiles, file]
+          : [file]
       };
     });
     onFileUpload(type, file);

@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { useToast } from "@/components/ui/use-toast";
+import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
-import { uploadDocumentToStorage, createDocumentRecord } from "@/lib/document-upload";
 
 interface DocumentSubmissionHandlerProps {
   visaType: string;
-  uploadedFiles: Record<string, File>;
+  uploadedFiles: Record<string, File[]>;
   isUploading: boolean;
   setIsUploading: (value: boolean) => void;
 }
@@ -18,100 +18,97 @@ const DocumentSubmissionHandler = ({
   isUploading,
   setIsUploading,
 }: DocumentSubmissionHandlerProps) => {
-  const [successCount, setSuccessCount] = useState(0);
+  const { user } = useAuth();
   const { toast } = useToast();
   const navigate = useNavigate();
+  const [progress, setProgress] = useState(0);
 
-  const handleSubmission = async () => {
-    if (Object.keys(uploadedFiles).length === 0) {
+  const handleSubmit = async () => {
+    if (!user) {
       toast({
-        title: "No Documents Selected",
-        description: "Please select at least one document to upload.",
         variant: "destructive",
+        title: "Authentication required",
+        description: "Please sign in to submit documents.",
       });
       return;
     }
 
     setIsUploading(true);
-    let successCount = 0;
+    setProgress(0);
 
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const totalFiles = Object.values(uploadedFiles).flat().length;
+      let uploadedCount = 0;
 
-      if (!user) {
-        throw new Error("User not authenticated");
-      }
+      for (const [docType, files] of Object.entries(uploadedFiles)) {
+        for (const file of files) {
+          const filePath = `${user.id}/${visaType}/${docType}-${Date.now()}-${file.name}`;
+          console.log(`Uploading ${docType} to ${filePath}`);
 
-      console.log("Starting document upload process...");
+          const { error: uploadError } = await supabase.storage
+            .from('documents')
+            .upload(filePath, file);
 
-      for (const [docType, file] of Object.entries(uploadedFiles)) {
-        try {
-          const filePath = await uploadDocumentToStorage(user.id, visaType, docType, file);
-          await createDocumentRecord(user.id, docType, filePath);
-          successCount++;
-          console.log(`Successfully uploaded ${docType}`);
-        } catch (error) {
-          console.error(`Failed to process ${docType}:`, error);
-          toast({
-            title: `Failed to Upload ${docType}`,
-            description: "Please try again or contact support if the issue persists.",
-            variant: "destructive",
+          if (uploadError) {
+            console.error(`Error uploading ${docType}:`, uploadError);
+            throw uploadError;
+          }
+
+          const { error: dbError } = await supabase.from('documents').insert({
+            user_id: user.id,
+            document_type: docType,
+            file_path: filePath,
+            status: 'pending'
           });
+
+          if (dbError) {
+            console.error(`Error saving ${docType} metadata:`, dbError);
+            throw dbError;
+          }
+
+          uploadedCount++;
+          setProgress((uploadedCount / totalFiles) * 100);
         }
       }
 
-      setSuccessCount(successCount);
-
-      if (successCount > 0) {
-        console.log("Documents uploaded successfully, preparing to navigate...");
-        
-        toast({
-          title: "Documents Submitted Successfully",
-          description: `${successCount} documents have been uploaded and are pending review.`,
-          duration: 5000,
-        });
-
-        // Force a small delay to ensure toast is shown before navigation
-        setTimeout(() => {
-          console.log("Navigating to dashboard...");
-          navigate("/dashboard", {
-            replace: true,
-            state: {
-              documentSubmission: {
-                timestamp: new Date().toLocaleString(),
-                visaType,
-                documentCount: successCount
-              }
-            }
-          });
-        }, 500); // Increased delay to ensure toast is visible
-      } else {
-        toast({
-          title: "Submission Failed",
-          description: "No documents were successfully uploaded. Please try again.",
-          variant: "destructive",
-        });
-      }
-    } catch (error) {
-      console.error("Document submission error:", error);
       toast({
-        title: "Error",
-        description: "An unexpected error occurred. Please try again.",
+        title: "Documents Uploaded",
+        description: "Your documents have been successfully uploaded.",
+      });
+
+      navigate('/dashboard', {
+        state: { documentSubmission: { visaType, timestamp: new Date().toISOString() } }
+      });
+    } catch (error) {
+      console.error('Document submission error:', error);
+      toast({
         variant: "destructive",
+        title: "Upload Failed",
+        description: "There was an error uploading your documents. Please try again.",
       });
     } finally {
       setIsUploading(false);
+      setProgress(0);
     }
   };
 
   return (
     <div className="mt-6">
+      {progress > 0 && progress < 100 && (
+        <div className="w-full bg-secondary rounded-full h-1.5 mb-4">
+          <div
+            className="bg-primary h-1.5 rounded-full transition-all duration-300"
+            style={{ width: `${progress}%` }}
+          />
+        </div>
+      )}
+
       <Button
-        onClick={handleSubmission}
+        onClick={handleSubmit}
         disabled={isUploading || Object.keys(uploadedFiles).length === 0}
         className="w-full"
       >
-        {isUploading ? "Uploading..." : "Submit Documents for Review"}
+        {isUploading ? "Uploading..." : "Submit Documents"}
       </Button>
     </div>
   );

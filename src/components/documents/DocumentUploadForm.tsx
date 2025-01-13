@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Plus } from "lucide-react";
 import { DocumentRequirement } from "@/types/documents";
 import DocumentUploadZone from "./DocumentUploadZone";
 import UploadProgress from "./UploadProgress";
@@ -16,12 +18,96 @@ const DocumentUploadForm = ({
   documents,
   onFileUpload,
 }: DocumentUploadFormProps) => {
-  const [uploadedFiles, setUploadedFiles] = useState<Record<string, File>>({});
+  const [uploadedFiles, setUploadedFiles] = useState<Record<string, File[]>>({});
   const [isUploading, setIsUploading] = useState(false);
 
   const handleFileUpload = (type: string, file: File) => {
-    setUploadedFiles(prev => ({ ...prev, [type]: file }));
+    setUploadedFiles(prev => {
+      // If the document type is recommendation_letter, handle multiple files
+      if (type === 'recommendation_letter') {
+        const existingFiles = prev[type] || [];
+        return {
+          ...prev,
+          [type]: [...existingFiles, file]
+        };
+      }
+      // For other document types, keep single file behavior
+      return {
+        ...prev,
+        [type]: [file]
+      };
+    });
     onFileUpload(type, file);
+  };
+
+  const handleRemoveFile = (type: string, index: number) => {
+    setUploadedFiles(prev => {
+      const files = [...(prev[type] || [])];
+      files.splice(index, 1);
+      return {
+        ...prev,
+        [type]: files
+      };
+    });
+  };
+
+  const renderUploadZone = (doc: DocumentRequirement) => {
+    const files = uploadedFiles[doc.type] || [];
+    
+    if (doc.type === 'recommendation_letter') {
+      return (
+        <div className="space-y-4">
+          {files.map((file, index) => (
+            <div key={index} className="flex items-center gap-2">
+              <DocumentUploadZone
+                onFileSelect={(file) => handleFileUpload(doc.type, file)}
+                file={file}
+                accept={doc.formats}
+                maxSize={doc.maxSize / (1024 * 1024)}
+              />
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => handleRemoveFile(doc.type, index)}
+              >
+                Remove
+              </Button>
+            </div>
+          ))}
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            onClick={() => document.getElementById(`upload-${doc.type}`)?.click()}
+            className="w-full"
+          >
+            <Plus className="w-4 h-4 mr-2" />
+            Add Another Letter
+          </Button>
+          <input
+            id={`upload-${doc.type}`}
+            type="file"
+            className="hidden"
+            accept={doc.formats.join(',')}
+            onChange={(e) => {
+              const file = e.target.files?.[0];
+              if (file) {
+                handleFileUpload(doc.type, file);
+              }
+            }}
+          />
+        </div>
+      );
+    }
+
+    return (
+      <DocumentUploadZone
+        onFileSelect={(file) => handleFileUpload(doc.type, file)}
+        file={files[0]}
+        accept={doc.formats}
+        maxSize={doc.maxSize / (1024 * 1024)}
+      />
+    );
   };
 
   return (
@@ -35,12 +121,7 @@ const DocumentUploadForm = ({
               {doc.label}
               {doc.required && <span className="text-destructive ml-1">*</span>}
             </label>
-            <DocumentUploadZone
-              onFileSelect={(file) => handleFileUpload(doc.type, file)}
-              file={uploadedFiles[doc.type]}
-              accept={doc.formats}
-              maxSize={doc.maxSize / (1024 * 1024)} // Convert bytes to MB
-            />
+            {renderUploadZone(doc)}
             {doc.description && (
               <p className="text-sm text-muted-foreground">{doc.description}</p>
             )}

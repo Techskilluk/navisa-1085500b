@@ -14,6 +14,10 @@ interface VisaOption {
   description: string;
   rating: number;
   processingTime: string;
+  requirements: {
+    label: string;
+    value: string;
+  }[];
 }
 
 interface VisaSelectionModalProps {
@@ -29,27 +33,78 @@ const visaOptions: VisaOption[] = [
     description: "For exceptional talent in science, engineering, humanities, and digital technology",
     rating: 4.5,
     processingTime: "3-8 weeks",
+    requirements: [
+      { label: "Education", value: "PhD or equivalent experience" },
+      { label: "Experience", value: "5+ years in field" },
+      { label: "Achievements", value: "Significant contributions" }
+    ]
   },
   {
-    id: "startup",
-    title: "Start-up Visa (UK)",
-    description: "For entrepreneurs launching an innovative business",
+    id: "high-potential",
+    title: "High Potential Individual",
+    description: "For recent graduates from top global universities",
     rating: 4.2,
-    processingTime: "3-4 weeks",
+    processingTime: "2-3 weeks",
+    requirements: [
+      { label: "Education", value: "Top university graduate" },
+      { label: "Graduation", value: "Last 5 years" },
+      { label: "Degree Level", value: "Bachelor's or higher" }
+    ]
   },
   {
-    id: "eb1",
-    title: "EB-1 Visa (USA)",
-    description: "For individuals with extraordinary ability in sciences, arts, education, business, or athletics",
+    id: "scale-up",
+    title: "Scale-up Talent Program",
+    description: "Fast-growing companies hiring international talent",
     rating: 4.0,
-    processingTime: "6-8 months",
+    processingTime: "2-4 weeks",
+    requirements: [
+      { label: "Company", value: "Scale-up sponsor" },
+      { label: "Salary", value: "£33,000+" },
+      { label: "Skills", value: "Graduate level" }
+    ]
   },
+  {
+    id: "tech-talent",
+    title: "Tech Talent Sponsorship",
+    description: "Fast-track sponsorship for software engineers and tech professionals",
+    rating: 4.3,
+    processingTime: "4-6 weeks",
+    requirements: [
+      { label: "Experience", value: "2+ years in tech" },
+      { label: "Skills", value: "In-demand tech stack" },
+      { label: "Language", value: "English proficiency" }
+    ]
+  },
+  {
+    id: "healthcare",
+    title: "Healthcare Professionals",
+    description: "Dedicated route for doctors, nurses, and healthcare specialists",
+    rating: 4.4,
+    processingTime: "4-8 weeks",
+    requirements: [
+      { label: "Qualification", value: "Medical degree/certification" },
+      { label: "Registration", value: "GMC/NMC registration" },
+      { label: "Experience", value: "Clinical experience" }
+    ]
+  },
+  {
+    id: "academic",
+    title: "Academic Sponsorship",
+    description: "For researchers, professors, and academic professionals",
+    rating: 4.1,
+    processingTime: "6-8 weeks",
+    requirements: [
+      { label: "Qualification", value: "PhD or equivalent" },
+      { label: "Research", value: "Publication record" },
+      { label: "Position", value: "Academic role offer" }
+    ]
+  }
 ];
 
 const VisaSelectionModal = ({ isOpen, onClose, onSelect }: VisaSelectionModalProps) => {
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[600px]">
+      <DialogContent className="sm:max-w-[600px] max-h-[80vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>Choose Your Visa Pathway</DialogTitle>
           <DialogDescription>
@@ -71,8 +126,18 @@ const VisaSelectionModal = ({ isOpen, onClose, onSelect }: VisaSelectionModalPro
                 </div>
               </div>
               <p className="text-sm text-muted-foreground mb-2">{visa.description}</p>
-              <div className="flex justify-between items-center text-sm">
-                <span className="text-muted-foreground">Processing time: {visa.processingTime}</span>
+              <div className="space-y-2">
+                <p className="text-sm font-medium">Key Requirements:</p>
+                <ul className="list-disc list-inside space-y-1 text-sm text-muted-foreground">
+                  {visa.requirements.map((req, index) => (
+                    <li key={index}>
+                      <span className="font-medium">{req.label}:</span> {req.value}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="mt-4 flex justify-between items-center text-sm">
+                <span className="text-muted-foreground">Processing: {visa.processingTime}</span>
                 <Button variant="ghost" size="sm">
                   Select <ArrowRight className="w-4 h-4 ml-2" />
                 </Button>

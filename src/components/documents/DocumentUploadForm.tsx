@@ -22,8 +22,8 @@ const DocumentUploadForm = ({
   const [isUploading, setIsUploading] = useState(false);
 
   const handleFileUpload = (type: string, file: File) => {
+    console.log(`Handling file upload for type: ${type}`, file);
     setUploadedFiles(prev => {
-      // If the document type is recommendation_letter, handle multiple files
       if (type === 'recommendation_letter') {
         const existingFiles = prev[type] || [];
         return {
@@ -31,7 +31,6 @@ const DocumentUploadForm = ({
           [type]: [...existingFiles, file]
         };
       }
-      // For other document types, keep single file behavior
       return {
         ...prev,
         [type]: [file]
@@ -41,6 +40,7 @@ const DocumentUploadForm = ({
   };
 
   const handleRemoveFile = (type: string, index: number) => {
+    console.log(`Removing file at index ${index} for type: ${type}`);
     setUploadedFiles(prev => {
       const files = [...(prev[type] || [])];
       files.splice(index, 1);
@@ -58,17 +58,20 @@ const DocumentUploadForm = ({
       return (
         <div className="space-y-4">
           {files.map((file, index) => (
-            <div key={index} className="flex items-center gap-2">
-              <DocumentUploadZone
-                onFileSelect={(file) => handleFileUpload(doc.type, file)}
-                file={file}
-                accept={doc.formats}
-                maxSize={doc.maxSize / (1024 * 1024)}
-              />
+            <div key={`${doc.type}-${index}`} className="flex items-center gap-2">
+              <div className="flex-1">
+                <DocumentUploadZone
+                  onFileSelect={(file) => handleFileUpload(doc.type, file)}
+                  file={file}
+                  accept={doc.formats}
+                  maxSize={doc.maxSize / (1024 * 1024)}
+                />
+              </div>
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={() => handleRemoveFile(doc.type, index)}
+                className="shrink-0"
               >
                 Remove
               </Button>
@@ -78,24 +81,23 @@ const DocumentUploadForm = ({
             type="button"
             variant="outline"
             size="sm"
-            onClick={() => document.getElementById(`upload-${doc.type}`)?.click()}
+            onClick={() => {
+              const input = document.createElement('input');
+              input.type = 'file';
+              input.accept = doc.formats.join(',');
+              input.onchange = (e) => {
+                const file = (e.target as HTMLInputElement).files?.[0];
+                if (file) {
+                  handleFileUpload(doc.type, file);
+                }
+              };
+              input.click();
+            }}
             className="w-full"
           >
             <Plus className="w-4 h-4 mr-2" />
             Add Another Letter
           </Button>
-          <input
-            id={`upload-${doc.type}`}
-            type="file"
-            className="hidden"
-            accept={doc.formats.join(',')}
-            onChange={(e) => {
-              const file = e.target.files?.[0];
-              if (file) {
-                handleFileUpload(doc.type, file);
-              }
-            }}
-          />
         </div>
       );
     }

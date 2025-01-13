@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Plus } from "lucide-react";
+import { Plus, Trash2 } from "lucide-react";
 import { DocumentRequirement } from "@/types/documents";
 import DocumentUploadZone from "./DocumentUploadZone";
 import UploadProgress from "./UploadProgress";
@@ -64,16 +64,16 @@ const DocumentUploadForm = ({
                   onFileSelect={(file) => handleFileUpload(doc.type, file)}
                   file={file}
                   accept={doc.formats}
-                  maxSize={doc.maxSize / (1024 * 1024)}
+                  maxSize={doc.maxSize}
                 />
               </div>
               <Button
                 variant="ghost"
-                size="sm"
+                size="icon"
                 onClick={() => handleRemoveFile(doc.type, index)}
-                className="shrink-0"
+                className="shrink-0 text-destructive hover:text-destructive/90"
               >
-                Remove
+                <Trash2 className="h-4 w-4" />
               </Button>
             </div>
           ))}
@@ -107,7 +107,7 @@ const DocumentUploadForm = ({
         onFileSelect={(file) => handleFileUpload(doc.type, file)}
         file={files[0]}
         accept={doc.formats}
-        maxSize={doc.maxSize / (1024 * 1024)}
+        maxSize={doc.maxSize}
       />
     );
   };

@@ -1,11 +1,7 @@
 import { getCalApi } from "@calcom/embed-react";
 
-export type CalInstance = {
-  ui: (config: any) => Promise<void>;
-  inline: (config: any) => Promise<void>;
-  on: (config: any) => void;
-  unmount: (config: any) => void;
-};
+// Update the type definition to match Cal.com's actual API shape
+export type CalInstance = ReturnType<typeof getCalApi> extends Promise<infer T> ? T : never;
 
 export const initializeCalApi = async (
   elementId: string,

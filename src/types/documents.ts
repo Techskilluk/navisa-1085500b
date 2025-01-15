@@ -51,12 +51,10 @@ export const VISA_DOCUMENTS: Record<string, {
       {
         type: "portfolio",
         label: "Portfolio of Work",
-        description: "Evidence of significant contributions (up to 3 files)",
+        description: "Evidence of significant contributions",
         required: true,
         formats: ["pdf"],
-        maxSize: 10000000,
-        multiple: true,
-        maxFiles: 3
+        maxSize: 10000000
       }
     ],
     resources: [

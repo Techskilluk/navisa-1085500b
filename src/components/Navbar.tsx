@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { LogIn, Menu, X } from "lucide-react";
+import { LogIn, LogOut, Menu } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { Link } from "react-router-dom";
 import { useToast } from "@/components/ui/use-toast";
@@ -13,9 +13,26 @@ import {
 } from "@/components/ui/sheet";
 
 const Navbar = () => {
-  const { user } = useAuth();
+  const { user, signOut } = useAuth();
   const { toast } = useToast();
   const [isOpen, setIsOpen] = useState(false);
+
+  const handleSignOut = async () => {
+    try {
+      await signOut();
+      toast({
+        title: "Signed out successfully",
+        description: "You have been signed out of your account.",
+      });
+    } catch (error) {
+      console.error("Error signing out:", error);
+      toast({
+        variant: "destructive",
+        title: "Error signing out",
+        description: "There was a problem signing you out. Please try again.",
+      });
+    }
+  };
 
   const navLinks = [
     { to: "/", label: "Home" },
@@ -45,7 +62,15 @@ const Navbar = () => {
               {link.label}
             </Link>
           ))}
-          {!user && (
+          {user ? (
+            <Button 
+              onClick={handleSignOut}
+              className="bg-white text-black hover:bg-white/90 transition-colors"
+            >
+              Sign out
+              <LogOut className="w-4 h-4 ml-2" />
+            </Button>
+          ) : (
             <Link to="/signin">
               <Button className="bg-white text-black hover:bg-white/90 transition-colors">
                 Sign in
@@ -78,7 +103,18 @@ const Navbar = () => {
                     {link.label}
                   </Link>
                 ))}
-                {!user && (
+                {user ? (
+                  <Button 
+                    onClick={() => {
+                      handleSignOut();
+                      setIsOpen(false);
+                    }}
+                    className="w-full bg-white text-black hover:bg-white/90 transition-colors"
+                  >
+                    Sign out
+                    <LogOut className="w-4 h-4 ml-2" />
+                  </Button>
+                ) : (
                   <Link 
                     to="/signin"
                     onClick={() => setIsOpen(false)}

@@ -1,15 +1,30 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Building } from "lucide-react";
 import { useNavigate, Link } from "react-router-dom";
+import { useEffect } from "react";
+import { getCalApi } from "@calcom/embed-react";
 import VideoShowcase from "./hero/VideoShowcase";
 import StatsSection from "./hero/StatsSection";
 
 const Hero = () => {
   const navigate = useNavigate();
 
-  const handleConsultation = () => {
-    navigate("/consultation");
-  };
+  useEffect(() => {
+    (async function initCal() {
+      try {
+        console.log("Initializing Cal.com widget");
+        const cal = await getCalApi({ namespace: "global-talent-consultation" });
+        cal("ui", {
+          hideEventTypeDetails: false,
+          layout: "month_view",
+          theme: "light",
+        });
+        console.log("Cal.com widget initialized successfully");
+      } catch (error) {
+        console.error("Failed to initialize Cal.com widget:", error);
+      }
+    })();
+  }, []);
 
   return (
     <div className="relative min-h-[calc(100vh-80px)] flex items-center justify-center px-4 pt-20 lg:pt-0 overflow-hidden bg-gradient-to-br from-background via-background/95 to-background/90">
@@ -24,7 +39,9 @@ const Hero = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start animate-fade-in delay-200">
             <Button 
               className="w-full sm:w-auto px-6 py-6 text-lg bg-white text-black hover:bg-white/90 flex items-center gap-2"
-              onClick={handleConsultation}
+              data-cal-namespace="global-talent-consultation"
+              data-cal-link="navisa-global/global-talent-consultation"
+              data-cal-config='{"layout":"month_view"}'
             >
               Speak to a Consultant
               <ArrowRight className="w-5 h-5 text-black" />

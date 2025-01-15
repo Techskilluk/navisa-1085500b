@@ -12,7 +12,7 @@ interface FileUploadFieldProps {
 
 const FileUploadField = ({ document, files, onFileSelect, onRemoveFile }: FileUploadFieldProps) => {
   const handleAddFile = () => {
-    const input = document.createElement('input');
+    const input = window.document.createElement('input');
     input.type = 'file';
     input.accept = document.formats.join(',');
     input.onchange = (e) => {

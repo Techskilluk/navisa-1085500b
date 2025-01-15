@@ -27,7 +27,7 @@ const menuItems = [
   {
     icon: MessageSquare,
     label: "Consultations",
-    path: "/consultation",
+    path: "/consultation-booking",
   },
   {
     icon: BookOpen,

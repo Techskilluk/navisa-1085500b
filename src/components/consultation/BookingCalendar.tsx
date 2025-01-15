@@ -18,53 +18,74 @@ const BookingCalendar = ({ timeZone, onBookingConfirmed }: BookingCalendarProps)
   const [isBooking, setIsBooking] = useState(false);
 
   useEffect(() => {
-    (async function () {
+    let calInstance: any = null;
+
+    const initializeCal = async () => {
       try {
         console.log("Initializing Cal.com API");
         const cal = await getCalApi();
-        
-        if (cal?.["namespace"]) {
-          cal["namespace"]({
-            "ui": {
-              "styles": {
-                "branding": {
-                  "brandColor": "#000000"
-                }
+        calInstance = cal;
+
+        // Configure Cal.com
+        if (cal) {
+          // Set up global namespace configuration
+          console.log("Setting up Cal.com namespace configuration");
+          await cal("ui", {
+            theme: "light",
+            styles: {
+              branding: {
+                brandColor: "#000000"
+              }
+            }
+          });
+
+          // Initialize inline embed
+          console.log("Initializing Cal.com inline embed with config:", {
+            elementOrSelector: "#cal-booking-placeholder",
+            calLink: "navisa/consultation"
+          });
+
+          await cal("inline", {
+            elementOrSelector: "#cal-booking-placeholder",
+            calLink: "navisa/consultation",
+            config: {
+              timezone: timeZone,
+              name: user?.email,
+              email: user?.email,
+            }
+          });
+
+          // Set up event listeners
+          cal("on", {
+            action: "bookingSuccessful",
+            callback: () => {
+              console.log("Booking successful");
+              setIsBooking(false);
+              toast({
+                title: "Consultation Booked!",
+                description: "Check your email for confirmation details.",
+              });
+              if (onBookingConfirmed) {
+                onBookingConfirmed();
               }
             },
-            "theme": "light"
           });
+
+          cal("on", {
+            action: "error",
+            callback: (e: any) => {
+              console.error("Cal.com error:", e);
+              toast({
+                variant: "destructive",
+                title: "Booking Error",
+                description: "There was an error with the booking system. Please try again.",
+              });
+            },
+          });
+
+          setCalApiLoaded(true);
+          console.log("Cal.com API initialized successfully");
         }
-        
-        console.log("Initializing Cal inline embed");
-        cal?.("inline", {
-          elementOrSelector: "#cal-booking-placeholder",
-          calLink: "navisa/consultation",
-          config: {
-            timezone: timeZone,
-            name: user?.email,
-            email: user?.email,
-          }
-        });
-
-        // Listen for booking success
-        cal?.("on", {
-          action: "bookingSuccessful",
-          callback: () => {
-            console.log("Booking successful");
-            setIsBooking(false);
-            toast({
-              title: "Consultation Booked!",
-              description: "Check your email for confirmation details.",
-            });
-            if (onBookingConfirmed) {
-              onBookingConfirmed();
-            }
-          },
-        });
-
-        setCalApiLoaded(true);
-        console.log("Cal.com API initialized successfully");
       } catch (error) {
         console.error("Error initializing Cal.com API:", error);
         toast({
@@ -73,7 +94,17 @@ const BookingCalendar = ({ timeZone, onBookingConfirmed }: BookingCalendarProps)
           description: "Failed to load booking calendar. Please try again.",
         });
       }
-    })();
+    };
+
+    initializeCal();
+
+    // Cleanup function
+    return () => {
+      if (calInstance) {
+        console.log("Cleaning up Cal.com instance");
+        calInstance("unmount", { elementOrSelector: "#cal-booking-placeholder" });
+      }
+    };
   }, [timeZone, user, onBookingConfirmed, toast]);
 
   const handleBooking = () => {
@@ -93,7 +124,8 @@ const BookingCalendar = ({ timeZone, onBookingConfirmed }: BookingCalendarProps)
       />
       <div 
         id="cal-booking-placeholder" 
-        className={`min-h-[500px] rounded-lg ${!calApiLoaded ? 'animate-pulse bg-muted' : ''}`} 
+        style={{ minHeight: "500px" }}
+        className={`rounded-lg ${!calApiLoaded ? 'animate-pulse bg-muted' : ''}`}
       />
       <Button 
         className="w-full"

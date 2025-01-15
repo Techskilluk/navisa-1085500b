@@ -46,7 +46,7 @@ const SelectField = ({
             disabled={disabled}
           >
             <FormControl>
-              <SelectTrigger className="bg-primary border-white/10 h-11">
+              <SelectTrigger className="bg-[#141413] border-white/10 h-11">
                 <SelectValue 
                   placeholder={placeholder} 
                   className="text-muted-foreground"
@@ -54,7 +54,7 @@ const SelectField = ({
               </SelectTrigger>
             </FormControl>
             <SelectContent 
-              className="relative z-50 bg-modal border border-white/10"
+              className="relative z-50 bg-[#0A0B0E] border border-white/10"
               position="popper"
               sideOffset={4}
             >

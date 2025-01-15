@@ -26,14 +26,14 @@ const TimeZoneSelector = ({ selectedTimeZone, onTimeZoneChange }: TimeZoneSelect
     <div className="space-y-2">
       <Label htmlFor="timezone">Time zone</Label>
       <Select value={selectedTimeZone} onValueChange={onTimeZoneChange}>
-        <SelectTrigger id="timezone" className="w-full bg-primary border-white/10 h-11">
+        <SelectTrigger id="timezone" className="w-full bg-[#141413] border-white/10 h-11">
           <SelectValue 
             placeholder="Select time zone" 
             className="text-muted-foreground"
           />
         </SelectTrigger>
         <SelectContent 
-          className="relative z-50 bg-modal border border-white/10"
+          className="relative z-50 bg-[#0A0B0E] border border-white/10"
           position="popper"
           sideOffset={4}
         >

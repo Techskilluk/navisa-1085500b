@@ -44,7 +44,7 @@ const Experience = ({ form }: ExperienceProps) => {
             <FormLabel>Years of Experience</FormLabel>
             <Select onValueChange={field.onChange} defaultValue={field.value}>
               <FormControl>
-                <SelectTrigger className="bg-primary border-white/10 h-11">
+                <SelectTrigger className="bg-[#141413] border-white/10 h-11">
                   <SelectValue 
                     placeholder="Select years of experience" 
                     className="text-muted-foreground"
@@ -52,7 +52,7 @@ const Experience = ({ form }: ExperienceProps) => {
                 </SelectTrigger>
               </FormControl>
               <SelectContent 
-                className="relative z-50 bg-modal border border-white/10"
+                className="relative z-50 bg-[#0A0B0E] border border-white/10"
                 position="popper"
                 sideOffset={4}
               >

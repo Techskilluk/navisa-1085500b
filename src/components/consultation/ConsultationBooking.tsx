@@ -3,21 +3,51 @@ import { useNavigate } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Cal, { getCalApi } from "@calcom/embed-react";
+import { useToast } from "@/components/ui/use-toast";
 
 const ConsultationBooking = () => {
   const navigate = useNavigate();
+  const { toast } = useToast();
 
   useEffect(() => {
-    (async function initCal() {
-      console.log("Initializing Cal.com widget");
-      const cal = await getCalApi({ namespace: "global-talent-consultation" });
-      cal("ui", {
-        hideEventTypeDetails: false,
-        layout: "month_view",
-        theme: "light",
-      });
-    })();
-  }, []);
+    let mounted = true;
+
+    const initCal = async () => {
+      try {
+        console.log("Initializing Cal.com widget");
+        const cal = await getCalApi();
+        
+        if (!mounted) return;
+
+        // Initialize with namespace first
+        cal("namespace", { namespace: "global-talent-consultation" });
+        
+        // Then configure UI
+        cal("ui", {
+          hideEventTypeDetails: false,
+          layout: "month_view",
+          theme: "light",
+        });
+
+        console.log("Cal.com widget initialized successfully");
+      } catch (error) {
+        console.error("Failed to initialize Cal.com widget:", error);
+        if (mounted) {
+          toast({
+            title: "Error",
+            description: "Failed to load booking calendar. Please try refreshing the page.",
+            variant: "destructive",
+          });
+        }
+      }
+    };
+
+    initCal();
+
+    return () => {
+      mounted = false;
+    };
+  }, [toast]);
 
   return (
     <div className="min-h-screen bg-background">
@@ -45,7 +75,6 @@ const ConsultationBooking = () => {
       <div className="w-full max-w-7xl mx-auto px-4 py-8">
         <div className="w-full h-[800px] rounded-lg overflow-hidden border border-border">
           <Cal
-            namespace="global-talent-consultation"
             calLink="navisa-global/global-talent-consultation"
             style={{
               width: "100%",

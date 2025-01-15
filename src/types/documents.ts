@@ -5,8 +5,6 @@ export interface DocumentRequirement {
   maxSize: number;
   formats: string[];
   description?: string;
-  multiple?: boolean;
-  maxFiles?: number;
 }
 
 export interface VisaDocuments {
@@ -39,14 +37,12 @@ export const VISA_DOCUMENTS: Record<string, {
         maxSize: 5000000
       },
       {
-        type: "recommendation_letter",
+        type: "recommendation",
         label: "Letters of Recommendation",
-        description: "Up to 3 letters from academic or professional references. Each letter must be signed and on official letterhead.",
+        description: "At least 3 letters from recognized experts",
         required: true,
         formats: ["pdf"],
-        maxSize: 5000000,
-        multiple: true,
-        maxFiles: 3
+        maxSize: 5000000
       },
       {
         type: "portfolio",

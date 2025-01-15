@@ -25,21 +25,11 @@ const DocumentUploadForm = ({
     console.log(`Handling file upload for type: ${type}`, file);
     setUploadedFiles(prev => {
       const existingFiles = prev[type] || [];
-      const doc = documents.find(d => d.type === type);
-      
-      if (doc?.multiple && doc?.maxFiles) {
-        if (existingFiles.length >= doc.maxFiles) {
-          return prev;
-        }
-        return {
-          ...prev,
-          [type]: [...existingFiles, file]
-        };
-      }
-      
       return {
         ...prev,
-        [type]: [file]
+        [type]: type === 'recommendation_letter' 
+          ? [...existingFiles, file]
+          : [file]
       };
     });
     onFileUpload(type, file);
@@ -60,7 +50,7 @@ const DocumentUploadForm = ({
   const renderUploadZone = (doc: DocumentRequirement) => {
     const files = uploadedFiles[doc.type] || [];
     
-    if (doc.multiple) {
+    if (doc.type === 'recommendation_letter') {
       return (
         <div className="space-y-4">
           {files.map((file, index) => (
@@ -71,7 +61,6 @@ const DocumentUploadForm = ({
                   file={file}
                   accept={doc.formats}
                   maxSize={doc.maxSize}
-                  multiple={true}
                 />
               </div>
               <Button
@@ -84,29 +73,27 @@ const DocumentUploadForm = ({
               </Button>
             </div>
           ))}
-          {files.length < (doc.maxFiles || 3) && (
-            <Button
-              type="button"
-              variant="outline"
-              size="sm"
-              onClick={() => {
-                const input = document.createElement('input');
-                input.type = 'file';
-                input.accept = doc.formats.join(',');
-                input.onchange = (e) => {
-                  const file = (e.target as HTMLInputElement).files?.[0];
-                  if (file) {
-                    handleFileUpload(doc.type, file);
-                  }
-                };
-                input.click();
-              }}
-              className="w-full"
-            >
-              <Plus className="w-4 h-4 mr-2" />
-              Add Another Letter
-            </Button>
-          )}
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            onClick={() => {
+              const input = document.createElement('input');
+              input.type = 'file';
+              input.accept = doc.formats.join(',');
+              input.onchange = (e) => {
+                const file = (e.target as HTMLInputElement).files?.[0];
+                if (file) {
+                  handleFileUpload(doc.type, file);
+                }
+              };
+              input.click();
+            }}
+            className="w-full"
+          >
+            <Plus className="w-4 h-4 mr-2" />
+            Add Another Letter
+          </Button>
         </div>
       );
     }

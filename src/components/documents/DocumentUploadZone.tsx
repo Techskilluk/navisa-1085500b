@@ -8,17 +8,16 @@ interface DocumentUploadZoneProps {
   file?: File;
   accept: string[];
   maxSize: number;
-  multiple?: boolean;
 }
 
-const DocumentUploadZone = ({ onFileSelect, file, accept, maxSize, multiple = false }: DocumentUploadZoneProps) => {
+const DocumentUploadZone = ({ onFileSelect, file, accept, maxSize }: DocumentUploadZoneProps) => {
   const { toast } = useToast();
 
   const validateFile = useCallback((file: File) => {
-    if (file.size > maxSize) {
+    if (file.size > maxSize * 1024 * 1024) {
       toast({
         title: "File too large",
-        description: `Maximum file size is ${maxSize / (1024 * 1024)}MB`,
+        description: `Maximum file size is ${maxSize}MB`,
         variant: "destructive"
       });
       return false;
@@ -83,11 +82,7 @@ const DocumentUploadZone = ({ onFileSelect, file, accept, maxSize, multiple = fa
             <span className="text-primary font-medium">click to upload</span>
           </div>
           <div className="text-xs text-muted-foreground">
-            {multiple ? (
-              <span>Upload up to 3 recommendation letters (PDF only, max 5MB each)</span>
-            ) : (
-              <span>Supported formats: PDF, JPG, PNG</span>
-            )}
+            Supported formats: PDF, JPG, PNG
           </div>
         </div>
       )}

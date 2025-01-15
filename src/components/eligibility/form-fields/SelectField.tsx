@@ -54,11 +54,7 @@ const SelectField = ({
               </SelectTrigger>
             </FormControl>
             <SelectContent 
-              className="relative z-50 bg-background"
-              style={{
-                '--tw-bg-opacity': '0.95',
-                '--select-content-background': 'rgba(0, 0, 0, var(--tw-bg-opacity))'
-              } as React.CSSProperties}
+              className="bg-[#0A0B0E] border border-white/10"
               position="popper"
               sideOffset={4}
             >

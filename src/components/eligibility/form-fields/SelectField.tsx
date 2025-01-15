@@ -24,7 +24,15 @@ interface SelectFieldProps {
   disabled?: boolean;
 }
 
-const SelectField = ({ form, name, label, options, placeholder, className, disabled }: SelectFieldProps) => {
+const SelectField = ({ 
+  form, 
+  name, 
+  label, 
+  options, 
+  placeholder, 
+  className, 
+  disabled 
+}: SelectFieldProps) => {
   return (
     <FormField
       control={form.control}
@@ -32,7 +40,11 @@ const SelectField = ({ form, name, label, options, placeholder, className, disab
       render={({ field }) => (
         <FormItem className={className}>
           <FormLabel>{label}</FormLabel>
-          <Select onValueChange={field.onChange} defaultValue={field.value} disabled={disabled}>
+          <Select 
+            onValueChange={field.onChange} 
+            defaultValue={field.value} 
+            disabled={disabled}
+          >
             <FormControl>
               <SelectTrigger className="bg-primary border-white/10 h-11">
                 <SelectValue 

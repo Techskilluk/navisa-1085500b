@@ -11,8 +11,8 @@ interface FileUploadFieldProps {
 }
 
 const FileUploadField = ({ document, files, onFileSelect, onRemoveFile }: FileUploadFieldProps) => {
-  const handleAddFile = () => {
-    const input = document.createElement('input');
+  const handleFileSelection = () => {
+    const input = window.document.createElement('input');
     input.type = 'file';
     input.accept = document.formats.join(',');
     input.onchange = (e) => {
@@ -36,7 +36,7 @@ const FileUploadField = ({ document, files, onFileSelect, onRemoveFile }: FileUp
           <div key={`${document.type}-${index}`} className="flex items-center gap-2">
             <div className="flex-1">
               <DocumentUploadZone
-                onFileSelect={(file) => onFileSelect(file)}
+                onFileSelect={onFileSelect}
                 file={file}
                 accept={document.formats}
                 maxSize={document.maxSize}
@@ -59,7 +59,7 @@ const FileUploadField = ({ document, files, onFileSelect, onRemoveFile }: FileUp
             type="button"
             variant="outline"
             size="sm"
-            onClick={handleAddFile}
+            onClick={handleFileSelection}
             className="w-full"
           >
             <Plus className="w-4 h-4 mr-2" />

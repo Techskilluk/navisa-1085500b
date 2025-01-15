@@ -7,8 +7,8 @@ import StatsSection from "./hero/StatsSection";
 const Hero = () => {
   const navigate = useNavigate();
 
-  const handleEligibilityCheck = () => {
-    navigate("/eligibility");
+  const handleConsultation = () => {
+    navigate("/consultation");
   };
 
   return (
@@ -24,9 +24,9 @@ const Hero = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start animate-fade-in delay-200">
             <Button 
               className="w-full sm:w-auto px-6 py-6 text-lg bg-white text-black hover:bg-white/90 flex items-center gap-2"
-              onClick={handleEligibilityCheck}
+              onClick={handleConsultation}
             >
-              Begin Your Global Journey
+              Speak to a Consultant
               <ArrowRight className="w-5 h-5 text-black" />
             </Button>
             <Link to="/enterprise" className="w-full sm:w-auto">

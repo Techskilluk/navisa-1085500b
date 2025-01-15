@@ -1,7 +1,13 @@
 import { getCalApi } from "@calcom/embed-react";
 
-// Update the type definition to match Cal.com's actual API shape
-export type CalInstance = ReturnType<typeof getCalApi> extends Promise<infer T> ? T : never;
+// Define the Cal API interface based on actual available methods
+interface CalApi {
+  (command: string, options: any): void;
+  q?: any[];
+  ns?: Record<string, unknown>;
+}
+
+export type CalInstance = CalApi;
 
 export const initializeCalApi = async (
   elementId: string,
@@ -28,7 +34,7 @@ export const initializeCalApi = async (
 
     // Configure Cal.com
     console.log("Setting up Cal.com namespace configuration");
-    await cal("ui", {
+    cal("ui", {
       theme: "light",
       styles: {
         branding: {
@@ -39,7 +45,7 @@ export const initializeCalApi = async (
 
     // Initialize inline embed
     console.log("Initializing Cal.com inline embed");
-    await cal("inline", {
+    cal("inline", {
       elementOrSelector: `#${elementId}`,
       calLink,
       config

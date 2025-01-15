@@ -3,7 +3,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { Calendar } from "@/components/ui/calendar";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
-import { initializeCalApi, type CalInstance } from "@/lib/cal-api";
+import { initializeCalApi } from "@/lib/cal-api";
 import CalendarPlaceholder from "./CalendarPlaceholder";
 
 interface BookingCalendarProps {
@@ -19,7 +19,7 @@ const BookingCalendar = ({ timeZone, onBookingConfirmed }: BookingCalendarProps)
   const [isBooking, setIsBooking] = useState(false);
 
   useEffect(() => {
-    let calInstance: CalInstance | null = null;
+    let calInstance: any = null;
 
     const setupCalendar = async () => {
       calInstance = await initializeCalApi(
@@ -56,7 +56,11 @@ const BookingCalendar = ({ timeZone, onBookingConfirmed }: BookingCalendarProps)
     return () => {
       if (calInstance) {
         console.log("Cleaning up Cal.com instance");
-        calInstance.unmount({ elementOrSelector: "#cal-booking-placeholder" });
+        // Instead of using unmount, we'll remove the element directly
+        const element = document.getElementById("cal-booking-placeholder");
+        if (element) {
+          element.innerHTML = '';
+        }
       }
     };
   }, [timeZone, user, onBookingConfirmed, toast]);

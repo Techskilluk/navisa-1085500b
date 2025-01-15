@@ -26,7 +26,7 @@ const App = () => (
         <TooltipProvider>
           <Routes>
             {/* Consultation route outside of the main layout */}
-            <Route path="/consultation" element={
+            <Route path="/consultation-booking" element={
               <div className="min-h-screen bg-background">
                 <ConsultationBooking />
               </div>

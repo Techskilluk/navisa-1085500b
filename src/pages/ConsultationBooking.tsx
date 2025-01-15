@@ -10,12 +10,17 @@ const ConsultationBooking = () => {
   useEffect(() => {
     console.log("Initializing Cal.com widget");
     (async function initCal() {
-      const cal = await getCalApi({ namespace: "global-talent-consultation" });
-      cal("ui", {
-        hideEventTypeDetails: false,
-        layout: "month_view",
-        theme: "light",
-      });
+      try {
+        const cal = await getCalApi({ namespace: "global-talent-consultation" });
+        cal("ui", {
+          hideEventTypeDetails: false,
+          layout: "month_view",
+          theme: "light",
+        });
+        console.log("Cal.com widget initialized successfully");
+      } catch (error) {
+        console.error("Failed to initialize Cal.com widget:", error);
+      }
     })();
   }, []);
 

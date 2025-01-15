@@ -36,7 +36,9 @@ export const VISA_DOCUMENTS: Record<string, {
         description: "Detailed CV highlighting achievements and experience",
         required: true,
         formats: ["pdf"],
-        maxSize: 5000000
+        maxSize: 5000000,
+        multiple: true,
+        maxFiles: 3
       },
       {
         type: "recommendation_letter",
@@ -191,7 +193,9 @@ export const VISA_DOCUMENTS: Record<string, {
         description: "Including publications and research",
         required: true,
         formats: ["pdf"],
-        maxSize: 5000000
+        maxSize: 5000000,
+        multiple: true,
+        maxFiles: 3
       },
       {
         type: "publications",

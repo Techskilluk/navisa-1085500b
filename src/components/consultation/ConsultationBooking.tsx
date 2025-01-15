@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/dialog";
 import Cal, { getCalApi } from "@calcom/embed-react";
 import { useToast } from "@/components/ui/use-toast";
+import ConsultationHistory from "./ConsultationHistory";
 
 const ConsultationBooking = () => {
   const navigate = useNavigate();
@@ -86,49 +87,58 @@ const ConsultationBooking = () => {
 
       {/* Booking Section */}
       <div className="w-full max-w-7xl mx-auto px-4 py-12">
-        <div className="flex flex-col items-center justify-center space-y-6 text-center">
-          <div className="max-w-2xl">
-            <h2 className="text-2xl font-bold tracking-tight mb-4">
-              Ready to Start Your Journey?
-            </h2>
-            <p className="text-muted-foreground mb-8">
-              Book a consultation with our expert team to discuss your visa options and get personalized guidance for your immigration journey.
-            </p>
-            
-            <Dialog open={isOpen} onOpenChange={setIsOpen}>
-              <DialogTrigger asChild>
-                <Button size="lg" className="animate-scale-in">
-                  <Calendar className="w-4 h-4 mr-2" />
-                  Book Your Consultation
-                </Button>
-              </DialogTrigger>
-              <DialogContent className="sm:max-w-[900px] h-[80vh]">
-                <DialogHeader>
-                  <DialogTitle>Schedule Your Consultation</DialogTitle>
-                </DialogHeader>
-                {isLoading ? (
-                  <div className="flex items-center justify-center h-full">
-                    <div className="animate-pulse text-muted-foreground">
-                      Loading calendar...
-                    </div>
-                  </div>
-                ) : (
-                  <div className="h-full w-full">
-                    <Cal
-                      calLink="navisa-global/global-talent-consultation"
-                      style={{
-                        width: "100%",
-                        height: "100%",
-                        overflow: "scroll"
-                      }}
-                      config={{
-                        layout: "month_view"
-                      }}
-                    />
-                  </div>
-                )}
-              </DialogContent>
-            </Dialog>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="lg:col-span-2">
+            <div className="flex flex-col items-center justify-center space-y-6">
+              <div className="w-full">
+                <h2 className="text-2xl font-bold tracking-tight mb-4">
+                  Ready to Start Your Journey?
+                </h2>
+                <p className="text-muted-foreground mb-8">
+                  Book a consultation with our expert team to discuss your visa options and get personalized guidance for your immigration journey.
+                </p>
+                
+                <Dialog open={isOpen} onOpenChange={setIsOpen}>
+                  <DialogTrigger asChild>
+                    <Button size="lg" className="animate-scale-in">
+                      <Calendar className="w-4 h-4 mr-2" />
+                      Book Your Consultation
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent className="sm:max-w-[900px] h-[80vh]">
+                    <DialogHeader>
+                      <DialogTitle>Schedule Your Consultation</DialogTitle>
+                    </DialogHeader>
+                    {isLoading ? (
+                      <div className="flex items-center justify-center h-full">
+                        <div className="animate-pulse text-muted-foreground">
+                          Loading calendar...
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="h-full w-full">
+                        <Cal
+                          calLink="navisa-global/global-talent-consultation"
+                          style={{
+                            width: "100%",
+                            height: "100%",
+                            overflow: "scroll"
+                          }}
+                          config={{
+                            layout: "month_view"
+                          }}
+                        />
+                      </div>
+                    )}
+                  </DialogContent>
+                </Dialog>
+              </div>
+            </div>
+          </div>
+          
+          {/* Consultation History */}
+          <div className="lg:col-span-1">
+            <ConsultationHistory />
           </div>
         </div>
       </div>

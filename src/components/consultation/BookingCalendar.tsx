@@ -26,66 +26,73 @@ const BookingCalendar = ({ timeZone, onBookingConfirmed }: BookingCalendarProps)
         const cal = await getCalApi();
         calInstance = cal;
 
-        // Configure Cal.com
-        if (cal) {
-          // Set up global namespace configuration
-          console.log("Setting up Cal.com namespace configuration");
-          await cal("ui", {
-            theme: "light",
-            styles: {
-              branding: {
-                brandColor: "#000000"
-              }
-            }
-          });
-
-          // Initialize inline embed
-          console.log("Initializing Cal.com inline embed with config:", {
-            elementOrSelector: "#cal-booking-placeholder",
-            calLink: "navisa/consultation"
-          });
-
-          await cal("inline", {
-            elementOrSelector: "#cal-booking-placeholder",
-            calLink: "navisa/consultation",
-            config: {
-              timezone: timeZone,
-              name: user?.email,
-              email: user?.email,
-            }
-          });
-
-          // Set up event listeners
-          cal("on", {
-            action: "bookingSuccessful",
-            callback: () => {
-              console.log("Booking successful");
-              setIsBooking(false);
-              toast({
-                title: "Consultation Booked!",
-                description: "Check your email for confirmation details.",
-              });
-              if (onBookingConfirmed) {
-                onBookingConfirmed();
-              }
-            },
-          });
-
-          cal("on", {
-            action: "error",
-            callback: (e: any) => {
-              console.error("Cal.com error:", e);
-              toast({
-                variant: "destructive",
-                title: "Booking Error",
-                description: "There was an error with the booking system. Please try again.",
-              });
-            },
-          });
-
-          setCalApiLoaded(true);
-          console.log("Cal.com API initialized successfully");
+        if (!cal) {
+          console.error("Cal.com API failed to initialize");
+          throw new Error("Calendar API initialization failed");
         }
+
+        // Configure Cal.com
+        console.log("Setting up Cal.com namespace configuration");
+        await cal("ui", {
+          theme: "light",
+          styles: {
+            branding: {
+              brandColor: "#000000"
+            }
+          }
+        });
+
+        // Initialize inline embed
+        console.log("Initializing Cal.com inline embed");
+        await cal("inline", {
+          elementOrSelector: "#cal-booking-placeholder",
+          calLink: "navisa/consultation",
+          config: {
+            timezone: timeZone,
+            name: user?.email,
+            email: user?.email,
+          }
+        });
+
+        // Set up event listeners
+        cal("on", {
+          action: "bookingSuccessful",
+          callback: () => {
+            console.log("Booking successful");
+            setIsBooking(false);
+            toast({
+              title: "Consultation Booked!",
+              description: "Check your email for confirmation details.",
+            });
+            if (onBookingConfirmed) {
+              onBookingConfirmed();
+            }
+          },
+        });
+
+        // Handle loading state
+        cal("on", {
+          action: "linkReady",
+          callback: () => {
+            console.log("Cal.com embed ready");
+            setCalApiLoaded(true);
+          },
+        });
+
+        // Handle booking failed state
+        cal("on", {
+          action: "linkFailed",
+          callback: (e: any) => {
+            console.error("Cal.com link failed:", e);
+            toast({
+              variant: "destructive",
+              title: "Booking Error",
+              description: "There was an error with the booking system. Please try again.",
+            });
+          },
+        });
+
+        console.log("Cal.com API initialized successfully");
       } catch (error) {
         console.error("Error initializing Cal.com API:", error);
         toast({

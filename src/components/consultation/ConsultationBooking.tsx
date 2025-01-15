@@ -28,8 +28,10 @@ const ConsultationBooking = () => {
         
         if (!mounted) return;
 
-        cal("init", { namespace: "global-talent-consultation" });
+        // Initialize Cal.com
+        cal("init");
         
+        // Configure UI after initialization
         cal("ui", {
           hideEventTypeDetails: false,
           layout: "month_view",

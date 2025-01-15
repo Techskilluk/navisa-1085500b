@@ -40,9 +40,9 @@ export const initializeCalApi = async (
       throw new Error("Calendar API initialization failed");
     }
 
-    // Set up namespace with API key
-    console.log("Setting up Cal.com namespace configuration");
-    cal.namespace({ apiKey: key });
+    // Set up API key configuration
+    console.log("Setting up Cal.com API configuration");
+    cal("api", { apiKey: key });
 
     // Configure UI settings separately
     console.log("Setting up Cal.com UI configuration");

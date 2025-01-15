@@ -2,6 +2,14 @@ import { DocumentRequirement } from '../document-types';
 
 export const healthcareRequirements: DocumentRequirement[] = [
   {
+    type: "cv",
+    label: "Professional CV",
+    description: "Detailed healthcare experience and qualifications",
+    required: true,
+    formats: ["pdf"],
+    maxSize: 5000000
+  },
+  {
     type: "qualification",
     label: "Medical Qualification",
     description: "Medical degree or nursing qualification",

@@ -1,11 +1,8 @@
 import { getCalApi } from "@calcom/embed-react";
+import { supabase } from "@/integrations/supabase/client";
 
 // Define the Cal API interface based on actual available methods
-interface CalApi {
-  (command: string, options: any): void;
-  q?: any[];
-  ns?: Record<string, unknown>;
-}
+type CalApi = ReturnType<typeof getCalApi> extends Promise<infer T> ? T : never;
 
 export type CalInstance = CalApi;
 
@@ -25,6 +22,17 @@ export const initializeCalApi = async (
 ): Promise<CalInstance | null> => {
   try {
     console.log("Initializing Cal.com API");
+    
+    // Get the API key from Supabase
+    const { data: { key }, error } = await supabase.functions.invoke('get-secret', {
+      body: { name: 'CAL_API_KEY' }
+    });
+
+    if (error || !key) {
+      console.error("Failed to get Cal.com API key:", error);
+      throw new Error("Failed to initialize calendar due to missing API key");
+    }
+
     const cal = await getCalApi();
 
     if (!cal) {
@@ -32,10 +40,11 @@ export const initializeCalApi = async (
       throw new Error("Calendar API initialization failed");
     }
 
-    // Configure Cal.com
+    // Configure Cal.com with API key
     console.log("Setting up Cal.com namespace configuration");
     cal("ui", {
       theme: "light",
+      apiKey: key,
       styles: {
         branding: {
           brandColor: "#000000"

@@ -21,18 +21,9 @@ interface SelectFieldProps {
   options: { value: string; label: string }[];
   placeholder?: string;
   className?: string;
-  disabled?: boolean;
 }
 
-const SelectField = ({ 
-  form, 
-  name, 
-  label, 
-  options, 
-  placeholder, 
-  className, 
-  disabled 
-}: SelectFieldProps) => {
+const SelectField = ({ form, name, label, options, placeholder, className }: SelectFieldProps) => {
   return (
     <FormField
       control={form.control}
@@ -40,30 +31,15 @@ const SelectField = ({
       render={({ field }) => (
         <FormItem className={className}>
           <FormLabel>{label}</FormLabel>
-          <Select 
-            onValueChange={field.onChange} 
-            defaultValue={field.value} 
-            disabled={disabled}
-          >
+          <Select onValueChange={field.onChange} defaultValue={field.value}>
             <FormControl>
-              <SelectTrigger className="bg-[#141413] border-white/10 h-11">
-                <SelectValue 
-                  placeholder={placeholder} 
-                  className="text-muted-foreground"
-                />
+              <SelectTrigger>
+                <SelectValue placeholder={placeholder} />
               </SelectTrigger>
             </FormControl>
-            <SelectContent 
-              className="bg-[#0A0B0E] border border-white/10"
-              position="popper"
-              sideOffset={4}
-            >
+            <SelectContent className="relative z-50 bg-modal">
               {options.map((option) => (
-                <SelectItem 
-                  key={option.value} 
-                  value={option.value}
-                  className="hover:bg-white/5 focus:bg-white/5"
-                >
+                <SelectItem key={option.value} value={option.value}>
                   {option.label}
                 </SelectItem>
               ))}

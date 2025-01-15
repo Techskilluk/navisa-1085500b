@@ -44,24 +44,13 @@ const Experience = ({ form }: ExperienceProps) => {
             <FormLabel>Years of Experience</FormLabel>
             <Select onValueChange={field.onChange} defaultValue={field.value}>
               <FormControl>
-                <SelectTrigger className="bg-[#141413] border-white/10 h-11">
-                  <SelectValue 
-                    placeholder="Select years of experience" 
-                    className="text-muted-foreground"
-                  />
+                <SelectTrigger>
+                  <SelectValue placeholder="Select years of experience" />
                 </SelectTrigger>
               </FormControl>
-              <SelectContent 
-                className="bg-[#0A0B0E] border border-white/10"
-                position="popper"
-                sideOffset={4}
-              >
+              <SelectContent>
                 {EXPERIENCE_RANGES.map((range) => (
-                  <SelectItem 
-                    key={range} 
-                    value={range}
-                    className="hover:bg-white/5 focus:bg-white/5"
-                  >
+                  <SelectItem key={range} value={range}>
                     {range}
                   </SelectItem>
                 ))}

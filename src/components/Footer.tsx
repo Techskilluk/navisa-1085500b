@@ -1,5 +1,6 @@
-import { Instagram, Twitter, Linkedin, Tiktok } from "lucide-react";
+import { Instagram, Twitter, Linkedin } from "lucide-react";
 import { Button } from "./ui/button";
+import { TikTokIcon } from "./icons/TikTokIcon";
 
 const Footer = () => {
   return (
@@ -33,7 +34,7 @@ const Footer = () => {
               </Button>
               <Button variant="ghost" size="icon" className="hover:bg-white/10" asChild>
                 <a href="https://www.tiktok.com/@navisamigrationpathway?_t=ZM-8t44BjNv94Y&_r=1" target="_blank" rel="noopener noreferrer">
-                  <Tiktok className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
+                  <TikTokIcon className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
                 </a>
               </Button>
             </div>
@@ -57,7 +58,6 @@ const Footer = () => {
               <li className="text-sm sm:text-base text-white/60">Phone: +447816247864</li>
             </ul>
           </div>
-          
         </div>
         
         <div className="mt-8 sm:mt-12 pt-6 sm:pt-8 border-t border-white/10">

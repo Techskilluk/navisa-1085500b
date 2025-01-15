@@ -33,7 +33,7 @@ const TimeZoneSelector = ({ selectedTimeZone, onTimeZoneChange }: TimeZoneSelect
           />
         </SelectTrigger>
         <SelectContent 
-          className="relative z-50 bg-[#0A0B0E] border border-white/10"
+          className="bg-[#0A0B0E] border border-white/10"
           position="popper"
           sideOffset={4}
         >

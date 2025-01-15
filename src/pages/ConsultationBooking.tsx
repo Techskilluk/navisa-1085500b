@@ -8,8 +8,8 @@ const ConsultationBooking = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    console.log("Initializing Cal.com widget");
     (async function initCal() {
-      console.log("Initializing Cal.com widget");
       const cal = await getCalApi({ namespace: "global-talent-consultation" });
       cal("ui", {
         hideEventTypeDetails: false,

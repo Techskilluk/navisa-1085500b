@@ -21,9 +21,10 @@ interface SelectFieldProps {
   options: { value: string; label: string }[];
   placeholder?: string;
   className?: string;
+  disabled?: boolean;
 }
 
-const SelectField = ({ form, name, label, options, placeholder, className }: SelectFieldProps) => {
+const SelectField = ({ form, name, label, options, placeholder, className, disabled }: SelectFieldProps) => {
   return (
     <FormField
       control={form.control}
@@ -31,10 +32,13 @@ const SelectField = ({ form, name, label, options, placeholder, className }: Sel
       render={({ field }) => (
         <FormItem className={className}>
           <FormLabel>{label}</FormLabel>
-          <Select onValueChange={field.onChange} defaultValue={field.value}>
+          <Select onValueChange={field.onChange} defaultValue={field.value} disabled={disabled}>
             <FormControl>
-              <SelectTrigger className="bg-primary border-white/10">
-                <SelectValue placeholder={placeholder} />
+              <SelectTrigger className="bg-primary border-white/10 h-11">
+                <SelectValue 
+                  placeholder={placeholder} 
+                  className="text-muted-foreground"
+                />
               </SelectTrigger>
             </FormControl>
             <SelectContent 

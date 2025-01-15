@@ -1,4 +1,4 @@
-import { Instagram, Twitter, Linkedin } from "lucide-react";
+import { Instagram, Twitter, Linkedin, Facebook } from "lucide-react";
 import { Button } from "./ui/button";
 import { TikTokIcon } from "./icons/TikTokIcon";
 
@@ -18,7 +18,7 @@ const Footer = () => {
             </p>
             <div className="flex space-x-4">
               <Button variant="ghost" size="icon" className="hover:bg-white/10" asChild>
-                <a href="https://instagram.com/navisa" target="_blank" rel="noopener noreferrer">
+                <a href="https://www.instagram.com/navisa_intl?igsh=c2s1amFsYmxwbmUy&utm_source=qr" target="_blank" rel="noopener noreferrer">
                   <Instagram className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
                 </a>
               </Button>
@@ -28,13 +28,18 @@ const Footer = () => {
                 </a>
               </Button>
               <Button variant="ghost" size="icon" className="hover:bg-white/10" asChild>
-                <a href="https://linkedin.com/company/navisa" target="_blank" rel="noopener noreferrer">
+                <a href="https://www.linkedin.com/company/navisa2/" target="_blank" rel="noopener noreferrer">
                   <Linkedin className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
                 </a>
               </Button>
               <Button variant="ghost" size="icon" className="hover:bg-white/10" asChild>
                 <a href="https://www.tiktok.com/@navisamigrationpathway?_t=ZM-8t44BjNv94Y&_r=1" target="_blank" rel="noopener noreferrer">
                   <TikTokIcon className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
+                </a>
+              </Button>
+              <Button variant="ghost" size="icon" className="hover:bg-white/10" asChild>
+                <a href="https://www.facebook.com/stories/122103221324718198/UzpfSVNDOjkzMDUxNzAxOTE4OTI3NA==/?view_single=1&source=shared_permalink&mibextid=wwXIfr" target="_blank" rel="noopener noreferrer">
+                  <Facebook className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
                 </a>
               </Button>
             </div>

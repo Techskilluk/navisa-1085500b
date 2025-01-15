@@ -1,27 +1,23 @@
-import { useState } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useToast } from "@/hooks/use-toast";
-import { useAuth } from "@/contexts/AuthContext";
-import BookingCalendar from "@/components/consultation/BookingCalendar";
-import ConsultationDetails from "@/components/consultation/ConsultationDetails";
-import TimeZoneSelector from "@/components/consultation/TimeZoneSelector";
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import Cal, { getCalApi } from "@calcom/embed-react";
 
 const ConsultationBooking = () => {
   const navigate = useNavigate();
-  const { toast } = useToast();
-  const { user } = useAuth();
-  const [selectedTimeZone, setSelectedTimeZone] = useState("Africa/Lagos");
 
-  const handleBookingConfirmed = () => {
-    toast({
-      title: "Consultation Booked!",
-      description: "You will receive a confirmation email shortly.",
-    });
-    // Redirect to dashboard after successful booking
-    setTimeout(() => navigate("/dashboard"), 2000);
-  };
+  useEffect(() => {
+    (async function initCal() {
+      console.log("Initializing Cal.com widget");
+      const cal = await getCalApi({ namespace: "global-talent-consultation" });
+      cal("ui", {
+        hideEventTypeDetails: false,
+        layout: "month_view",
+        theme: "light",
+      });
+    })();
+  }, []);
 
   return (
     <div className="min-h-screen bg-background">
@@ -45,25 +41,21 @@ const ConsultationBooking = () => {
         </div>
       </div>
 
-      {/* Main Content */}
-      <div className="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {/* Left Column - Calendar */}
-          <div className="order-2 lg:order-1 space-y-6">
-            <TimeZoneSelector 
-              selectedTimeZone={selectedTimeZone}
-              onTimeZoneChange={setSelectedTimeZone}
-            />
-            <BookingCalendar 
-              timeZone={selectedTimeZone}
-              onBookingConfirmed={handleBookingConfirmed}
-            />
-          </div>
-
-          {/* Right Column - Details */}
-          <div className="order-1 lg:order-2">
-            <ConsultationDetails />
-          </div>
+      {/* Cal.com Embed */}
+      <div className="w-full max-w-7xl mx-auto px-4 py-8">
+        <div className="w-full h-[800px] rounded-lg overflow-hidden border border-border">
+          <Cal
+            namespace="global-talent-consultation"
+            calLink="navisa-global/global-talent-consultation"
+            style={{
+              width: "100%",
+              height: "100%",
+              overflow: "scroll"
+            }}
+            config={{
+              layout: "month_view"
+            }}
+          />
         </div>
       </div>
     </div>

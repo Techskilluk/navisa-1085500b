@@ -46,7 +46,7 @@ const BookingCalendar = ({ timeZone, onBookingConfirmed }: BookingCalendarProps)
         console.log("Initializing Cal.com inline embed");
         await cal("inline", {
           elementOrSelector: "#cal-booking-placeholder",
-          calLink: "navisa/consultation",
+          calLink: "navisa-global/global-talent-consultation",
           config: {
             timezone: timeZone,
             name: user?.email,

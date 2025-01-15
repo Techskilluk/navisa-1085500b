@@ -37,7 +37,7 @@ const SelectField = ({ form, name, label, options, placeholder, className }: Sel
                 <SelectValue placeholder={placeholder} />
               </SelectTrigger>
             </FormControl>
-            <SelectContent>
+            <SelectContent className="relative z-50 bg-background/[.98]">
               {options.map((option) => (
                 <SelectItem key={option.value} value={option.value}>
                   {option.label}

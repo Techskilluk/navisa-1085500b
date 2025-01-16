@@ -9,36 +9,6 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      consultation_bookings: {
-        Row: {
-          created_at: string
-          end_time: string
-          id: string
-          start_time: string
-          status: string
-          updated_at: string
-          user_id: string | null
-        }
-        Insert: {
-          created_at?: string
-          end_time: string
-          id?: string
-          start_time: string
-          status?: string
-          updated_at?: string
-          user_id?: string | null
-        }
-        Update: {
-          created_at?: string
-          end_time?: string
-          id?: string
-          start_time?: string
-          status?: string
-          updated_at?: string
-          user_id?: string | null
-        }
-        Relationships: []
-      }
       document_templates: {
         Row: {
           created_at: string

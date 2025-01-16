@@ -2,12 +2,17 @@ import { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
-import type { Database } from "@/integrations/supabase/types";
 
-type ConsultationBooking = Database["public"]["Tables"]["consultation_bookings"]["Row"];
+interface Booking {
+  id: string;
+  created_at: string;
+  status: string;
+  start_time: string;
+  end_time: string;
+}
 
 const ConsultationHistory = () => {
-  const [bookings, setBookings] = useState<ConsultationBooking[]>([]);
+  const [bookings, setBookings] = useState<Booking[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const { user } = useAuth();
 
@@ -16,10 +21,10 @@ const ConsultationHistory = () => {
       try {
         console.log("Fetching consultation bookings for user:", user?.id);
         const { data, error } = await supabase
-          .from("consultation_bookings")
-          .select("*")
-          .eq("user_id", user?.id)
-          .order("created_at", { ascending: false });
+          .from('consultation_bookings')
+          .select('*')
+          .eq('user_id', user?.id)
+          .order('created_at', { ascending: false });
 
         if (error) throw error;
         
